@@ -1,1 +1,6 @@
 @import 'bulma/bulma';
+
+// Fix vertical alignment in tables
+.table td, .table th {
+  vertical-align: middle;
+}
