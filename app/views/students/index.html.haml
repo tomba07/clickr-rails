@@ -14,7 +14,7 @@
   %tbody
     - @students.each do |student|
       %tr
-        %td= student.school_class
+        %td= student.school_class&.name
         %td= student.name
         %td= student.seat_row
         %td= student.seat_col

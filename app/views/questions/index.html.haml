@@ -12,7 +12,7 @@
   %tbody
     - @questions.each do |question|
       %tr
-        %td= question.school_class
+        %td= question.school_class&.name
         %td= question.text
         %td= link_to 'Show', question
         %td= link_to 'Edit', edit_question_path(question)
