@@ -1,7 +1,10 @@
 require "application_system_test_case"
 
 class QuestionsTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @question = questions(:one)
   end
 
@@ -14,9 +17,9 @@ class QuestionsTest < ApplicationSystemTestCase
     visit questions_url
     click_on "New Question"
 
-    fill_in "School class", with: @question.school_class_id
+    select @question.school_class.name, from: "question_school_class_id"
     fill_in "Text", with: @question.text
-    click_on "Create Question"
+    click_on "Save"
 
     assert_text "Question was successfully created"
     click_on "Back"
@@ -26,9 +29,9 @@ class QuestionsTest < ApplicationSystemTestCase
     visit questions_url
     click_on "Edit", match: :first
 
-    fill_in "School class", with: @question.school_class_id
+    select @question.school_class.name, from: "question_school_class_id"
     fill_in "Text", with: @question.text
-    click_on "Update Question"
+    click_on "Save"
 
     assert_text "Question was successfully updated"
     click_on "Back"

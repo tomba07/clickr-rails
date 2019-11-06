@@ -1,9 +1,27 @@
 %header.header
   %nav.navbar.is-fixed-top.is-dark{'aria-label': 'main navigation', role: 'navigation'}
     .navbar-brand
-      %h4.navbar-item.title.is-4.is-marginless.has-text-white Clickr
+      %h4.navbar-item.title.is-4.is-marginless.has-text-white
+        = Clickr
+        - if current_user&.school_class&.name
+          \- #{current_user.school_class.name}
     .navbar-menu
       .navbar-start
-        = link_to 'Classes', school_classes_path, class: 'navbar-item'
-        = link_to 'Students', students_path, class: 'navbar-item'
-        = link_to 'Questions', questions_path, class: 'navbar-item'
+        = link_to 'Classes', school_classes_path, class: "navbar-item #{'is-active' if controller_name == 'school_classes'}"
+        = link_to 'Students', students_path, class: "navbar-item #{'is-active' if controller_name == 'students'}"
+        = link_to 'Questions', questions_path, class: "navbar-item #{'is-active' if controller_name == 'questions'}"
+      .navbar-end
+        - if user_signed_in?
+          .navbar-item.has-dropdown.is-hoverable.is-right
+            %a.navbar-link
+              = current_user&.school_class&.name || 'Select a class'
+            .navbar-dropdown
+              - SchoolClass.all.each do |school_class|
+                = link_to school_class.name, users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'navbar-item'
+          .navbar-item
+            = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'button is-light'
+        - else
+          .navbar-item
+            .buttons
+              = link_to 'Sign up', new_user_registration_path, class: 'button is-primary'
+              = link_to 'Log in', new_user_session_path, class: 'button is-light'

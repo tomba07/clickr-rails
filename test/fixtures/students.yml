@@ -2,12 +2,12 @@
 
 one:
   school_class: one
-  name: MyString
+  name: Max
   seat_row: 1
   seat_col: 1
 
 two:
   school_class: two
-  name: MyString
+  name: Maria
   seat_row: 1
-  seat_col: 1
+  seat_col: 2

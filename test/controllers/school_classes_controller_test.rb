@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class SchoolClassesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @school_class = school_classes(:one)
   end
 
@@ -40,6 +43,8 @@ class SchoolClassesControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy school_class" do
     assert_difference('SchoolClass.count', -1) do
+      delete question_url(questions(:one))
+      delete student_url(students(:one))
       delete school_class_url(@school_class)
     end
 

@@ -2,8 +2,8 @@
 
 one:
   school_class: one
-  text: MyString
+  text: question 1
 
 two:
   school_class: two
-  text: MyString
+  text: question 2

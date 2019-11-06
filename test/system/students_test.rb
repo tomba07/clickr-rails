@@ -1,7 +1,10 @@
 require "application_system_test_case"
 
 class StudentsTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @student = students(:one)
   end
 
@@ -15,10 +18,10 @@ class StudentsTest < ApplicationSystemTestCase
     click_on "New Student"
 
     fill_in "Name", with: @student.name
-    fill_in "School class", with: @student.school_class_id
+    select @student.school_class.name, from: "student_school_class_id"
     fill_in "Seat col", with: @student.seat_col
     fill_in "Seat row", with: @student.seat_row
-    click_on "Create Student"
+    click_on "Save"
 
     assert_text "Student was successfully created"
     click_on "Back"
@@ -29,10 +32,10 @@ class StudentsTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Name", with: @student.name
-    fill_in "School class", with: @student.school_class_id
+    select @student.school_class.name, from: "student_school_class_id"
     fill_in "Seat col", with: @student.seat_col
     fill_in "Seat row", with: @student.seat_row
-    click_on "Update Student"
+    click_on "Save"
 
     assert_text "Student was successfully updated"
     click_on "Back"

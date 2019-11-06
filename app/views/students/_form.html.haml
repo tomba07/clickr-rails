@@ -7,9 +7,10 @@
           %li= message
 
   .field
-    = f.label :school_class, class: 'label'
+    = f.label :school_class_id, class: 'label'
     .control
-      = f.collection_select :school_class_id, SchoolClass.all, :id, :name, prompt: true, class: 'input'
+      .select
+        = f.collection_select :school_class_id, SchoolClass.all, :id, :name, prompt: true
   .field
     = f.label :name, class: 'label'
     .control
@@ -22,6 +23,6 @@
     = f.label :seat_col, class: 'label'
     .control
       = f.number_field :seat_col, class: 'input'
-  .actions.buttons.has-addons
+  .actions.buttons
     = f.submit 'Save', class: 'button is-primary'
     = yield
