@@ -1,21 +1,21 @@
-%h1 Listing school_classes
+%h1.title Listing school classes
 
-%table
+%table.table.is-striped.is-hoverable
   %thead
     %tr
       %th Name
-      %th
-      %th
       %th
 
   %tbody
     - @school_classes.each do |school_class|
       %tr
         %td= school_class.name
-        %td= link_to 'Show', school_class
-        %td= link_to 'Edit', edit_school_class_path(school_class)
-        %td= link_to 'Destroy', school_class, method: :delete, data: { confirm: 'Are you sure?' }
+        %td
+          .buttons.has-addons
+            = link_to 'Show', school_class, class: 'button'
+            = link_to 'Edit', edit_school_class_path(school_class), class: 'button'
+            = link_to 'Destroy', school_class, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 
 %br
 
-= link_to 'New School class', new_school_class_path
+= link_to 'New School class', new_school_class_path, class: 'button is-primary'

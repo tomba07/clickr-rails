@@ -1,0 +1,9 @@
+%header.header
+  %nav.navbar.is-fixed-top.is-dark{'aria-label': 'main navigation', role: 'navigation'}
+    .navbar-brand
+      %h4.navbar-item.title.is-4.is-marginless.has-text-white Clickr
+    .navbar-menu
+      .navbar-start
+        = link_to 'Classes', school_classes_path, class: 'navbar-item'
+        = link_to 'Students', students_path, class: 'navbar-item'
+        = link_to 'Questions', questions_path, class: 'navbar-item'

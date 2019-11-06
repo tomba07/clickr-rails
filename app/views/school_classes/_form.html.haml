@@ -1,13 +1,15 @@
 = form_for @school_class do |f|
   - if @school_class.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@school_class.errors.count, "error")} prohibited this school_class from being saved:"
+      %h2.title= "#{pluralize(@school_class.errors.count, "error")} prohibited this school_class from being saved:"
       %ul
         - @school_class.errors.full_messages.each do |message|
           %li= message
 
   .field
-    = f.label :name
-    = f.text_field :name
-  .actions
-    = f.submit 'Save'
+    = f.label :name, class: 'label'
+    .control
+      = f.text_field :name, class: 'input'
+  .actions.buttons.has-addons
+    = f.submit 'Save', class: 'button is-primary'
+    = yield

@@ -1,7 +1,4 @@
-%h1 Editing school_class
+%h1.title Editing school class
 
-= render 'form'
-
-= link_to 'Show', @school_class
-\|
-= link_to 'Back', school_classes_path
+= render 'form' do
+  = link_to 'Back', school_classes_path, class: 'button is-danger'

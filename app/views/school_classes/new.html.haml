@@ -1,5 +1,4 @@
-%h1 New school_class
+%h1.title New school class
 
-= render 'form'
-
-= link_to 'Back', school_classes_path
+= render 'form' do
+  = link_to 'Back', school_classes_path, class: 'button is-danger'

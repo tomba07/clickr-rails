@@ -1,14 +1,12 @@
-%h1 Listing students
+%h1.title Listing students
 
-%table
+%table.table.is-striped.is-hoverable
   %thead
     %tr
       %th School class
       %th Name
       %th Seat row
       %th Seat col
-      %th
-      %th
       %th
 
   %tbody
@@ -18,10 +16,11 @@
         %td= student.name
         %td= student.seat_row
         %td= student.seat_col
-        %td= link_to 'Show', student
-        %td= link_to 'Edit', edit_student_path(student)
-        %td= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }
+        %td.buttons.has-addons
+          = link_to 'Show', student, class: 'button'
+          = link_to 'Edit', edit_student_path(student), class: 'button'
+          = link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 
 %br
 
-= link_to 'New Student', new_student_path
+= link_to 'New Student', new_student_path, class: 'button is-primary'
