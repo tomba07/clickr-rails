@@ -58,3 +58,5 @@ gem "haml-rails", "~> 2.0"
 gem "devise", "~> 4.7"
 
 gem "bullet", "~> 6.0", :group => :development
+
+gem "strip_attributes", "~> 1.9"
