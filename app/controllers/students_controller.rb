@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    @students = Student.includes(:school_class).all
   end
 
   # GET /students/1
@@ -64,7 +64,7 @@ class StudentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
-      @student = Student.find(params[:id])
+      @student = Student.includes(:school_class).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
