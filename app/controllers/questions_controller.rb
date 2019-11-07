@@ -1,10 +1,11 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:edit, :update, :destroy]
+  before_action :set_question_with_includes, only: [:show]
 
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.includes(:school_class).all
+    @questions = Question.includes(:school_class, :lesson).all
   end
 
   # GET /questions/1
@@ -24,7 +25,15 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    @question = Question.new(question_params)
+    clazz = SchoolClass.find(params[:question][:school_class_id]) || current_user.school_class
+    raise ActionController::BadRequest, 'No school class given, and user does not have a school class selected' unless clazz
+
+    most_recent_lesson = clazz.most_recent_lesson || clazz.lessons.create(title: "Lesson 1 (#{clazz.name})")
+    all_params = question_params.merge(
+      school_class_id: clazz.id,
+      lesson_id: most_recent_lesson.id
+    )
+    @question = Question.new(all_params)
 
     respond_to do |format|
       if @question.save
@@ -64,11 +73,15 @@ class QuestionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
-      @question = Question.includes(:school_class).find(params[:id])
+      @question = Question.find(params[:id])
+    end
+
+    def set_question_with_includes
+      @question = Question.includes(:school_class, :lesson).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:school_class_id, :text)
+      params.require(:question).permit(:school_class_id, :lesson_id, :text)
     end
 end

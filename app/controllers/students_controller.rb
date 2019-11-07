@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_student, only: [:edit, :update, :destroy]
+  before_action :set_student_with_includes, only: [:show]
 
   # GET /students
   # GET /students.json
@@ -64,6 +65,10 @@ class StudentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
+      @student = Student.find(params[:id])
+    end
+
+    def set_student_with_includes
       @student = Student.includes(:school_class).find(params[:id])
     end
 

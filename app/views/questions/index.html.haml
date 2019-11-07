@@ -5,6 +5,7 @@
     %tr
       %th School class
       %th Text
+      %th Lesson
       %th
 
   %tbody
@@ -12,6 +13,7 @@
       %tr
         %td= question.school_class&.name
         %td= question.text
+        %td= question.lesson&.title
         %td
           .buttons
             = link_to 'Show', question, class: 'button'

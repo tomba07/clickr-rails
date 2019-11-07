@@ -44,7 +44,11 @@ class SchoolClassesControllerTest < ActionDispatch::IntegrationTest
   test "should destroy school_class" do
     assert_difference('SchoolClass.count', -1) do
       delete question_url(questions(:one))
+      delete question_url(questions(:two))
       delete student_url(students(:one))
+      delete student_url(students(:two))
+      delete lesson_url(lessons(:one))
+      delete lesson_url(lessons(:two))
       delete school_class_url(@school_class)
     end
 
