@@ -56,3 +56,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "haml-rails", "~> 2.0"
 
 gem "devise", "~> 4.7"
+
+gem "bullet", "~> 6.0", :group => :development
