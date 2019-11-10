@@ -1,0 +1,53 @@
+.rbc
+capybara-*.html
+.rspec
+/log
+/tmp
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/public/system
+/coverage/
+/spec/tmp
+*.orig
+rerun.txt
+pickle-email-*.html
+storage
+
+## Environment normalization:
+.bundle
+
+# Let's maybe not put our git sources in here
+.git
+
+# dotenv
+.env
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+
+# if using bower-rails ignore default bower_components path bower.json files
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
+
+# Ignore pow environment settings
+.powenv
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore node_modules
+node_modules/
+
+/.idea
+
+# Docker configs
+Dockerfile
+Dockerfile.deploy
+Dockerfile.test
+.dockerignore
+
+# Various configs and assorted dotfiles
+.DS_Store
+.gitignore
+.postcssrc.yml
