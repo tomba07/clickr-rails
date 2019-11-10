@@ -1,0 +1,13 @@
+defaults: &defaults
+  suggest_new_lesson_after_minutes: 120
+  min_seat_rows: 4
+  min_seat_cols: 4
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

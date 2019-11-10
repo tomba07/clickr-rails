@@ -1,4 +1,5 @@
-= form_for @student do |f|
+=# local: true because otherwise errors won't be shown
+= form_with model: @student, local: true do |f|
   - if @student.errors.any?
     #error_explanation
       %h2.title= "#{pluralize(@student.errors.count, "error")} prohibited this student from being saved:"

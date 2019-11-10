@@ -63,3 +63,5 @@ gem "strip_attributes", "~> 1.9"
 
 gem "better_errors", "~> 2.5", :group => :development
 gem "binding_of_caller", "~> 0.8.0", :group => :development
+
+gem "rails-controller-testing", "~> 1.0", :group => :test

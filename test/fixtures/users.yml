@@ -5,7 +5,8 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
-  email: 'f@ftes.de'
+  email: f@ftes.de
+  school_class: one
 
 two:
-  email: 'f+2@ftes.de'
+  email: f+2@ftes.de

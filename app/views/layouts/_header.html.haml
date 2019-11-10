@@ -1,10 +1,11 @@
 %header.header
   %nav.navbar.is-fixed-top.is-dark{'aria-label': 'main navigation', role: 'navigation'}
     .navbar-brand
-      %h4.navbar-item.title.is-4.is-marginless.has-text-white
-        = Clickr
-        - if current_user&.school_class&.name
-          \- #{current_user.school_class.name}
+      %a{href: root_path}
+        %h4.navbar-item.title.is-4.is-marginless.has-text-white
+          = Clickr
+          - if current_user&.school_class&.name
+            \- #{current_user.school_class.name}
     .navbar-menu
       .navbar-start
         = link_to 'Classes', school_classes_path, class: "navbar-item #{'is-active' if controller_name == 'school_classes'}"

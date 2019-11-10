@@ -49,6 +49,7 @@ class SchoolClassesControllerTest < ActionDispatch::IntegrationTest
       delete student_url(students(:two))
       delete lesson_url(lessons(:one))
       delete lesson_url(lessons(:two))
+      put users_school_class_url, params: { school_class_id: school_classes(:two).id }
       delete school_class_url(@school_class)
     end
 

@@ -25,15 +25,9 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    clazz = SchoolClass.find(params[:question][:school_class_id]) || current_user.school_class
-    raise ActionController::BadRequest, 'No school class given, and user does not have a school class selected' unless clazz
-
-    most_recent_lesson = clazz.most_recent_lesson || clazz.lessons.create(title: "Lesson 1 (#{clazz.name})")
-    all_params = question_params.merge(
-      school_class_id: clazz.id,
-      lesson_id: most_recent_lesson.id
-    )
-    @question = Question.new(all_params)
+    clazz = SchoolClass.find_by_id(question_params[:school_class_id]) || current_user.school_class
+    lesson_id = question_params[:lesson_id] || clazz&.most_recent_lesson_or_create&.id
+    @question = Question.new({ school_class_id: clazz&.id, lesson_id: lesson_id }.merge question_params)
 
     respond_to do |format|
       if @question.save
@@ -82,6 +76,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:school_class_id, :lesson_id, :text)
+      # Remove blank values to allow merge
+      params.require(:question).permit(:school_class_id, :lesson_id, :text).reject{|_, v| v.blank?}
     end
 end

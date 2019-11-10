@@ -1,4 +1,5 @@
-= form_for @question do |f|
+=# local: true because otherwise errors won't be shown
+= form_with model: @question, local: true do |f|
   - if @question.errors.any?
     #error_explanation
       %h2.title= "#{pluralize(@question.errors.count, "error")} prohibited this question from being saved:"

@@ -20,10 +20,20 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create question" do
     assert_difference('Question.count') do
-      post questions_url, params: { question: { school_class_id: @question.school_class_id, text: @question.text } }
+      post questions_url, params: { question: { school_class_id: @question.school_class_id, lesson_id: @question.lesson_id, text: @question.text } }
     end
 
     assert_redirected_to question_url(Question.last)
+  end
+
+  test "should create question using user's class and most recent lesson (newly created)" do
+    users(:one).update_attribute(:school_class, school_classes(:two))
+
+    assert_difference('Lesson.count', 1) do
+      post questions_url, params: { question: { text: @question.text } }
+    end
+
+    assert_equal school_classes(:two), assigns(:question).school_class
   end
 
   test "should show question" do
@@ -37,7 +47,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update question" do
-    patch question_url(@question), params: { question: { school_class_id: @question.school_class_id, text: @question.text } }
+    patch question_url(@question), params: { question: { school_class_id: @question.school_class_id, lesson_id: @question.lesson_id, text: @question.text } }
     assert_redirected_to question_url(@question)
   end
 
