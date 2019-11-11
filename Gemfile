@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
-ruby '2.6.3'
+ruby '2.5.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Ues SQLite as database adapter
-gem "sqlite3", "~> 1.4"
+gem 'sqlite3', '~> 1.4'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5'
+gem 'sassc-rails', '~> 2.1'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -28,11 +28,11 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 # Remove spaces around string attributes and nullify blank values
-gem "strip_attributes", "~> 1.9"
+gem 'strip_attributes', '~> 1.9'
 # Authentication
-gem "devise", "~> 4.7"
+gem 'devise', '~> 4.7'
 # Templating alternative to .erb
-gem "haml-rails", "~> 2.0"
+gem 'haml-rails', '~> 2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -47,11 +47,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Detect N+1 queries
-  gem "bullet", "~> 6.0"
+  gem 'bullet', '~> 6.0'
   # Improved error page (interactive debugger)
-  gem "better_errors", "~> 2.5"
+  gem 'better_errors', '~> 2.5'
   # binding_of_caller is optional, but is necessary to use Better Errors' advanced features (REPL, local/instance variable inspection, pretty stack frame names).
-  gem "binding_of_caller", "~> 0.8.0"
+  gem 'binding_of_caller', '~> 0.8.0'
 end
 
 group :test do
@@ -61,8 +61,10 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   # Use assigns(:variable) to access controller instance variables in tests
-  gem "rails-controller-testing", "~> 1.0"
+  gem 'rails-controller-testing', '~> 1.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "bigdecimal", "~> 1.4"

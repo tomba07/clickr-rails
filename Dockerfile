@@ -1,24 +1,16 @@
-# TODO switch to alpine (get rid of /bin/bash -l -c)
-FROM debian
+FROM alpine:latest
 
-RUN apt-get update && apt-get install -yq --no-install-recommends \
-    ca-certificates \
-    curl \
-    libpq-dev \
-    nodejs \
-    procps \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# install RVM, Ruby, and Bundler
-RUN \curl -L https://get.rvm.io | bash -s stable
-RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install 2.6.3"
-RUN /bin/bash -l -c "gem install bundler"
-
-RUN \curl -o- -L https://yarnpkg.com/install.sh | bash
-
-#switch on systemd init system in container
-ENV INITSYSTEM on
+RUN apk add --no-cache \
+  build-base \
+  ruby-dev \
+  ruby-bundler \
+  ruby-json \
+  sqlite-dev \
+  # Timezone information
+  tzdata \
+  yarn \
+  # For nokogiri gem
+  zlib-dev
 
 RUN mkdir -p "/usr/src/app"
 WORKDIR /usr/src/app
@@ -26,11 +18,11 @@ WORKDIR /usr/src/app
 COPY Gemfile .
 COPY Gemfile.lock .
 # TODO RPi: --without development test
-RUN /bin/bash -l -c "bundle install"
+RUN bundle install
 
 COPY package.json .
 COPY yarn.lock .
-RUN /bin/bash -l -c "yarn install"
+RUN yarn install
 
 COPY . .
 
@@ -40,4 +32,4 @@ ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # TODO puma
-CMD ["/bin/bash", "-l", "-c", "'bundle exec rails server -b 0.0.0.0'"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
