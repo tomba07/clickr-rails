@@ -1,6 +1,5 @@
-db/development.sqlite3
-db/test.sqlite3
-db/production.sqlite3
+# Dockerfile (use balena template)
+/Dockerfile
 
 
 # Created by https://www.gitignore.io/api/rails,rubymine

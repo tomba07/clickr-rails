@@ -1,3 +1,6 @@
 #!/bin/sh
+set -e
 
+cat Dockerfile.template | sed 's/balenalib\/%%BALENA_ARCH%%-//' > Dockerfile
 docker-compose build
+rm Dockerfile
