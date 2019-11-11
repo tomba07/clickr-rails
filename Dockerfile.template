@@ -24,7 +24,6 @@ RUN bundle install --without development test
 
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install --prod --ignore-optional
 
 COPY . .
 
