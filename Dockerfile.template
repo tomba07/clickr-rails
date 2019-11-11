@@ -3,6 +3,8 @@ FROM balenalib/%%BALENA_ARCH%%-alpine:latest
 RUN apk add --no-cache \
   build-base \
   git \
+  # For node-sass (in old sass-rails version)
+  python \
   ruby-dev \
   ruby-bundler \
   ruby-json \
