@@ -10,32 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_07_152652) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 2019_11_06_191945) do
 
   create_table "lessons", force: :cascade do |t|
     t.text "title"
-    t.bigint "school_class_id", null: false
+    t.integer "school_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_class_id"], name: "index_lessons_on_school_class_id"
   end
 
   create_table "questions", force: :cascade do |t|
-    t.bigint "school_class_id", null: false
+    t.integer "school_class_id", null: false
+    t.integer "lesson_id", null: false
     t.string "text"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "lesson_id", null: false
     t.index ["lesson_id"], name: "index_questions_on_lesson_id"
     t.index ["school_class_id"], name: "index_questions_on_school_class_id"
   end
 
   create_table "questions_students", id: false, force: :cascade do |t|
-    t.bigint "question_id", null: false
-    t.bigint "student_id", null: false
+    t.integer "question_id", null: false
+    t.integer "student_id", null: false
   end
 
   create_table "school_classes", force: :cascade do |t|
@@ -45,7 +42,7 @@ ActiveRecord::Schema.define(version: 2019_11_07_152652) do
   end
 
   create_table "students", force: :cascade do |t|
-    t.bigint "school_class_id", null: false
+    t.integer "school_class_id", null: false
     t.string "name"
     t.integer "seat_row"
     t.integer "seat_col"
@@ -62,7 +59,7 @@ ActiveRecord::Schema.define(version: 2019_11_07_152652) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "school_class_id"
+    t.integer "school_class_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["school_class_id"], name: "index_users_on_school_class_id"
