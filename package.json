@@ -1,6 +1,9 @@
 {
   "name": "clickr",
   "private": true,
+  "scripts": {
+    "release-to-pi": "balena push clickr"
+  },
   "dependencies": {
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
@@ -12,6 +15,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "balena-cli": "^11.17.4",
     "webpack-dev-server": "^3.9.0"
   }
 }
