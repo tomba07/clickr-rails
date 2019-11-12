@@ -9,4 +9,4 @@ echo "RFID_KEYBOARD_READER_DEBOUNCE_SECONDS=3" >> .env
 
 yarn balena env add --application clickr WEB_RAILS_MASTER_KEY "$1"
 yarn balena env add --application clickr RFID_KEYBOARD_READER_USB_IDS "16c0:27db"
-yarn balena env add --application clickr WEB_RAILS_MASTER_KEY "3"
+yarn balena env add --application clickr RFID_KEYBOARD_READER_DEBOUNCE_SECONDS "3"
