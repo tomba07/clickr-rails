@@ -1,0 +1,26 @@
+###############
+# Build stage #
+###############
+FROM balenalib/%%BALENA_ARCH%%-alpine-python:latest-build as build
+
+RUN apk add --no-cache \
+  build-base \
+  linux-headers
+
+# --user installs dependencies to /root/.local
+RUN pip install --user --no-cache-dir \
+  evdev
+
+#############
+# Run stage #
+#############
+FROM balenalib/%%BALENA_ARCH%%-alpine-python:latest-run
+LABEL maintainer="f@ftes.de"
+
+WORKDIR /app
+
+COPY --from=build /root/.local /root/.local
+
+COPY . .
+
+CMD ["python", "./main.py"]

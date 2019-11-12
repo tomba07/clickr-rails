@@ -1,6 +1,0 @@
-#!/bin/sh
-set -ex
-
-/.docker-template
-docker-compose up "$@"
-rm Dockerfile

@@ -1,3 +1,6 @@
+# Dockerfile (use balena template)
+/Dockerfile
+
 
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python

@@ -3,7 +3,7 @@ services:
   web:
     build: services/web
     environment:
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RAILS_MASTER_KEY: ${WEB_RAILS_MASTER_KEY}
     volumes:
       - db:/app/db/data
     ports:
@@ -13,7 +13,8 @@ services:
     build: services/rfid-keyboard-reader
     privileged: true
     environment:
-      RFID_KEYBOARD_READER_USB_IDS: ${RFID_KEYBOARD_READER_USB_IDS}
+      USB_IDS: ${RFID_KEYBOARD_READER_USB_IDS}
+      DEBOUNCE_SECONDS: ${RFID_KEYBOARD_READER_DEBOUNCE_SECONDS}
 
 volumes:
   db:

@@ -3,5 +3,6 @@
 
 find services -name Dockerfile.template | while read template; do
     dockerfile="`dirname $template`/Dockerfile"
-    cat $template | sed 's/balenalib\/%%BALENA_ARCH%%-alpine:latest-[a-z]*/alpine/' > $dockerfile
+    cat $template | sed -e 's/balenalib\/%%BALENA_ARCH%%-alpine:latest-[a-z]*/alpine:latest/' \
+      -e 's/balenalib\/%%BALENA_ARCH%%-alpine-python:latest-[a-z]*/python:3-alpine/' > $dockerfile
 done
