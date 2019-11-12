@@ -19,13 +19,18 @@ def get_device(path, usb_ids, debounce_seconds):
         return None
     return Device(ev_device = device, debounce_seconds = debounce_seconds)
 
-if __name__ == '__main__':
+def main():
     usb_ids_raw = os.getenv('USB_IDS', '')
     debounce_seconds_raw = os.getenv('DEBOUNCE_SECONDS', '3')
-    log.info(f"Params (raw):\n  usb_ids: {usb_ids_raw}\n  debounce_seconds: {debounce_seconds_raw}")
+    log.info(f"Params (raw):\n  USB_IDS: {usb_ids_raw}\n  DEBOUNCE_SECONDS: {debounce_seconds_raw}")
     usb_ids = parse_usb_ids(usb_ids_raw)
     debounce_seconds = int(debounce_seconds_raw)
-    log.info(f"Params (parsed):\n  usb_ids: {usb_ids}\n  debounce_seconds: {debounce_seconds}")
+    log.info(f"Params (parsed):\n  USB_IDS: {usb_ids}\n  DEBOUNCE_SECONDS: {debounce_seconds}")
+
+    if not usb_ids:
+        log.error("USB_IDS was empty. Exiting.")
+        sys.exit(1)
+        return
 
     all_devices = [get_device(path, usb_ids, debounce_seconds) for path in evdev.util.list_devices()]
     selected_devices = [dev for dev in all_devices if dev]
@@ -35,3 +40,6 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_forever()
     # TODO clean stop https://www.roguelynn.com/words/asyncio-graceful-shutdowns/
+
+if __name__ == '__main__':
+    main()
