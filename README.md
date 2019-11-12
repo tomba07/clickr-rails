@@ -15,5 +15,4 @@
 ## Rails master key
 Set `RAILS_MASTER_KEY`:
 - For development (either `.env` file or in `config/master.key`)
-- For CI build server (`.balena/balena.yml`)
 - On devices (via balena fleet management UI -> environment variables)

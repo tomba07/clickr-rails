@@ -1,9 +1,6 @@
 # Dockerfile (use balena template)
 /Dockerfile
 
-# Balena
-.balena
-
 
 # Created by https://www.gitignore.io/api/rails,rubymine
 # Edit at https://www.gitignore.io/?templates=rails,rubymine
