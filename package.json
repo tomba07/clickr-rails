@@ -12,9 +12,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "balena-cli": "^11.17.4",
     "webpack-dev-server": "^3.9.0"
-  },
-  "optionalDependencies": {
-    "balena-cli": "^11.17.4"
   }
 }

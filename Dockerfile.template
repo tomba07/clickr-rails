@@ -1,4 +1,10 @@
-FROM balenalib/%%BALENA_ARCH%%-alpine:latest
+###############
+# Build stage #
+###############
+FROM balenalib/%%BALENA_ARCH%%-alpine:latest-build as build
+
+WORKDIR /app
+ENV RAILS_ENV=production
 
 RUN apk add --no-cache \
   build-base \
@@ -7,29 +13,70 @@ RUN apk add --no-cache \
   python \
   ruby-dev \
   ruby-bundler \
+  # Required by activesupport (assets:precompile)
   ruby-json \
   sqlite-dev \
-  # Timezone information
+  # For assets:precompile: Timezone information
   tzdata \
   yarn \
   # For nokogiri gem
   zlib-dev
 
-RUN mkdir -p "/usr/src/app"
-WORKDIR /usr/src/app
-
+# Copy only files for bundle/yarn install first (layer does not change as often)
 COPY Gemfile .
 COPY Gemfile.lock .
-RUN bundle install --without development test
-
 COPY package.json .
 COPY yarn.lock .
 
+# --deployment sets --path vendor/bundle
+RUN bundle install --without development test --no-cache --deployment \
+  && ls vendor/bundle
+#  && rm -rf vendor/bundle/cache/*.gem \
+#  && find vendor/bundle/gems/ -name "*.c" -delete \
+#  && find vendor/bundle/gems/ -name "*.o" -delete
+
+# Manually run yarn install before copying all sources (layer does not change as often)
+RUN yarn install --prod
+
 COPY . .
+
+# precompile assets
+RUN bundle exec rails assets:precompile
+
+# Remove folders not needed in resulting image
+RUN rm -rf node_modules tmp/cache app/assets vendor/assets lib/assets spec
+
+
+#############
+# Run stage #
+#############
+FROM balenalib/%%BALENA_ARCH%%-alpine:latest-run
+LABEL maintainer="f@ftes.de"
+
+WORKDIR /app
+ENV RAILS_ENV=production
+# TODO Add nginx container as reverse proxy for static files
+ENV RAILS_SERVE_STATIC_FILES=true
+ENV RAILS_LOG_TO_STDOUT=true
+
+RUN apk add --no-cache \
+  ruby \
+  # Required to run db:create etc.
+  ruby-bundler \
+  # Required by activesupport
+  ruby-json \
+  sqlite-dev \
+  # Timezone information
+  tzdata
+
+COPY --from=build /app .
+
+RUN bundler exec rails db:create db:migrate db:seed
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
+
 EXPOSE 3000
 
 # TODO puma
