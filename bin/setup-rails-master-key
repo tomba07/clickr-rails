@@ -5,3 +5,4 @@
 set -ex
 
 echo "RAILS_MASTER_KEY=$1" > .env
+yarn balena env add --application clickr RAILS_MASTER_KEY "$1"

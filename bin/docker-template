@@ -1,0 +1,7 @@
+#!/bin/sh
+# Translate Dockerfile.template to Dockerfile for local development
+
+find services -name Dockerfile.template | while read template; do
+    dockerfile="`dirname $template`/Dockerfile"
+    cat $template | sed 's/balenalib\/%%BALENA_ARCH%%-alpine:latest-[a-z]*/alpine/' > $dockerfile
+done

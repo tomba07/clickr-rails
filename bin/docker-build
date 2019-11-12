@@ -1,6 +1,6 @@
 #!/bin/sh
 set -ex
 
-cat Dockerfile.template | sed 's/balenalib\/%%BALENA_ARCH%%-alpine:latest-[a-z]*/alpine/' > Dockerfile
+`dirname "$0"`/docker-template
 docker-compose build "$@"
-rm Dockerfile
+rm services/**/Dockerfile
