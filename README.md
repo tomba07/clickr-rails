@@ -8,8 +8,9 @@
 5. `xdg-open http://localhost:3000`, credentials: `f@ftes.de`/`password`
 
 ## Docker
-- `./bin/docker-build`
-- `./bin/release-to-pi` (balena.io cloud build and push to devices)
+1. `bin/setup-rails-master-key <master-key>` (if you haven't done so already)
+2. `./bin/docker-build` (build locally first, that's faster, but not for ARM/Raspberry Pi)
+3. `./bin/release-to-pi` (balena.io cloud build and push to devices)
 
 ## Rails master key
 Set `RAILS_MASTER_KEY`:
