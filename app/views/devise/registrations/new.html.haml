@@ -1,5 +1,5 @@
 %h2.title Sign up
-= form_with model:(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+= form_with model: resource, as: resource_name, url: registration_path(resource_name), local: true do |f|
   = render "devise/shared/error_messages", resource: resource
   .field
     = f.label :email, class: 'label'
@@ -16,5 +16,5 @@
     .control
       = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'input'
   .actions.buttons
-    = f.submit 'Sign up'
+    = f.submit 'Sign up', class: 'button is-primary'
     = render "devise/shared/links"
