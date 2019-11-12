@@ -1,0 +1,8 @@
+#!/bin/sh
+# Usage: setup-rails-master-key <master-key>
+# Adds master key to .env and .balena/balena.yml
+
+set -ex
+
+echo "RAILS_MASTER_KEY=$1" > .env
+echo "build-variables:\n  global:\n  - RAILS_MASTER_KEY=$1" > .balena/balena.yml

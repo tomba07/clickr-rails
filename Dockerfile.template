@@ -5,7 +5,6 @@ FROM balenalib/%%BALENA_ARCH%%-alpine:latest-build as build
 
 WORKDIR /app
 ENV RAILS_ENV=production
-ENV NODE_ENV=production
 
 RUN apk add --no-cache \
   build-base \
@@ -29,20 +28,20 @@ COPY Gemfile.lock .
 COPY package.json .
 COPY yarn.lock .
 
-# --deployment sets --path vendor/bundle
-RUN bundle install --without development test --no-cache --deployment \
-  && ls vendor/bundle
-#  && rm -rf vendor/bundle/cache/*.gem \
-#  && find vendor/bundle/gems/ -name "*.c" -delete \
-#  && find vendor/bundle/gems/ -name "*.o" -delete
+RUN bundle install --jobs 4 --without development test --no-cache --deployment \
+# https://www.georg-ledermann.de/blog/2018/04/19/dockerize-rails-the-lean-way/
+  && rm -rf vendor/bundle/cache/*.gem \
+  && find vendor/bundle/gems/ -name "*.c" -delete || true \
+  && find vendor/bundle/gems/ -name "*.o" -delete || true
 
 # Manually run yarn install before copying all sources (layer does not change as often)
+# Ignore warnings about balena-cli. yarn install --production also resolves dev dependencies, but doesn't install them).
 RUN yarn install --production --frozen-lockfile
 
 COPY . .
 
-# precompile assets
-RUN bundle exec rails assets:precompile
+# Do not require master key and use fake secret key base (https://github.com/rails/rails/issues/32947#issuecomment-531508722)
+RUN REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
 
 # Remove folders not needed in resulting image
 RUN rm -rf node_modules tmp/cache app/assets vendor/assets lib/assets spec
@@ -62,7 +61,7 @@ ENV RAILS_LOG_TO_STDOUT=true
 
 RUN apk add --no-cache \
   ruby \
-  # Required to run db:create etc.
+  # Required for db:create etc.
   ruby-bundler \
   # Required by activesupport
   ruby-json \
@@ -72,12 +71,14 @@ RUN apk add --no-cache \
 
 COPY --from=build /app .
 
-RUN bundler exec rails db:create db:migrate db:seed
+# Prepoluate /app/db/data volume
+RUN REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails db:create db:migrate db:seed
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
+VOLUME /app/db/data
 EXPOSE 3000
 
 # TODO puma

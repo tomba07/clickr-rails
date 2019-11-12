@@ -3,12 +3,9 @@ services:
   web:
     build: .
     environment:
-      - DATABASE_HOST=db
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
-    expose:
-      - 3000
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     volumes:
-      - db:/usr/src/app/db
+      - db:/app/db/data
     ports:
       - 80:3000
 
