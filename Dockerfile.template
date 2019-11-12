@@ -5,6 +5,7 @@ FROM balenalib/%%BALENA_ARCH%%-alpine:latest-build as build
 
 WORKDIR /app
 ENV RAILS_ENV=production
+ENV NODE_ENV=production
 
 RUN apk add --no-cache \
   build-base \
@@ -36,7 +37,7 @@ RUN bundle install --without development test --no-cache --deployment \
 #  && find vendor/bundle/gems/ -name "*.o" -delete
 
 # Manually run yarn install before copying all sources (layer does not change as often)
-RUN yarn install --prod
+RUN yarn install --production --frozen-lockfile
 
 COPY . .
 

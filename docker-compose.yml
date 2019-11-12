@@ -4,6 +4,7 @@ services:
     build: .
     environment:
       - DATABASE_HOST=db
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
     expose:
       - 3000
     volumes:
