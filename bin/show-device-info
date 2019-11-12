@@ -1,0 +1,7 @@
+#!/bin/sh
+# Usage: show-device-info <device-uuid>
+# Obtain <device-uuid> by running list-devices
+
+set -ex
+
+yarn balena device "$@"
