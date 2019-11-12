@@ -20,8 +20,8 @@ def get_device(path, usb_ids, debounce_seconds):
     return Device(ev_device = device, debounce_seconds = debounce_seconds)
 
 def main():
-    usb_ids_raw = os.getenv('USB_IDS', '')
-    debounce_seconds_raw = os.getenv('DEBOUNCE_SECONDS', '3')
+    usb_ids_raw = os.getenv('RFID_KEYBOARD_READER_USB_IDS', '')
+    debounce_seconds_raw = os.getenv('RFID_KEYBOARD_READER_DEBOUNCE_SECONDS', '3')
     log.info(f"Params (raw):\n  USB_IDS: {usb_ids_raw}\n  DEBOUNCE_SECONDS: {debounce_seconds_raw}")
     usb_ids = parse_usb_ids(usb_ids_raw)
     debounce_seconds = int(debounce_seconds_raw)

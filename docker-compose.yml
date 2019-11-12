@@ -2,8 +2,9 @@ version: '2'
 services:
   web:
     build: services/web
-    environment:
-      RAILS_MASTER_KEY: "${WEB_RAILS_MASTER_KEY}"
+    # environment:
+      # Balena adds env vars automatically and env var substitution in compose file is not yet supported
+      # RAILS_MASTER_KEY: "${RAILS_MASTER_KEY}"
     volumes:
       - db:/app/db/data
     ports:
@@ -11,10 +12,11 @@ services:
 
   rfid-keyboard-reader:
     build: services/rfid-keyboard-reader
-#    privileged: true
-    environment:
-      USB_IDS: "${RFID_KEYBOARD_READER_USB_IDS}"
-      DEBOUNCE_SECONDS: "${RFID_KEYBOARD_READER_DEBOUNCE_SECONDS}"
+    privileged: true
+    # environment:
+      # Balena adds env vars automatically and env var substitution in compose file is not yet supported
+      # RFID_KEYBOARD_READER_USB_IDS: "${RFID_KEYBOARD_READER_USB_IDS}"
+      # RFID_KEYBOARD_READER_DEBOUNCE_SECONDS: "${RFID_KEYBOARD_READER_DEBOUNCE_SECONDS}"
 
 volumes:
   db:
