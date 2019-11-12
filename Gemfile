@@ -6,7 +6,7 @@ ruby '2.5.7'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 # Ues SQLite as database adapter
 gem 'sqlite3', '~> 1.4'
 # Use SCSS for stylesheets (version 5 avoids sassc, which won't compile on RPi: https://github.com/sass/sassc-rails/issues/138)
