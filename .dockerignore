@@ -1,3 +1,9 @@
+# Docker
+Dockerfile
+Dockerfile.template
+.dockerignore
+
+# Rails and Ruby
 *.rbc
 capybara-*.html
 *.rspec
@@ -16,7 +22,7 @@ storage
 .ruby-gemset
 .rvmrc
 
-## Environment normalization:
+# Environment normalization:
 .bundle
 
 # Let's maybe not put our git sources in here

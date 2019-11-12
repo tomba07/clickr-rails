@@ -79,7 +79,7 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
 VOLUME /app/db/data
-EXPOSE 3000
+EXPOSE 80
 
 # TODO puma
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "80"]
