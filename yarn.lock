@@ -677,10 +677,10 @@ balena-auth@^3.0.0:
     bluebird "^3.0.0"
     jwt-decode "^2.1.0"
 
-balena-cli@^11.17.4:
-  version "11.17.4"
-  resolved "https://registry.yarnpkg.com/balena-cli/-/balena-cli-11.17.4.tgz#4caeedf9c8a8c26ff8be5724e2eeb4c4d3a3d8b2"
-  integrity sha512-XuJhrOe1/DBcRqLQxDABb1QZd/xU/nKchr96yLLEf2i7nFJWVDuEEoNDs52VpgOWDI+64bMIqPnPJcIkRojfMw==
+balena-cli@^11.18.0:
+  version "11.18.0"
+  resolved "https://registry.yarnpkg.com/balena-cli/-/balena-cli-11.18.0.tgz#0fae7c05efa809713032e99bb783384c01a33b54"
+  integrity sha512-Dt4CAyHSPW7uv7NM0jiw+OVqt9dx4NQ+ay/r48Mdb0OtlPGAg22dddheVLs3cNkBGQ4zxFa31uYH150k9mu2lA==
   dependencies:
     "@oclif/command" "^1.5.12"
     "@oclif/errors" "^1.2.2"
@@ -768,7 +768,7 @@ balena-cli@^11.17.4:
     tmp "0.0.31"
     typed-error "^3.1.0"
     umount "^1.1.6"
-    unzip2 balena-io-library/node-unzip-2#v0.2.8
+    unzip2 "github:balena-io-library/node-unzip-2#v0.2.8"
     update-notifier "^2.2.0"
     window-size "^1.1.0"
   optionalDependencies:
@@ -5975,9 +5975,10 @@ resin-device-status@^1.0.1:
   dependencies:
     lodash "^4.0.0"
 
-"resin-discoverable-services@git+https://github.com/resin-io-modules/resin-discoverable-services.git#find-on-all-interfaces":
+"resin-discoverable-services@git+https://github.com/resin-io-modules/resin-discoverable-services#find-on-all-interfaces":
   version "1.2.2"
-  resolved "git+https://github.com/resin-io-modules/resin-discoverable-services.git#afca9e4700ec5ef82aa897f14bd5a46f06518061"
+  uid afca9e4700ec5ef82aa897f14bd5a46f06518061
+  resolved "git+https://github.com/resin-io-modules/resin-discoverable-services#afca9e4700ec5ef82aa897f14bd5a46f06518061"
   dependencies:
     bluebird "^3.0.0"
     bonjour "git+https://github.com/resin-io/bonjour#fixed-mdns"
@@ -7235,8 +7236,9 @@ umount@^1.1.6:
   dependencies:
     lodash "~4.17.4"
 
-"unbzip2-stream@github:balena-io-modules/unbzip2-stream#942fc218013c14adab01cf693b0500cf6ac83193":
+unbzip2-stream@balena-io-modules/unbzip2-stream#942fc218013c14adab01cf693b0500cf6ac83193:
   version "1.2.5"
+  uid "942fc218013c14adab01cf693b0500cf6ac83193"
   resolved "https://codeload.github.com/balena-io-modules/unbzip2-stream/tar.gz/942fc218013c14adab01cf693b0500cf6ac83193"
 
 underscore.string@^3.1.1, underscore.string@^3.2.3, underscore.string@~3.3.4:

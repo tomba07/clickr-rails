@@ -4,7 +4,7 @@
   "repository": "git@github.com:ftes/clickr-rails.git",
   "author": "Fredrik Teschke <f@ftes.de>",
   "devDependencies": {
-    "balena-cli": "^11.17.4"
+    "balena-cli": "^11.18.0"
   },
   "private": true
 }
