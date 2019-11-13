@@ -8,7 +8,7 @@
             \- #{current_user.school_class.name}
     .navbar-menu
       .navbar-start
-        = link_to lesson_executions_path, class: 'navbar-item' do
+        = link_to lesson_executions_path, class: "navbar-item #{'is-active' if controller_name == 'lesson_executions'}" do
           .icon
             = icon('fas', 'play')
           %div Give lesson
