@@ -1,5 +1,5 @@
 %h2.title Log in
-= form_with model: resource, as: resource_name, url: session_path(resource_name), locale: true do |f|
+= form_with model: resource, as: resource_name, url: session_path(resource_name), local: true do |f|
   .field
     = f.label :email, class: 'label'
     .control
