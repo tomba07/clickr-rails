@@ -6,7 +6,6 @@
       The last lesson seems to be quite old.
       Do you want to create a new one?
 
-      =# TODO reload current page (either via ajax handler or by evaluating hidden field in controller)
       = form_with model: Lesson.new, format: :json do |f|
         = f.hidden_field :redirect_to_previous_page, value: true
         .field
