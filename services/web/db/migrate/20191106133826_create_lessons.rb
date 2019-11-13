@@ -8,6 +8,6 @@ class CreateLessons < ActiveRecord::Migration[6.0]
     end
 
     add_index :lessons, :created_at, order: { created_at: :desc }
-    add_index :lessons, %i[school_class title], unique: true
+    add_index :lessons, %i[school_class_id title], unique: true
   end
 end

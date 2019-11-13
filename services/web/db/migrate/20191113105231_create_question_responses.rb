@@ -14,6 +14,6 @@ class CreateQuestionResponses < ActiveRecord::Migration[6.0]
 
     add_index :question_responses, :created_at, order: { created_at: :desc }
     # Sum per student for one lesson
-    add_index :question_responses, %i[student lesson]
+    add_index :question_responses, %i[student_id lesson_id]
   end
 end

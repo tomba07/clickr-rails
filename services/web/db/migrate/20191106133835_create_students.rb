@@ -9,7 +9,7 @@ class CreateStudents < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :students, %i[school_class name], unique: true
-    add_index :students, %i[school_class seat_row seat_col], unique: true
+    add_index :students, %i[school_class_id name], unique: true
+    add_index :students, %i[school_class_id seat_row seat_col], unique: true
   end
 end
