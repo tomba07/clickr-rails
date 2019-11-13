@@ -1,21 +1,9 @@
-=# local: true because otherwise errors won't be shown
-= form_with model: @lesson, local: true do |f|
-  - if @lesson.errors.any?
-    #error_explanation
-      %h2.title= "#{pluralize(@lesson.errors.count, "error")} prohibited this lesson from being saved:"
-      %ul
-        - @lesson.errors.full_messages.each do |message|
-          %li= message
+= simple_form_for @lesson do |f|
+  = f.error_notification
 
-  .field
-    = f.label :title, class: 'label'
-    .control
-      = f.text_area :title, class: 'input'
-  .field
-    = f.label :school_class_id, class: 'label'
-    .control
-      .select
-        = f.collection_select :school_class_id, SchoolClass.all, :id, :name, prompt: true
-  .actions.buttons
+  = f.input :title, as: :string
+  = f.association :school_class
+
+  .buttons
     = f.submit 'Save', class: 'button is-primary'
     = yield
