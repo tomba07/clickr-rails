@@ -29,6 +29,7 @@ class Device:
             return
 
         log.info(f"Token: {token_id}")
+        # TODO Pass token to web app (pass in fn reference when instantiating Device)
 
     def handle_event(self, event):
         if event.type != evdev.ecodes.EV_KEY:

@@ -35,6 +35,8 @@ def main():
     all_devices = [get_device(path, usb_ids, debounce_seconds) for path in evdev.util.list_devices()]
     selected_devices = [dev for dev in all_devices if dev]
 
+    log.info(f"Watching {len(selected_devices)} devices: {[dev.ev_device.path for dev in selected_devices]})")
+
     for device in selected_devices:
         asyncio.ensure_future(device.async_handle_event())
     loop = asyncio.get_event_loop()
