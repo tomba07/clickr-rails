@@ -2,7 +2,7 @@
 set -ex
 
 # Remove a potentially pre-existing server.pid for Rails.
-rm -f /usr/src/app/tmp/pids/server.pid
+rm -f /app/tmp/pids/server.pid
 
 bundler exec rails db:migrate
 
