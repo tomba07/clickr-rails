@@ -1,0 +1,18 @@
+version: 1
+
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "live"
+
+  - package_manager: "ruby:bundler"
+    directory: "/services/web"
+    update_schedule: "live"
+
+  - package_manager: "javascript"
+    directory: "/services/web"
+    update_schedule: "live"
+
+  - package_manager: "python"
+    directory: "/services/rfid-keyboard-reader"
+    update_schedule: "live"
