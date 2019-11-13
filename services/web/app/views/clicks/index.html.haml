@@ -1,0 +1,23 @@
+%h1 Listing clicks
+
+%table
+  %thead
+    %tr
+      %th Device
+      %th Device type
+      %th
+      %th
+      %th
+
+  %tbody
+    - @clicks.each do |click|
+      %tr
+        %td= click.device_id
+        %td= click.device_type
+        %td= link_to 'Show', click
+        %td= link_to 'Edit', edit_click_path(click)
+        %td= link_to 'Destroy', click, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Click', new_click_path

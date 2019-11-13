@@ -10,44 +10,88 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_06_191945) do
+ActiveRecord::Schema.define(version: 2019_11_13_115657) do
+
+  create_table "clicks", force: :cascade do |t|
+    t.string "device_id", null: false
+    t.string "device_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_clicks_on_created_at", order: :desc
+    t.index ["device_id"], name: "index_clicks_on_device_id"
+    t.index ["device_type"], name: "index_clicks_on_device_type"
+  end
 
   create_table "lessons", force: :cascade do |t|
-    t.text "title"
+    t.text "title", null: false
     t.integer "school_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index "\"school_class\", \"title\"", name: "index_lessons_on_school_class_and_title", unique: true
+    t.index ["created_at"], name: "index_lessons_on_created_at", order: :desc
     t.index ["school_class_id"], name: "index_lessons_on_school_class_id"
+  end
+
+  create_table "question_responses", force: :cascade do |t|
+    t.integer "score", default: 1, null: false
+    t.integer "click_id", null: false
+    t.integer "student_id", null: false
+    t.integer "question_id", null: false
+    t.integer "lesson_id", null: false
+    t.integer "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index "\"student\", \"lesson\"", name: "index_question_responses_on_student_and_lesson"
+    t.index ["click_id"], name: "index_question_responses_on_click_id", unique: true
+    t.index ["created_at"], name: "index_question_responses_on_created_at", order: :desc
+    t.index ["lesson_id"], name: "index_question_responses_on_lesson_id"
+    t.index ["question_id"], name: "index_question_responses_on_question_id"
+    t.index ["school_class_id"], name: "index_question_responses_on_school_class_id"
+    t.index ["student_id"], name: "index_question_responses_on_student_id"
   end
 
   create_table "questions", force: :cascade do |t|
     t.integer "school_class_id", null: false
     t.integer "lesson_id", null: false
-    t.string "text"
+    t.string "text", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_questions_on_created_at", order: :desc
     t.index ["lesson_id"], name: "index_questions_on_lesson_id"
     t.index ["school_class_id"], name: "index_questions_on_school_class_id"
   end
 
-  create_table "questions_students", id: false, force: :cascade do |t|
-    t.integer "question_id", null: false
-    t.integer "student_id", null: false
-  end
-
   create_table "school_classes", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_school_classes_on_name", unique: true
+  end
+
+  create_table "student_device_mappings", force: :cascade do |t|
+    t.integer "student_id", null: false
+    t.integer "school_class_id", null: false
+    t.string "device_id", null: false
+    t.string "device_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index "\"school_class\", \"device_id\"", name: "index_student_device_mappings_on_school_class_and_device_id", unique: true
+    t.index ["created_at"], name: "index_student_device_mappings_on_created_at", order: :desc
+    t.index ["device_id"], name: "index_student_device_mappings_on_device_id"
+    t.index ["device_type"], name: "index_student_device_mappings_on_device_type"
+    t.index ["school_class_id"], name: "index_student_device_mappings_on_school_class_id"
+    t.index ["student_id"], name: "index_student_device_mappings_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
     t.integer "school_class_id", null: false
-    t.string "name"
-    t.integer "seat_row"
-    t.integer "seat_col"
+    t.string "name", null: false
+    t.integer "seat_row", null: false
+    t.integer "seat_col", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index "\"school_class\", \"name\"", name: "index_students_on_school_class_and_name", unique: true
+    t.index "\"school_class\", \"seat_row\", \"seat_col\"", name: "index_students_on_school_class_and_seat_row_and_seat_col", unique: true
     t.index ["school_class_id"], name: "index_students_on_school_class_id"
   end
 
@@ -66,8 +110,15 @@ ActiveRecord::Schema.define(version: 2019_11_06_191945) do
   end
 
   add_foreign_key "lessons", "school_classes"
+  add_foreign_key "question_responses", "clicks"
+  add_foreign_key "question_responses", "lessons"
+  add_foreign_key "question_responses", "questions"
+  add_foreign_key "question_responses", "school_classes"
+  add_foreign_key "question_responses", "students"
   add_foreign_key "questions", "lessons"
   add_foreign_key "questions", "school_classes"
+  add_foreign_key "student_device_mappings", "school_classes"
+  add_foreign_key "student_device_mappings", "students"
   add_foreign_key "students", "school_classes"
   add_foreign_key "users", "school_classes"
 end

@@ -1,0 +1,16 @@
+= form_for @click do |f|
+  - if @click.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@click.errors.count, "error")} prohibited this click from being saved:"
+      %ul
+        - @click.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :device_id
+    = f.text_field :device_id
+  .field
+    = f.label :device_type
+    = f.text_field :device_type
+  .actions
+    = f.submit 'Save'

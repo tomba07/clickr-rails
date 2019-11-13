@@ -1,0 +1,19 @@
+= form_for @student_device_mapping do |f|
+  - if @student_device_mapping.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@student_device_mapping.errors.count, "error")} prohibited this student_device_mapping from being saved:"
+      %ul
+        - @student_device_mapping.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :student
+    = f.text_field :student
+  .field
+    = f.label :device_id
+    = f.text_field :device_id
+  .field
+    = f.label :device_type
+    = f.text_field :device_type
+  .actions
+    = f.submit 'Save'

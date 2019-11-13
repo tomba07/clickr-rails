@@ -1,5 +1,0 @@
-class CreateQuestionStudentJoinTable < ActiveRecord::Migration[6.0]
-  def change
-    create_join_table :questions, :students
-  end
-end

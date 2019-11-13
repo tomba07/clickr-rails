@@ -1,0 +1,2 @@
+module StudentDeviceMappingsHelper
+end

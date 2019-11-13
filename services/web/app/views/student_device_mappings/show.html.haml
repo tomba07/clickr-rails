@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Student:
+  = @student_device_mapping.student
+%p
+  %b Device:
+  = @student_device_mapping.device_id
+%p
+  %b Device type:
+  = @student_device_mapping.device_type
+
+= link_to 'Edit', edit_student_device_mapping_path(@student_device_mapping)
+\|
+= link_to 'Back', student_device_mappings_path

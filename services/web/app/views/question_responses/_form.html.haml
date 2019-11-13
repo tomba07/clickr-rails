@@ -1,0 +1,25 @@
+= form_for @question_response do |f|
+  - if @question_response.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@question_response.errors.count, "error")} prohibited this question_response from being saved:"
+      %ul
+        - @question_response.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :click
+    = f.text_field :click
+  .field
+    = f.label :student
+    = f.text_field :student
+  .field
+    = f.label :question
+    = f.text_field :question
+  .field
+    = f.label :lesson
+    = f.text_field :lesson
+  .field
+    = f.label :school_class
+    = f.text_field :school_class
+  .actions
+    = f.submit 'Save'

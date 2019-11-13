@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Click:
+  = @question_response.click
+%p
+  %b Student:
+  = @question_response.student
+%p
+  %b Question:
+  = @question_response.question
+%p
+  %b Lesson:
+  = @question_response.lesson
+%p
+  %b Class:
+  = @question_response.class
+
+= link_to 'Edit', edit_question_response_path(@question_response)
+\|
+= link_to 'Back', question_responses_path

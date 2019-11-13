@@ -1,0 +1,29 @@
+%h1 Listing question_responses
+
+%table
+  %thead
+    %tr
+      %th Click
+      %th Student
+      %th Question
+      %th Lesson
+      %th Class
+      %th
+      %th
+      %th
+
+  %tbody
+    - @question_responses.each do |question_response|
+      %tr
+        %td= question_response.click
+        %td= question_response.student
+        %td= question_response.question
+        %td= question_response.lesson
+        %td= question_response.class
+        %td= link_to 'Show', question_response
+        %td= link_to 'Edit', edit_question_response_path(question_response)
+        %td= link_to 'Destroy', question_response, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Question response', new_question_response_path

@@ -3,6 +3,9 @@ class SchoolClass < ApplicationRecord
   has_many :students
   has_many :lessons
   has_many :questions
+  has_many :question_responses
+
+  validates :name, presence: true, uniqueness: true
 
   def most_recent_lesson_or_create
     lessons.last || lessons.create!(title: "Lesson 1 (#{name})")
