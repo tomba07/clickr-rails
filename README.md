@@ -1,6 +1,9 @@
 # Clickr
 
-## Overview
+## Introduction
+TODO briefly explain domain model
+
+## Technical overview
 ```
 $ tree -L 2 --filelimit 10 --dirsfirst
 .
@@ -50,3 +53,4 @@ Initialized via `bin/setup-environment-variables`.
 - `web`: [balena update locking](https://www.balena.io/docs/learn/deploy/release-strategy/update-locking/) and trigger from within the app (do not update during lesson)
 - new adapters (e.g. raw I/O)
 - `rfid-keyboar-reader`: support selecting by device.name (`HXGCoLtd Keyboard`)
+- `web`: check that created_at indexes are used (order by desc)
