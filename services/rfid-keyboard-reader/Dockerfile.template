@@ -10,8 +10,7 @@ RUN apk add --no-cache \
   linux-headers
 
 # --user installs dependencies to /root/.local
-RUN pip install --user --no-cache-dir \
-  evdev
+RUN pip install --user --no-cache-dir -r requirements.txt
 
 #############
 # Run stage #
