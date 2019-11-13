@@ -1,25 +1,36 @@
-= form_for @question_response do |f|
+=# local: true because otherwise errors won't be shown
+= form_with model: @question_response, local: true do |f|
   - if @question_response.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@question_response.errors.count, "error")} prohibited this question_response from being saved:"
+      %h2.title= "#{pluralize(@question_response.errors.count, "error")} prohibited this question_response from being saved:"
       %ul
         - @question_response.errors.full_messages.each do |message|
           %li= message
 
   .field
-    = f.label :click
-    = f.text_field :click
+    = f.label :click, class: 'label'
+    .control
+      = f.text_field :click
   .field
-    = f.label :student
-    = f.text_field :student
+    = f.label :student, class: 'label'
+    .control
+      .select
+        = f.collection_select :student_id, Student.all, :id, :name, prompt: true
   .field
-    = f.label :question
-    = f.text_field :question
+    = f.label :question, class: 'label'
+    .control
+      .select
+        = f.collection_select :question_id, Question.all, :id, :text, prompt: true
   .field
-    = f.label :lesson
-    = f.text_field :lesson
+    = f.label :lesson, class: 'label'
+    .control
+      .select
+        = f.collection_select :lesson_id, Lesson.all, :id, :title, prompt: true
   .field
-    = f.label :school_class
-    = f.text_field :school_class
-  .actions
-    = f.submit 'Save'
+    = f.label :school_class, class: 'label'
+    .control
+      .select
+        = f.collection_select :school_class_id, SchoolClass.all, :id, :name, prompt: true
+  .actions.buttons
+    = f.submit 'Save', class: 'button is-primary'
+    = yield

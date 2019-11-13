@@ -1,5 +1,4 @@
-%h1 New question_response
+%h1.title New question response
 
-= render 'form'
-
-= link_to 'Back', question_responses_path
+= render 'form' do
+  = link_to 'Back', question_responses_path, class: 'button is-danger'

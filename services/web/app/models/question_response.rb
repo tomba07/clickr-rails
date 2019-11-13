@@ -7,4 +7,7 @@ class QuestionResponse < ApplicationRecord
   belongs_to :school_class
 
   validates :score, presence: true
+  # TODO validates student.school_class = school_class
+  # TODO validates lesson.school_class = school_class
+  # TODO validates question.lesson = lesson
 end

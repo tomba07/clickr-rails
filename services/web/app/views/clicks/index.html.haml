@@ -1,12 +1,10 @@
-%h1 Listing clicks
+%h1.title Clicks
 
-%table
+%table.table.is-striped.is-hoverable
   %thead
     %tr
       %th Device
       %th Device type
-      %th
-      %th
       %th
 
   %tbody
@@ -14,10 +12,12 @@
       %tr
         %td= click.device_id
         %td= click.device_type
-        %td= link_to 'Show', click
-        %td= link_to 'Edit', edit_click_path(click)
-        %td= link_to 'Destroy', click, method: :delete, data: { confirm: 'Are you sure?' }
+        %td
+          .buttons
+            = link_to 'Show', click, class: 'button'
+            = link_to 'Edit', edit_click_path(click), class: 'button'
+            = link_to 'Destroy', click, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 
-%br
 
-= link_to 'New Click', new_click_path
+
+= link_to 'New Click', new_click_path, class: 'button is-primary'

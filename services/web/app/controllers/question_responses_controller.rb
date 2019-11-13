@@ -1,5 +1,6 @@
 class QuestionResponsesController < ApplicationController
   before_action :set_question_response, only: [:show, :edit, :update, :destroy]
+  # TODO load with (avoid N+1)
 
   # GET /question_responses
   # GET /question_responses.json
@@ -25,6 +26,7 @@ class QuestionResponsesController < ApplicationController
   # POST /question_responses.json
   def create
     @question_response = QuestionResponse.new(question_response_params)
+    # TODO set missing data
 
     respond_to do |format|
       if @question_response.save

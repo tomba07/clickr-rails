@@ -1,7 +1,4 @@
-%h1 Editing click
+%h1.title Editing click
 
-= render 'form'
-
-= link_to 'Show', @click
-\|
-= link_to 'Back', clicks_path
+= render 'form' do
+  = link_to 'Back', clicks_path, class: 'button is-danger'

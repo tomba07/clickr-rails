@@ -1,7 +1,4 @@
-%h1 Editing student_device_mapping
+%h1.title Editing student device mapping
 
-= render 'form'
-
-= link_to 'Show', @student_device_mapping
-\|
-= link_to 'Back', student_device_mappings_path
+= render 'form' do
+  = link_to 'Back', student_device_mappings_path, class: 'button is-danger'

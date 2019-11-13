@@ -1,5 +1,6 @@
 class StudentDeviceMappingsController < ApplicationController
   before_action :set_student_device_mapping, only: [:show, :edit, :update, :destroy]
+  # TODO load with (avoid N+1)
 
   # GET /student_device_mappings
   # GET /student_device_mappings.json
@@ -25,6 +26,7 @@ class StudentDeviceMappingsController < ApplicationController
   # POST /student_device_mappings.json
   def create
     @student_device_mapping = StudentDeviceMapping.new(student_device_mapping_params)
+    # TODO set missing data
 
     respond_to do |format|
       if @student_device_mapping.save

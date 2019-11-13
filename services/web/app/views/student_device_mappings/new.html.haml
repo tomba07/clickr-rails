@@ -1,5 +1,4 @@
-%h1 New student_device_mapping
+%h1.title New student device mapping
 
-= render 'form'
-
-= link_to 'Back', student_device_mappings_path
+= render 'form' do
+  = link_to 'Back', student_device_mappings_path, class: 'button is-danger'

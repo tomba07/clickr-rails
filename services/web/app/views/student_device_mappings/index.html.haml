@@ -1,25 +1,24 @@
-%h1 Listing student_device_mappings
+%h1.title Student device mappings
 
-%table
+%table.is-striped.is-hoverable
   %thead
     %tr
       %th Student
       %th Device
       %th Device type
       %th
-      %th
-      %th
 
   %tbody
     - @student_device_mappings.each do |student_device_mapping|
       %tr
-        %td= student_device_mapping.student
+        %td= student_device_mapping.student&.name
         %td= student_device_mapping.device_id
         %td= student_device_mapping.device_type
-        %td= link_to 'Show', student_device_mapping
-        %td= link_to 'Edit', edit_student_device_mapping_path(student_device_mapping)
-        %td= link_to 'Destroy', student_device_mapping, method: :delete, data: { confirm: 'Are you sure?' }
+        %td
+          .buttons
+            = link_to 'Show', student_device_mapping, class: 'button'
+            = link_to 'Edit', edit_student_device_mapping_path(student_device_mapping), class: 'button'
+            = link_to 'Destroy', student_device_mapping, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 
-%br
 
 = link_to 'New Student device mapping', new_student_device_mapping_path

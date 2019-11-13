@@ -9,9 +9,12 @@
     .navbar-menu
       .navbar-start
         = link_to 'Classes', school_classes_path, class: "navbar-item #{'is-active' if controller_name == 'school_classes'}"
+        = link_to 'Lessons', lessons_path, class: "navbar-item #{'is-active' if controller_name == 'lessons'}"
         = link_to 'Students', students_path, class: "navbar-item #{'is-active' if controller_name == 'students'}"
         = link_to 'Questions', questions_path, class: "navbar-item #{'is-active' if controller_name == 'questions'}"
-        = link_to 'Lessons', lessons_path, class: "navbar-item #{'is-active' if controller_name == 'lessons'}"
+        = link_to 'Mappings', student_device_mappings_path, class: "navbar-item #{'is-active' if controller_name == 'student_device_mappings'}"
+        = link_to 'Clicks', clicks_path, class: "navbar-item #{'is-active' if controller_name == 'clicks'}"
+        = link_to 'Responses', question_responses_path, class: "navbar-item #{'is-active' if controller_name == 'question_responses'}"
       .navbar-end
         - if user_signed_in?
           .navbar-item.has-dropdown.is-hoverable.is-right

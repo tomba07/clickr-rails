@@ -1,19 +1,25 @@
-= form_for @student_device_mapping do |f|
+=# local: true because otherwise errors won't be shown
+= form_with model: @student_device_mapping, local: true do |f|
   - if @student_device_mapping.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@student_device_mapping.errors.count, "error")} prohibited this student_device_mapping from being saved:"
+      %h2.title= "#{pluralize(@student_device_mapping.errors.count, "error")} prohibited this student_device_mapping from being saved:"
       %ul
         - @student_device_mapping.errors.full_messages.each do |message|
           %li= message
 
   .field
-    = f.label :student
-    = f.text_field :student
+    = f.label :student, class: 'label'
+    .control
+      .select
+        = f.collection_select :student_id, Student.all, :id, :name, prompt: true
   .field
-    = f.label :device_id
-    = f.text_field :device_id
+    = f.label :device_id, class: 'label'
+    .control
+      = f.text_field :device_id, class: 'input'
   .field
-    = f.label :device_type
-    = f.text_field :device_type
-  .actions
-    = f.submit 'Save'
+    = f.label :device_type, class: 'label'
+    .control
+      = f.text_field :device_type, class: 'input'
+  .actions.buttons
+    = f.submit 'Save', class: 'button is-primary'
+    = yield
