@@ -8,13 +8,41 @@
             \- #{current_user.school_class.name}
     .navbar-menu
       .navbar-start
-        = link_to 'Classes', school_classes_path, class: "navbar-item #{'is-active' if controller_name == 'school_classes'}"
-        = link_to 'Lessons', lessons_path, class: "navbar-item #{'is-active' if controller_name == 'lessons'}"
-        = link_to 'Students', students_path, class: "navbar-item #{'is-active' if controller_name == 'students'}"
-        = link_to 'Questions', questions_path, class: "navbar-item #{'is-active' if controller_name == 'questions'}"
-        = link_to 'Mappings', student_device_mappings_path, class: "navbar-item #{'is-active' if controller_name == 'student_device_mappings'}"
-        = link_to 'Clicks', clicks_path, class: "navbar-item #{'is-active' if controller_name == 'clicks'}"
-        = link_to 'Responses', question_responses_path, class: "navbar-item #{'is-active' if controller_name == 'question_responses'}"
+        = link_to lesson_executions_path, class: 'navbar-item' do
+          .icon
+            = icon('fas', 'play')
+          %div Give lesson
+        .navbar-item.has-dropdown.is-hoverable
+          .navbar-link Admin
+          .navbar-dropdown
+            = link_to school_classes_path, class: "navbar-item #{'is-active' if controller_name == 'school_classes'}" do
+              .icon
+                = icon('fas', 'users')
+              .is-hidden-touch Classes
+            = link_to lessons_path, class: "navbar-item #{'is-active' if controller_name == 'lessons'}" do
+              .icon
+                = icon('fas', 'paper-plane')
+              %div Lessons
+            = link_to students_path, class: "navbar-item #{'is-active' if controller_name == 'students'}" do
+              .icon
+                = icon('fas', 'user')
+              %div Students
+            = link_to questions_path, class: "navbar-item #{'is-active' if controller_name == 'questions'}" do
+              .icon
+                = icon('fas', 'question')
+              %div Questions
+            = link_to student_device_mappings_path, class: "navbar-item #{'is-active' if controller_name == 'student_device_mappings'}" do
+              .icon
+                = icon('fas', 'map-signs')
+              %div Mappings
+            = link_to clicks_path, class: "navbar-item #{'is-active' if controller_name == 'clicks'}" do
+              .icon
+                = icon('fas', 'mouse')
+              %div Clicks
+            = link_to question_responses_path, class: "navbar-item #{'is-active' if controller_name == 'question_responses'}" do
+              .icon
+                = icon('fas', 'reply')
+              %div Responses
       .navbar-end
         - if user_signed_in?
           .navbar-item.has-dropdown.is-hoverable.is-right
