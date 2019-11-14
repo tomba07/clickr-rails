@@ -18,7 +18,7 @@
         %td= student.seat_col
         %td
           .buttons
-            = link_to 'Show', student, class: 'button'
+            = link_to 'Show', students_path, class: 'button'
             = link_to 'Edit', edit_student_path(student), class: 'button'
             = link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 

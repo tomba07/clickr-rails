@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(version: 2019_11_13_115657) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.text "title", null: false
+    t.string "name", null: false
     t.integer "school_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_lessons_on_created_at", order: :desc
-    t.index ["school_class_id", "title"], name: "index_lessons_on_school_class_id_and_title", unique: true
+    t.index ["school_class_id", "name"], name: "index_lessons_on_school_class_id_and_name", unique: true
     t.index ["school_class_id"], name: "index_lessons_on_school_class_id"
   end
 
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_115657) do
   create_table "questions", force: :cascade do |t|
     t.integer "school_class_id", null: false
     t.integer "lesson_id", null: false
-    t.string "text", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_questions_on_created_at", order: :desc

@@ -1,11 +1,11 @@
 class QuestionResponsesController < ApplicationController
-  before_action :set_question_response, only: [:show, :edit, :update, :destroy]
-  # TODO load with (avoid N+1)
+  before_action :set_question_response, only: [:edit, :update, :destroy]
+  before_action :set_question_response_with_includes, only: [:show]
 
   # GET /question_responses
   # GET /question_responses.json
   def index
-    @question_responses = QuestionResponse.all
+    @question_responses = QuestionResponse.includes(:student, :lesson, :question, :school_class).all
   end
 
   # GET /question_responses/1
@@ -67,6 +67,10 @@ class QuestionResponsesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_question_response
       @question_response = QuestionResponse.find(params[:id])
+    end
+
+    def set_question_response_with_includes
+      @question_response = QuestionResponse.includes(:student, :lesson, :question, :school_class).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -12,7 +12,7 @@
         %td= school_class.name
         %td
           .buttons
-            = link_to 'Show', school_class, class: 'button'
+            = link_to 'Show', school_classes_path, class: 'button'
             = link_to 'Edit', edit_school_class_path(school_class), class: 'button'
             = link_to 'Select', users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'button'
             = link_to 'Destroy', school_class, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'

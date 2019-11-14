@@ -1,29 +1,12 @@
-=# local: true because otherwise errors won't be shown
-= form_with model: @student, local: true do |f|
-  - if @student.errors.any?
-    #error_explanation
-      %h2.title= "#{pluralize(@student.errors.count, "error")} prohibited this student from being saved:"
-      %ul
-        - @student.errors.full_messages.each do |message|
-          %li= message
+= simple_form_for @student do |f|
+  = f.error_notification
+  = f.error_notification message: (f.error :base) if f.object.errors[:base].present?
 
-  .field
-    = f.label :school_class_id, class: 'label'
-    .control
-      .select
-        = f.collection_select :school_class_id, SchoolClass.all, :id, :name, prompt: true
-  .field
-    = f.label :name, class: 'label'
-    .control
-      = f.text_field :name, class: 'input'
-  .field
-    = f.label :seat_row, class: 'label'
-    .control
-      = f.number_field :seat_row, class: 'input'
-  .field
-    = f.label :seat_col, class: 'label'
-    .control
-      = f.number_field :seat_col, class: 'input'
-  .actions.buttons
+  = f.association :school_class, autofocus: true
+  = f.input :name
+  = f.input :seat_row
+  = f.input :seat_col
+
+  .buttons
     = f.submit 'Save', class: 'button is-primary'
     = yield

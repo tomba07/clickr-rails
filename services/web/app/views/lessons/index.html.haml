@@ -10,11 +10,11 @@
   %tbody
     - @lessons.each do |lesson|
       %tr
-        %td= lesson.title
+        %td= lesson.name
         %td= lesson.school_class&.name
         %td
           .buttons
-            = link_to 'Show', lesson, class: 'button'
+            = link_to 'Show', lessons_path, class: 'button'
             = link_to 'Edit', edit_lesson_path(lesson), class: 'button'
             = link_to 'Destroy', lesson, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 

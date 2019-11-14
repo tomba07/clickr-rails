@@ -8,7 +8,7 @@ class SchoolClass < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   def most_recent_lesson_or_create
-    lessons.last || lessons.create!(title: "Lesson 1 (#{name})")
+    lessons.last || lessons.create!(name: "Lesson 1 (#{name})")
   end
 
   def suggest_creating_new_lesson?

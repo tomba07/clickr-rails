@@ -1,20 +1,10 @@
-=# local: true because otherwise errors won't be shown
-= form_with model: @click, local: true do |f|
-  - if @click.errors.any?
-    #error_explanation
-      %h2.title= "#{pluralize(@click.errors.count, "error")} prohibited this click from being saved:"
-      %ul
-        - @click.errors.full_messages.each do |message|
-          %li= message
+= simple_form_for @click do |f|
+  = f.error_notification
+  = f.error_notification message: (f.error :base) if f.object.errors[:base].present?
 
-  .field
-    = f.label :device_id, class: 'label'
-    .control
-      = f.text_field :device_id, class: 'input'
-  .field
-    = f.label :device_type, class: 'label'
-    .control
-      = f.text_field :device_type, class: 'input'
-  .actions.buttons
+  = f.input :device_id, autofocus: true
+  = f.input :device_type
+
+  .buttons
     = f.submit 'Save', class: 'button is-primary'
     = yield

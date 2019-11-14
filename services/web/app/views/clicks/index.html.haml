@@ -14,7 +14,7 @@
         %td= click.device_type
         %td
           .buttons
-            = link_to 'Show', click, class: 'button'
+            = link_to 'Show', clicks_path, class: 'button'
             = link_to 'Edit', edit_click_path(click), class: 'button'
             = link_to 'Destroy', click, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 

@@ -3,7 +3,7 @@ class CreateQuestions < ActiveRecord::Migration[6.0]
     create_table :questions do |t|
       t.references :school_class, null: false, foreign_key: true, index: true
       t.references :lesson, null: false, foreign_key: true, index: true
-      t.string :text, null: false
+      t.string :name, null: false
 
       t.timestamps
     end

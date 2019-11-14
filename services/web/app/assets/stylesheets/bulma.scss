@@ -5,8 +5,7 @@
   vertical-align: middle;
 }
 
-.field_with_errors {
-  .input, .select select {
-    border-color: $danger;
-  }
+// Add space between checkbox and label
+.checkbox input[type=checkbox] {
+  margin-right: .5em;
 }

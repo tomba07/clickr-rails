@@ -4,7 +4,7 @@ class Lesson < ApplicationRecord
   has_many :questions
   has_one :question_responses
 
-  validates :title, presence: true, uniqueness: { scope: :school_class }
+  validates :name, presence: true, uniqueness: { scope: :school_class }
 
   def most_recent_question
     questions.last

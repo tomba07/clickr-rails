@@ -1,11 +1,11 @@
 class StudentDeviceMappingsController < ApplicationController
-  before_action :set_student_device_mapping, only: [:show, :edit, :update, :destroy]
-  # TODO load with (avoid N+1)
+  before_action :set_student_device_mapping, only: [:edit, :update, :destroy]
+  before_action :set_student_device_mapping_with_includes, only: [:show]
 
   # GET /student_device_mappings
   # GET /student_device_mappings.json
   def index
-    @student_device_mappings = StudentDeviceMapping.all
+    @student_device_mappings = StudentDeviceMapping.includes(:student, :school_class).all
   end
 
   # GET /student_device_mappings/1
@@ -69,8 +69,12 @@ class StudentDeviceMappingsController < ApplicationController
       @student_device_mapping = StudentDeviceMapping.find(params[:id])
     end
 
+    def set_student_device_mapping_with_includes
+      @student_device_mapping = StudentDeviceMapping.includes(:student, :school_class).find(params[:id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_device_mapping_params
-      params.require(:student_device_mapping).permit(:student_id, :device_id, :device_type)
+      params.require(:student_device_mapping).permit(:student_id, :school_class_id, :device_id, :device_type)
     end
 end

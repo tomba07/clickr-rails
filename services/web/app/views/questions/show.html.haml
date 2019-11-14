@@ -2,11 +2,11 @@
   %b School class:
   = @question.school_class&.name
 %p
-  %b Text:
-  = @question.text
+  %b Name:
+  = @question.name
 %p
   %b Lesson:
-  = @question.lesson&.title
+  = @question.lesson&.name
 
 .buttons
   = link_to 'Edit', edit_question_path(@question), class: 'button is-primary'

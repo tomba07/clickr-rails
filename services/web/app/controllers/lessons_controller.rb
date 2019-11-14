@@ -76,6 +76,6 @@ class LessonsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lesson_params
-      params.require(:lesson).permit(:title, :school_class_id).reject{|_, v| v.blank?}
+      params.require(:lesson).permit(:name, :school_class_id).reject{|_, v| v.blank?}
     end
 end

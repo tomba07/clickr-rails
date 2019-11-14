@@ -7,20 +7,20 @@
       %th Student
       %th Question
       %th Lesson
-      %th Class
+      %th School class
       %th
 
   %tbody
     - @question_responses.each do |question_response|
       %tr
-        %td= question_response.click
+        %td= question_response.click_id
         %td= question_response.student&.name
-        %td= question_response.question&.text
-        %td= question_response.lesson&.title
-        %td= question_response.class&.name
+        %td= question_response.question&.name
+        %td= question_response.lesson&.name
+        %td= question_response.school_class&.name
         %td
           .buttons
-            = link_to 'Show', lesson, class: 'button'
+            = link_to 'Show', question_responses_path, class: 'button'
             = link_to 'Edit', edit_question_response_path(question_response), class: 'button'
             = link_to 'Destroy', question_response, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 
