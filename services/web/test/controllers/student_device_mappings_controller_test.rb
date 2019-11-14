@@ -4,8 +4,9 @@ class StudentDeviceMappingsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
-    @student_device_mapping = student_device_mappings(:one)
+    @user = create(:user)
+    sign_in @user
+    @student_device_mapping = create(:student_device_mapping)
   end
 
   test "should get index" do
@@ -19,8 +20,10 @@ class StudentDeviceMappingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create student_device_mapping" do
+    new_student_device_mapping = build(:student_device_mapping)
+
     assert_difference('StudentDeviceMapping.count') do
-      post student_device_mappings_url, params: { student_device_mapping: { device_id: @student_device_mapping.device_id, device_type: @student_device_mapping.device_type, student_id: @student_device_mapping.student_id } }
+      post student_device_mappings_url, params: { student_device_mapping: { device_id: new_student_device_mapping.device_id, device_type: new_student_device_mapping.device_type, student_id: new_student_device_mapping.student_id, school_class_id: new_student_device_mapping.school_class_id } }
     end
 
     assert_redirected_to student_device_mapping_url(StudentDeviceMapping.last)

@@ -4,8 +4,9 @@ class QuestionResponsesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
-    @question_response = question_responses(:one)
+    @user = create(:user)
+    sign_in @user
+    @question_response = create(:question_response)
   end
 
   test "should get index" do
@@ -19,8 +20,10 @@ class QuestionResponsesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create question_response" do
+    new_question_response = build(:question_response)
+
     assert_difference('QuestionResponse.count') do
-      post question_responses_url, params: { question_response: { class_id: @question_response.school_class_id, click_id: @question_response.click_id, lesson_id: @question_response.lesson_id, question_id: @question_response.question_id, student_id: @question_response.student_id } }
+      post question_responses_url, params: { question_response: { school_class_id: new_question_response.school_class_id, click_id: new_question_response.click_id, lesson_id: new_question_response.lesson_id, question_id: new_question_response.question_id, student_id: new_question_response.student_id } }
     end
 
     assert_redirected_to question_response_url(QuestionResponse.last)
@@ -37,7 +40,7 @@ class QuestionResponsesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update question_response" do
-    patch question_response_url(@question_response), params: { question_response: { class_id: @question_response.class_id, click_id: @question_response.click_id, lesson_id: @question_response.lesson_id, question_id: @question_response.question_id, student_id: @question_response.student_id } }
+    patch question_response_url(@question_response), params: { question_response: { class_id: @question_response.school_class_id, click_id: @question_response.click_id, lesson_id: @question_response.lesson_id, question_id: @question_response.question_id, student_id: @question_response.student_id } }
     assert_redirected_to question_response_url(@question_response)
   end
 

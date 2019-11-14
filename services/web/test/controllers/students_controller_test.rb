@@ -4,8 +4,9 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
-    @student = students(:one)
+    @user = create(:user)
+    sign_in @user
+    @student = create(:student)
   end
 
   test "should get index" do
@@ -19,8 +20,10 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create student" do
+    new_student = build(:student)
+
     assert_difference('Student.count') do
-      post students_url, params: { student: { name: 'Malte', school_class_id: @student.school_class_id, seat_col: @student.seat_col, seat_row: 99 } }
+      post students_url, params: { student: { name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row } }
     end
 
     assert_redirected_to student_url(Student.last)

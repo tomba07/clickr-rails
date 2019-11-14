@@ -4,8 +4,9 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
-    @question = questions(:one)
+    @user = create(:user)
+    sign_in @user
+    @question = create(:question)
   end
 
   test "should get index" do
@@ -19,21 +20,24 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create question" do
+    new_question = build(:question)
+
     assert_difference('Question.count') do
-      post questions_url, params: { question: { school_class_id: @question.school_class_id, lesson_id: @question.lesson_id, name: 'three' } }
+      post questions_url, params: { question: { school_class_id: new_question.school_class_id, lesson_id: new_question.lesson_id, name: new_question.name } }
     end
 
     assert_redirected_to question_url(Question.last)
   end
 
   test "should create question using user's class and most recent lesson (newly created)" do
-    users(:one).update_attribute(:school_class, school_classes(:two))
+    new_school_class = create(:school_class)
+    @user.update_attribute(:school_class, new_school_class)
 
     assert_difference('Lesson.count', 1) do
       post questions_url, params: { question: { name: @question.name } }
     end
 
-    assert_equal school_classes(:two), assigns(:question).school_class
+    assert_equal new_school_class, assigns(:question).school_class
   end
 
   test "should show question" do

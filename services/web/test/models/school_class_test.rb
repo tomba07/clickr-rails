@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SchoolClassTest < ActiveSupport::TestCase
   def setup
-    @subject = SchoolClass.create!(name: 'class')
+    @subject = create(:school_class)
     @long_ago = Rails.application.config.clickr.suggest_new_lesson_after_minutes.minutes.ago - 1.minute
   end
 

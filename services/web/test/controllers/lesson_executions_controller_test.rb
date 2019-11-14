@@ -4,7 +4,8 @@ class LessonExecutionsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:one)
+    @user = create(:user)
+    sign_in @user
   end
 
   test "should get index" do
