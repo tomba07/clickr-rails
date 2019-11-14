@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :click do
     device_type { 'rfid' }
-    device_id { "rfid:#{Faker::Base.regexify(/[abcde0-9]{8}/)}" }
+    sequence(:device_id) { |n| "rfid:#{n}" }
   end
 end

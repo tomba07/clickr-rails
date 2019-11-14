@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :student do
     school_class
-    name { Faker::FunnyName.unique.name }
-
-    after(:build) { |s| s.seat_row, s.seat_col = Faker::Base.unique.regexify(/[0-9]{2}-[0-9]{2}/).split('-') }
+    sequence(:name) { |n| "Max #{n}" }
+    sequence(:seat_row) { |n| n }
+    sequence(:seat_col) { |n| n }
   end
 end

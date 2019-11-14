@@ -5,40 +5,30 @@ WORKDIR /app
 RUN apk add --no-cache \
   build-base \
   git \
-  # For node-sass (in old sass-rails version)
-  python \
   ruby-dev \
   ruby-bundler \
-  # Required by activesupport (assets:precompile)
+  # Required by activesupport
   ruby-json \
   sqlite-dev \
-  # For assets:precompile: Timezone information
+  # Timezone information
   tzdata \
-  yarn \
   # For nokogiri gem
   zlib-dev
 
-# Copy only files for bundle/yarn install first (layer does not change as often)
+# Copy only files for bundle install first (layer does not change as often)
 COPY Gemfile .
 COPY Gemfile.lock .
-COPY package.json .
-COPY yarn.lock .
 
-RUN bundle install --jobs 4 --without development test --no-cache --deployment \
+RUN bundle install --jobs 4 --without development --no-cache \
 # https://www.georg-ledermann.de/blog/2018/04/19/dockerize-rails-the-lean-way/
   && rm -rf vendor/bundle/cache/*.gem \
   && find vendor/bundle/gems/ -name "*.c" -delete || true \
   && find vendor/bundle/gems/ -name "*.o" -delete || true
 
-# Manually run yarn install before copying all sources (layer does not change as often)
-# Ignore warnings about balena-cli. yarn install --production also resolves dev dependencies, but doesn't install them).
-RUN yarn install --production --frozen-lockfile
-
 COPY . .
 
 ENV RAILS_ENV=test
 
-# Prepoluate /app/db/data volume
 RUN REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails db:migrate
 
 CMD ["bundle", "exec", "rails", "test"]

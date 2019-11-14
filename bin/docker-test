@@ -1,0 +1,5 @@
+#!/bin/sh
+set -ex
+
+cd services/web
+docker run --rm -i $(docker build -f Dockerfile.test -q .)

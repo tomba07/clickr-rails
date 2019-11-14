@@ -47,7 +47,6 @@ group :development, :test do
   # Model factories for tests
   gem "factory_bot_rails", "~> 5.1"
   # Random data for model factories
-  gem "faker", "~> 2.7"
 end
 
 group :development do
