@@ -1,0 +1,8 @@
+version: "2"
+plugins:
+  eslint:
+    enabled: true
+  pep8:
+    enabled: true
+  rubocop:
+    enabled: true
