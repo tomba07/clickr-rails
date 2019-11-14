@@ -35,8 +35,8 @@ gem 'strip_attributes', '~> 1.9'
 gem 'devise', '~> 4.7'
 # Templating alternative to .erb
 gem 'haml-rails', '~> 2.0'
-# Fontawesome icons
-gem "font-awesome-sass", "~> 5.11"
+# Fontawesome icons (v5.0.9 still uses sass, not sassc -> important for ARMv8/Pi)
+gem "font-awesome-sass", "5.0.9"
 # Form generator
 gem "simple_form", "~> 5.0"
 
@@ -62,11 +62,6 @@ group :development do
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
   # Use assigns(:variable) to access controller instance variables in tests
   gem 'rails-controller-testing', '~> 1.0'
 end
