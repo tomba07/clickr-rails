@@ -18,7 +18,7 @@ class QuestionsTest < ApplicationSystemTestCase
     click_on "New Question"
 
     select @question.school_class.name, from: "question_school_class_id"
-    fill_in "Text", with: @question.text
+    fill_in "Text", with: @question.name
     click_on "Save"
 
     assert_text "Question was successfully created"
@@ -30,7 +30,7 @@ class QuestionsTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     select @question.school_class.name, from: "question_school_class_id"
-    fill_in "Text", with: @question.text
+    fill_in "Text", with: @question.name
     click_on "Save"
 
     assert_text "Question was successfully updated"

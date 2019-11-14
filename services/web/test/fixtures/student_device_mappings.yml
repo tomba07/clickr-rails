@@ -2,10 +2,12 @@
 
 one:
   student: one
-  device_id: MyString
-  device_type: MyString
+  device_id: rfid:one
+  device_type: rfid
+  school_class: one
 
 two:
   student: two
-  device_id: MyString
-  device_type: MyString
+  device_id: rfid:two
+  device_type: rfid
+  school_class: one

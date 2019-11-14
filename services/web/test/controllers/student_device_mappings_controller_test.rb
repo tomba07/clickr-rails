@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class StudentDeviceMappingsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:one)
     @student_device_mapping = student_device_mappings(:one)
   end
 

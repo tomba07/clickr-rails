@@ -36,7 +36,7 @@ class SchoolClassesTest < ApplicationSystemTestCase
   end
 
   test "destroying a School class" do
-    skip # Need to destroy related students, questions and lessons first
+    skip 'dependent rows in other tables'
     visit school_classes_url
     page.accept_confirm do
       click_on "Destroy", match: :first

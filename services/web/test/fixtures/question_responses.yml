@@ -5,11 +5,11 @@ one:
   student: one
   question: one
   lesson: one
-  class: one
+  school_class: one
 
 two:
   click: two
   student: two
   question: two
   lesson: two
-  class: two
+  school_class: two

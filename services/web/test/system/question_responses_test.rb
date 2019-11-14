@@ -7,14 +7,14 @@ class QuestionResponsesTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit question_responses_url
-    assert_selector "h1", text: "Question Responses"
+    assert_selector "h1", text: "Question responses"
   end
 
   test "creating a Question response" do
     visit question_responses_url
-    click_on "New Question Response"
+    click_on "New Question response"
 
-    fill_in "Class", with: @question_response.class_id
+    fill_in "Class", with: @question_response.school_class_id
     fill_in "Click", with: @question_response.click_id
     fill_in "Lesson", with: @question_response.lesson_id
     fill_in "Question", with: @question_response.question_id
@@ -29,7 +29,7 @@ class QuestionResponsesTest < ApplicationSystemTestCase
     visit question_responses_url
     click_on "Edit", match: :first
 
-    fill_in "Class", with: @question_response.class_id
+    fill_in "Class", with: @question_response.school_class_id
     fill_in "Click", with: @question_response.click_id
     fill_in "Lesson", with: @question_response.lesson_id
     fill_in "Question", with: @question_response.question_id

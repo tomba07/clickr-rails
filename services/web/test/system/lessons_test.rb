@@ -18,7 +18,7 @@ class LessonsTest < ApplicationSystemTestCase
     click_on "New Lesson"
 
     select @lesson.school_class.name, from: "lesson_school_class_id"
-    fill_in "Title", with: @lesson.title
+    fill_in "Title", with: @lesson.name
     click_on "Save"
 
     assert_text "Lesson was successfully created"
@@ -30,7 +30,7 @@ class LessonsTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     select @lesson.school_class.name, from: "lesson_school_class_id"
-    fill_in "Title", with: @lesson.title
+    fill_in "Title", with: @lesson.name
     click_on "Save"
 
     assert_text "Lesson was successfully updated"
@@ -38,7 +38,7 @@ class LessonsTest < ApplicationSystemTestCase
   end
 
   test "destroying a Lesson" do
-    skip # Need to destroy related questions first
+    skip 'dependent rows in other tables'
     visit lessons_url
     page.accept_confirm do
       click_on "Destroy", match: :first

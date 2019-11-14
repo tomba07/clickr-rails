@@ -3,9 +3,9 @@
 one:
   school_class: one
   lesson: one
-  text: question 1
+  name: question 1
 
 two:
   school_class: two
   lesson: one
-  text: question 2
+  name: question 2

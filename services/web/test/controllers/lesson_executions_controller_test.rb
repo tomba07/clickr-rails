@@ -8,7 +8,7 @@ class LessonExecutionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get lesson_executions_index_url
+    get lesson_executions_url
     assert_response :success
   end
 
