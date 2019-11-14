@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="RUBY_MODULE" version="4">
-  <component name="ModuleRunConfigurationManager">
-    <shared />
+  <component name="FacetManager">
+    <facet type="RailsFacetType" name="Ruby on Rails">
+      <configuration>
+        <RAILS_FACET_CONFIG_ID NAME="RAILS_FACET_SUPPORT_REMOVED" VALUE="false" />
+        <RAILS_FACET_CONFIG_ID NAME="RAILS_TESTS_SOURCES_PATCHED" VALUE="true" />
+        <RAILS_FACET_CONFIG_ID NAME="RAILS_FACET_APPLICATION_ROOT" VALUE="$MODULE_DIR$/../../services/web" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$/../../services/web">
+      <sourceFolder url="file://$MODULE_DIR$/../../services/web/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../services/web/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../services/web/features" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/.bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/components" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/log" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/public/packs" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/public/system" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/vendor/bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../services/web/vendor/cache" />
+    </content>
     <orderEntry type="jdk" jdkName="RVM: ruby-2.5.7" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="actioncable (v6.0.1, RVM: ruby-2.5.7) [gem]" level="application" />
@@ -26,6 +44,7 @@
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.3, RVM: ruby-2.5.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bullet (v6.0.2, RVM: ruby-2.5.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.0.2, RVM: ruby-2.5.7) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="byebug (v11.0.1, RVM: ruby-2.5.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capybara (v3.29.0, RVM: ruby-2.5.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="childprocess (v3.0.0, RVM: ruby-2.5.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.1.5, RVM: ruby-2.5.7) [gem]" level="application" />
@@ -100,5 +119,12 @@
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.4, RVM: ruby-2.5.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, RVM: ruby-2.5.7) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.2.1, RVM: ruby-2.5.7) [gem]" level="application" />
+  </component>
+  <component name="RModuleSettingsStorage">
+    <LOAD_PATH number="0" />
+    <I18N_FOLDERS number="1" string0="$MODULE_DIR$/../../services/web/config/locales" />
+  </component>
+  <component name="RubyModuleProperties">
+    <option name="autoCreated" value="true" />
   </component>
 </module>
