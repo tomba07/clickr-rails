@@ -80,4 +80,7 @@ Rails.application.configure do
     # Bullet.slack = { webhook_url: 'http://some.slack.url', channel: '#default', username: 'notifier' }
     Bullet.raise = true
   end
+
+  # create associations when building (not saving) parent
+  FactoryBot.use_parent_strategy = false
 end
