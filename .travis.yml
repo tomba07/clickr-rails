@@ -9,7 +9,7 @@ before_install:
   - nvm use node
   - curl -o- -L https://yarnpkg.com/install.sh | bash
 install:
-  - bundle install --jobs 4 --without development test --deployment
+  - bundle install --jobs 4 --without development --deployment
   - yarn install --production --frozen-lockfile
 rvm:
   - 2.5.7
