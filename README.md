@@ -1,5 +1,10 @@
 # Clickr
 
+[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/ftes/clickr-rails%2Fclickr-rails-web?branch=master&key=eyJhbGciOiJIUzI1NiJ9.NWRjODgzMDE3NDVhYzhiZTg1NDA1ZDYw.4ABUjUM_5g5JRxOXGczbsWuKIUUSgrPSNS3fgb_6WiU&type=cf-1)]( https://g.codefresh.io/pipelines/clickr-rails-web/builds?repoOwner=ftes&repoName=clickr-rails&serviceName=ftes%2Fclickr-rails&filter=trigger:build~Build;branch:master;pipeline:5dcdbe007ede0267dbdef058~clickr-rails-web)
+[![Travis build Status](https://travis-ci.com/ftes/clickr-rails.svg?branch=master)](https://travis-ci.com/ftes/clickr-rails)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/maintainability)](https://codeclimate.com/github/ftes/clickr-rails/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/test_coverage)](https://codeclimate.com/github/ftes/clickr-rails/test_coverage)
+
 ## Introduction
 TODO briefly explain domain model
 
