@@ -1,3 +1,4 @@
+# TODO Do not use a separate dockerfile config. Perhaps extend base image instead.
 FROM alpine:latest
 
 WORKDIR /app

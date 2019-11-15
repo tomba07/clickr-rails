@@ -1,0 +1,49 @@
+version: "1.0"
+stages:
+  - "clone"
+  - "build"
+  - "test"
+steps:
+  main_clone:
+    type: "git-clone"
+    description: "Cloning main repository..."
+    repo: "ftes/clickr-rails"
+    revision: "${{CF_BRANCH}}"
+    stage: "clone"
+  build_test:
+    title: "Building Docker test Image"
+    stage: "build"
+    type: "build"
+    image_name: "ftes/clickr-rails-web-test"
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
+    working_directory: ./services/web
+    dockerfile: Dockerfile.test
+  build_dockerfile:
+    title: "Building Dockerfile"
+    stage: "build"
+    image: "alpine"
+    commands:
+      - "./bin/docker-template"
+  build:
+    title: "Building Docker Image"
+    stage: "build"
+    type: "build"
+    image_name: "ftes/clickr-rails-web"
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
+    working_directory: ./services/web
+    dockerfile: Dockerfile
+  run_unit_tests:
+    title: "Running Unit Tests"
+    stage: "test"
+    image: '${{build_test}}'
+    working_directory: IMAGE_WORK_DIR
+    on_success:
+      metadata:
+        set:
+          - '${{build.imageId}}':
+              - CF_QUALITY: true
+    on_fail:
+      metadata:
+        set:
+          - '${{build.imageId}}':
+              - CF_QUALITY: false
