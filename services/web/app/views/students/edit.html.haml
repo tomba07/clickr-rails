@@ -1,4 +1,4 @@
-%h1.title Editing student
+%h1.title= t('.title')
 
 = render 'form' do
-  = link_to 'Back', students_path, class: 'button is-danger'
+  = link_to t('common.back'), students_path, class: 'button is-danger'

@@ -30,4 +30,148 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  clicks:
+    create:
+      notice: "Click was created."
+    update:
+      notice: "Click was updated."
+    destroy:
+      notice: "Click was destroyed."
+    edit:
+      title: "Editing click"
+    index:
+      title: "Clicks"
+    new:
+      title: "New click"
+    title: "Click"
+  lessons:
+    create:
+      notice: "Lesson was created."
+      default_name: "Lesson 1 (%{school_class_name})"
+    update:
+      notice: "Lesson was updated."
+    destroy:
+      notice: "Lesson was destroyed."
+    edit:
+      title: "Editing lesson"
+    index:
+      title: "Lessons"
+    new:
+      title: "New lesson"
+    title: "Lesson"
+  question_responses:
+    create:
+      notice: "Question response was created."
+    update:
+      notice: "Question response was updated."
+    destroy:
+      notice: "Question response was destroyed."
+    edit:
+      title: "Editing question response"
+    index:
+      title: "Question responses"
+    new:
+      title: "New question response"
+  questions:
+    create:
+      notice: "Question was created."
+    update:
+      notice: "Question was updated."
+    destroy:
+      notice: "Question was destroyed."
+    title: "Question"
+    edit:
+      title: "Editing question"
+    index:
+      title: "Questions"
+    new:
+      title: "New question"
+  school_classes:
+    create:
+      notice: "School was created."
+    update:
+      notice: "School was updated."
+    destroy:
+      notice: "School was destroyed."
+    title: "School class"
+    edit:
+      title: "Editing school class"
+    index:
+      title: "School classes"
+    new:
+      title: "New school class"
+  student_device_mappings:
+    create:
+      notice: "Student device mapping was created."
+    update:
+      notice: "Student device mapping was updated."
+    destroy:
+      notice: "Student device mapping was destroyed."
+    edit:
+      title: "Editing student device mapping"
+    index:
+      title: "Student device mappings"
+    new:
+      title: "New student device mapping"
+  students:
+    create:
+      notice: "Student was created."
+    update:
+      notice: "Student was updated."
+    destroy:
+      notice: "Student was destroyed."
+    title: "Student"
+    edit:
+      title: "Editing student"
+    index:
+      title: "Students"
+    seat_row: "Seat row"
+    seat_col: "Seat col"
+    new:
+      title: "New student"
+  lesson_executions:
+    index:
+      select_school_class_notice: "Select a class."
+      title: "Lesson execution"
+      create_new_lesson_text: "The last lesson seems to be quite old. Do you want to create a new one?"
+      create_new_lesson_submit: "Create lesson"
+  common:
+    back: "Back"
+    show: "Show"
+    edit: "Edit"
+    destroy: "Destroy"
+    are_you_sure: "Are you sure?"
+    sign_up: "Sign up"
+    log_in: "Log in"
+    save: "Save"
+    log_out: "Log out"
+    name: "Name"
+    new: "New"
+    select: "Select"
+  devices:
+    device: "Device"
+    device_type: "Device type"
+  devise:
+    passwords:
+      new:
+        submit: "Send me reset password instructions"
+        title: "Forgot your password?"
+    shared:
+      links:
+        didn_t_receive_confirmation_instructions: "Didn't receive confirmation instructions?"
+        didn_t_receive_unlock_instructions: "Didn't receive unlock instructions?"
+        sign_in_with_provider: "Sign in with %{provider}"
+  layouts:
+    error_messages:
+      heading: "Please review the problems below:"
+    header:
+      give_lesson: "Give lesson"
+      admin:
+        school_classes: "Classes"
+        lessons: "Lessons"
+        students: "Students"
+        questions: "Questions"
+        student_device_mappings: "Mappings"
+        clicks: "Clicks"
+        question_responses: "Responses"
+      select_a_class: "Select a class"

@@ -1,12 +1,12 @@
-%h1.title Student device mappings
+%h1.title= t('.title')
 
 %table.table.is-striped.is-hoverable
   %thead
     %tr
-      %th Student
-      %th School class
-      %th Device
-      %th Device type
+      %th= t('students.title')
+      %th= t('school_classes.title')
+      %th= t('devices.device')
+      %th= t('devices.device_type')
       %th
 
   %tbody
@@ -18,9 +18,9 @@
         %td= student_device_mapping.device_type
         %td
           .buttons
-            = link_to 'Show', student_device_mapping_path(student_device_mapping), class: 'button'
-            = link_to 'Edit', edit_student_device_mapping_path(student_device_mapping), class: 'button'
-            = link_to 'Destroy', student_device_mapping, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
+            = link_to t('common.show'), student_device_mapping_path(student_device_mapping), class: 'button'
+            = link_to t('common.edit'), edit_student_device_mapping_path(student_device_mapping), class: 'button'
+            = link_to t('common.destroy'), student_device_mapping, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
 
 
-= link_to 'New student device mapping', new_student_device_mapping_path, class: 'button is-primary'
+= link_to t('common.new'), new_student_device_mapping_path, class: 'button is-primary'

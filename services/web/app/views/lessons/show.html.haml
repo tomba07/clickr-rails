@@ -1,10 +1,10 @@
 %p
-  %b Name:
+  %b #{t('common.name')}:
   = @lesson.name
 %p
-  %b School class:
+  %b #{t('school_classes.title')}:
   = @lesson.school_class&.name
 
 .buttons
-  = link_to 'Edit', edit_lesson_path(@lesson), class: 'button is-primary'
-  = link_to 'Back', lessons_path, class: 'button'
+  = link_to t('common.edit'), edit_lesson_path(@lesson), class: 'button is-primary'
+  = link_to t('common.back'), lessons_path, class: 'button'

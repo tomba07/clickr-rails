@@ -1,10 +1,10 @@
-%h1.title Clicks
+%h1.title= t('.title')
 
 %table.table.is-striped.is-hoverable
   %thead
     %tr
-      %th Device
-      %th Device type
+      %th= t('devices.device')
+      %th= t('devices.device_type')
       %th
 
   %tbody
@@ -14,10 +14,10 @@
         %td= click.device_type
         %td
           .buttons
-            = link_to 'Show', click_path(click), class: 'button'
-            = link_to 'Edit', edit_click_path(click), class: 'button'
-            = link_to 'Destroy', click, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
+            = link_to t('common.show'), click_path(click), class: 'button'
+            = link_to t('common.edit'), edit_click_path(click), class: 'button'
+            = link_to t('common.destroy'), click, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
 
 
 
-= link_to 'New Click', new_click_path, class: 'button is-primary'
+= link_to t('common.new'), new_click_path, class: 'button is-primary'

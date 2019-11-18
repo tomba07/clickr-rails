@@ -1,13 +1,13 @@
-%h1.title Question responses
+%h1.title= t('.title')
 
 %table.table.is-striped.is-hoverable
   %thead
     %tr
-      %th Click
-      %th Student
-      %th Question
-      %th Lesson
-      %th School class
+      %th= t('clicks.title')
+      %th= t('students.title')
+      %th= t('questions.title')
+      %th= t('lessons.title')
+      %th= t('school_classes.title')
       %th
 
   %tbody
@@ -20,10 +20,10 @@
         %td= question_response.school_class&.name
         %td
           .buttons
-            = link_to 'Show', question_response_path(question_response), class: 'button'
-            = link_to 'Edit', edit_question_response_path(question_response), class: 'button'
-            = link_to 'Destroy', question_response, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
+            = link_to t('common.show'), question_response_path(question_response), class: 'button'
+            = link_to t('common.edit'), edit_question_response_path(question_response), class: 'button'
+            = link_to t('common.destroy'), question_response, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
 
 
 
-= link_to 'New Question response', new_question_response_path, class: 'button is-primary'
+= link_to t('common.new'), new_question_response_path, class: 'button is-primary'

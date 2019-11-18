@@ -1,12 +1,12 @@
-%h1.title Students
+%h1.title= t('.title')
 
 %table.table.is-striped.is-hoverable
   %thead
     %tr
-      %th School class
-      %th Name
-      %th Seat row
-      %th Seat col
+      %th= t('school_classes.title')
+      %th= t('common.name')
+      %th= t('students.seat_row')
+      %th= t('students.seat_col')
       %th
 
   %tbody
@@ -18,9 +18,9 @@
         %td= student.seat_col
         %td
           .buttons
-            = link_to 'Show', student_path(student), class: 'button'
-            = link_to 'Edit', edit_student_path(student), class: 'button'
-            = link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
+            = link_to t('common.show'), student_path(student), class: 'button'
+            = link_to t('common.edit'), edit_student_path(student), class: 'button'
+            = link_to t('common.destroy'), student, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
 
 
-= link_to 'New Student', new_student_path, class: 'button is-primary'
+= link_to t('common.new'), new_student_path, class: 'button is-primary'

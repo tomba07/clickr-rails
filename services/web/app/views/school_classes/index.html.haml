@@ -1,9 +1,9 @@
-%h1.title Classes
+%h1.title= t('.title')
 
 %table.table.is-striped.is-hoverable
   %thead
     %tr
-      %th Name
+      %th= t('common.name')
       %th
 
   %tbody
@@ -12,10 +12,10 @@
         %td= school_class.name
         %td
           .buttons
-            = link_to 'Show', school_class_path(school_class), class: 'button'
-            = link_to 'Edit', edit_school_class_path(school_class), class: 'button'
-            = link_to 'Select', users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'button'
-            = link_to 'Destroy', school_class, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
+            = link_to t('common.show'), school_class_path(school_class), class: 'button'
+            = link_to t('common.edit'), edit_school_class_path(school_class), class: 'button'
+            = link_to t('common.select'), users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'button'
+            = link_to t('common.destroy'), school_class, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
 
 
-= link_to 'New School class', new_school_class_path, class: 'button is-primary'
+= link_to t('common.new'), new_school_class_path, class: 'button is-primary'

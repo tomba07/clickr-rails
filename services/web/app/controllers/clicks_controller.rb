@@ -30,7 +30,7 @@ class ClicksController < ApplicationController
 
     respond_to do |format|
       if @click.save
-        format.html { redirect_to @click, notice: 'Click was successfully created.' }
+        format.html { redirect_to @click, notice: I18n.t('.notice') }
         format.json { render :show, status: :created, location: @click }
       else
         format.html { render :new }
@@ -44,7 +44,7 @@ class ClicksController < ApplicationController
   def update
     respond_to do |format|
       if @click.update(click_params)
-        format.html { redirect_to @click, notice: 'Click was successfully updated.' }
+        format.html { redirect_to @click, notice: I18n.t('.notice') }
         format.json { render :show, status: :ok, location: @click }
       else
         format.html { render :edit }
@@ -58,7 +58,7 @@ class ClicksController < ApplicationController
   def destroy
     @click.destroy
     respond_to do |format|
-      format.html { redirect_to clicks_url, notice: 'Click was successfully destroyed.' }
+      format.html { redirect_to clicks_url, notice: I18n.t('.notice') }
       format.json { head :no_content }
     end
   end

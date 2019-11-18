@@ -1,10 +1,10 @@
 %p
-  %b Device:
+  %b #{t('devices.device')}:
   = @click.device_id
 %p
-  %b Device type:
+  %b #{t('devices.device_type')}:
   = @click.device_type
 
 .buttons
-  = link_to 'Edit', edit_click_path(@click), class: 'button is-primary'
-  = link_to 'Back', clicks_path, class: 'button'
+  = link_to t('common.edit'), edit_click_path(@click), class: 'button is-primary'
+  = link_to t('common.back'), clicks_path, class: 'button'

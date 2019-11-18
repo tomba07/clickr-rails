@@ -1,7 +1,7 @@
 %p
-  %b Name:
+  %b #{t('common.name')}:
   = @school_class.name
 
 .buttons
-  = link_to 'Edit', edit_school_class_path(@school_class), class: 'button is-primary'
-  = link_to 'Back', school_classes_path, class: 'button'
+  = link_to t('common.edit'), edit_school_class_path(@school_class), class: 'button is-primary'
+  = link_to I18n.t('common.back'), school_classes_path, class: 'button'

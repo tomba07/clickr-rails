@@ -1,4 +1,4 @@
-%h1.title New question response
+%h1.title= t('.title')
 
 = render 'form' do
-  = link_to 'Back', question_responses_path, class: 'button is-danger'
+  = link_to t('common.back'), question_responses_path, class: 'button is-danger'

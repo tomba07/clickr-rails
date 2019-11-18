@@ -1,4 +1,4 @@
-%h1.title New student device mapping
+%h1.title= t('.title')
 
 = render 'form' do
-  = link_to 'Back', student_device_mappings_path, class: 'button is-danger'
+  = link_to t('common.back'), student_device_mappings_path, class: 'button is-danger'

@@ -1,4 +1,4 @@
-%h1.title New lesson
+%h1.title= t('.title')
 
 = render 'form' do
-  = link_to 'Back', lessons_path, class: 'button is-danger'
+  = link_to t('common.back'), lessons_path, class: 'button is-danger'

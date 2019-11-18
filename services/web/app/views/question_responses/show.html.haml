@@ -1,19 +1,19 @@
 %p
-  %b Click:
+  %b #{t('clicks.title')}:
   = @question_response.click_id
 %p
-  %b Student:
+  %b #{t('students.title')}:
   = @question_response.student&.name
 %p
-  %b Question:
+  %b #{t('questions.title')}:
   = @question_response.question&.name
 %p
-  %b Lesson:
+  %b #{t('lessons.title')}:
   = @question_response.lesson&.name
 %p
-  %b Class:
+  %b #{t('school_classes.title')}:
   = @question_response.school_class&.name
 
 .buttons
-  = link_to 'Edit', edit_question_response_path(@question_response), class: 'button is-primary'
-  = link_to 'Back', question_responses_path, class: 'button'
+  = link_to t('common.edit'), edit_question_response_path(@question_response), class: 'button is-primary'
+  = link_to t('common.back'), question_responses_path, class: 'button'

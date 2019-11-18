@@ -8,5 +8,5 @@
   = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name
 
   .buttons
-    = f.submit_primary 'Save'
+    = f.submit_primary t('common.save')
     = yield

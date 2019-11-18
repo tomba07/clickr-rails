@@ -1,4 +1,4 @@
-%h2.title Sign up
+%h2.title= t('common.sign_up')
 = form_with model: resource, as: resource_name, url: registration_path(resource_name), local: true do |f|
   = render "layouts/error_messages", f: f
 
@@ -7,5 +7,5 @@
   = f.password_field_with_label :password_confirmation, autocomplete: 'new-password'
 
   .buttons
-    = f.submit_primary 'Sign up'
+    = f.submit_primary t('common.sign_up')
     = render "devise/shared/links"

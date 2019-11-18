@@ -31,7 +31,7 @@ class LessonsController < ApplicationController
       if @lesson.save
         redirect_to request.referer and return if params.dig(:lesson, :redirect_to_previous_page)
 
-        format.html { redirect_to @lesson, notice: 'Lesson was successfully created.' }
+        format.html { redirect_to @lesson, notice: I18n.t('.notice') }
         format.json { render :show, status: :created, location: @lesson }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class LessonsController < ApplicationController
   def update
     respond_to do |format|
       if @lesson.update(lesson_params)
-        format.html { redirect_to @lesson, notice: 'Lesson was successfully updated.' }
+        format.html { redirect_to @lesson, notice: I18n.t('.notice') }
         format.json { render :show, status: :ok, location: @lesson }
       else
         format.html { render :edit }
@@ -59,7 +59,7 @@ class LessonsController < ApplicationController
   def destroy
     @lesson.destroy
     respond_to do |format|
-      format.html { redirect_to lessons_url, notice: 'Lesson was successfully destroyed.' }
+      format.html { redirect_to lessons_url, notice: I18n.t('.notice') }
       format.json { head :no_content }
     end
   end

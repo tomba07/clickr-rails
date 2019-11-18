@@ -1,4 +1,4 @@
-%h1.title Editing click
+%h1.title= t('.title')
 
 = render 'form' do
-  = link_to 'Back', clicks_path, class: 'button is-danger'
+  = link_to t('common.back'), clicks_path, class: 'button is-danger'

@@ -1,11 +1,11 @@
-%h1.title Questions
+%h1.title= t('.title')
 
 %table.table.is-striped.is-hoverable
   %thead
     %tr
-      %th School class
-      %th Text
-      %th Lesson
+      %th= t('school_classes.title')
+      %th= t('common.name')
+      %th= t('lessons.title')
       %th
 
   %tbody
@@ -16,9 +16,9 @@
         %td= question.lesson&.name
         %td
           .buttons
-            = link_to 'Show', question_path(question), class: 'button'
-            = link_to 'Edit', edit_question_path(question), class: 'button'
-            = link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
+            = link_to t('common.show'), question_path(question), class: 'button'
+            = link_to t('common.edit'), edit_question_path(question), class: 'button'
+            = link_to t('common.destroy'), question, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
 
 
-= link_to 'New Question', new_question_path, class: 'button is-primary'
+= link_to t('common.new'), new_question_path, class: 'button is-primary'
