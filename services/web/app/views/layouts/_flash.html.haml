@@ -1,6 +1,7 @@
 - if notice or alert
   %section.section
-    - if notice
-      .notification.is-info= notice
-    - if alert
-      .notification.is-danger= alert
+    .container
+      - if notice
+        .notification.is-info= notice
+      - if alert
+        .notification.is-danger= alert
