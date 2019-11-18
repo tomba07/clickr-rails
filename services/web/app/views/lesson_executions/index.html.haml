@@ -8,9 +8,7 @@
 
       = form_with model: Lesson.new, format: :json do |f|
         = f.hidden_field :redirect_to_previous_page, value: true
-        .field
-          .control
-            = f.text_field :name, class: 'input', value: "#{@school_class.name} - #{I18n.l Date.today, format: :short}"
+        = f.text_field :name, value: "#{@school_class.name} - #{I18n.l Date.today, format: :short}"
         .actions.buttons
-          = f.submit 'Create lesson', class: 'button is-primary'
+          = f.submit_primary 'Create lesson'
           = yield

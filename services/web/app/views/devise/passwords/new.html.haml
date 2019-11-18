@@ -1,10 +1,9 @@
 %h2.title Forgot your password?
-= simple_form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :post } do |f|
-  = f.error_notification
-  = f.error_notification message: (f.error :base) if f.object.errors[:base].present?
+= form_with model: resource, as: resource_name, url: password_path(resource_name), html: { method: :post }, local: true do |f|
+  = render "layouts/error_messages", f: f
 
-  = f.input :email, autofocus: true, autocomplete: 'email'
+  = f.text_field_with_label :email, autofocus: true, autocomplete: 'email'
 
   .buttons
-    = f.submit 'Send me reset password instructions', class: 'button is-primary'
+    = f.submit_primary 'Send me reset password instructions'
     = render 'devise/shared/links'

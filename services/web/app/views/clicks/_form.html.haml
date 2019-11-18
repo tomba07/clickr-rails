@@ -1,10 +1,9 @@
-= simple_form_for @click do |f|
-  = f.error_notification
-  = f.error_notification message: (f.error :base) if f.object.errors[:base].present?
+= form_with model: @click, local: true do |f|
+  = render "layouts/error_messages", f: f
 
-  = f.input :device_id, autofocus: true
-  = f.input :device_type
+  = f.text_field_with_label :device_id, autofocus: true
+  = f.text_field_with_label :device_type
 
   .buttons
-    = f.submit 'Save', class: 'button is-primary'
+    = f.submit_primary 'Save'
     = yield

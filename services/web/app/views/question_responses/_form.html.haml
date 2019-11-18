@@ -1,13 +1,12 @@
-= simple_form_for @question_response do |f|
-  = f.error_notification
-  = f.error_notification message: (f.error :base) if f.object.errors[:base].present?
+= form_with model: @question_response, local: true do |f|
+  = render "layouts/error_messages", f: f
 
-  = f.association :click, autofocus: true
-  = f.association :student
-  = f.association :question
-  = f.association :lesson
-  = f.association :school_class
+  = f.collection_select_with_label :click_id, Click.all, :id, :name, {}, autofocus: true
+  = f.collection_select_with_label :student_id, Student.all, :id, :name
+  = f.collection_select_with_label :question_id, Question.all, :id, :name
+  = f.collection_select_with_label :lesson_id, Lesson.all, :id, :name
+  = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name
 
   .buttons
-    = f.submit 'Save', class: 'button is-primary'
+    = f.submit_primary 'Save'
     = yield

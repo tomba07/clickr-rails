@@ -1,0 +1,4 @@
+- if f.object.errors.any?
+  .notification.is-danger Please review the problems below:
+- if f.object.errors[:base].present?
+  .notification.is-danger= f.object.errors[:base].join(', ')

@@ -1,12 +1,11 @@
-= simple_form_for @student_device_mapping do |f|
-  = f.error_notification
-  = f.error_notification message: (f.error :base) if f.object.errors[:base].present?
+= form_with model: @student_device_mapping, local: true do |f|
+  = render "layouts/error_messages", f: f
 
-  = f.association :student, autofocus: true
-  = f.association :school_class, autofocus: true
-  = f.input :device_id
-  = f.input :device_type
+  = f.collection_select_with_label :student_id, Student.all, :id, :name, {}, autofocus: true
+  = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name, {}, autofocus: true
+  = f.text_field_with_label :device_id
+  = f.text_field_with_label :device_type
 
   .buttons
-    = f.submit 'Save', class: 'button is-primary'
+    = f.submit_primary 'Save'
     = yield

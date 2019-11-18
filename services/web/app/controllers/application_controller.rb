@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  default_form_builder BulmaFormBuilder
+
   before_action :authenticate_user!
   # around_action :switch_locale
 

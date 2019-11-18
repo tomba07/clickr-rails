@@ -1,13 +1,12 @@
 %h2.title Log in
-= simple_form_for resource, as: resource_name, url: session_path(resource_name) do |f|
-  = f.error_notification
-  = f.error_notification message: (f.error :base) if f.object.errors[:base].present?
+= form_with model: resource, as: resource_name, url: session_path(resource_name), local: true do |f|
+  = render "layouts/error_messages", f: f
 
-  = f.input :email, autofocus: true, autocomplete: 'email'
-  = f.input :password, autocomplete: 'current-password'
+  = f.text_field_with_label :email, autofocus: true, autocomplete: 'email'
+  = f.password_field_with_label :password, autocomplete: 'current-password'
   - if devise_mapping.rememberable?
-    = f.input :remember_me, as: :boolean
+    = f.check_box_with_label :remember_me, as: :boolean
 
   .buttons
-    = f.submit 'Log in', class: 'button is-primary'
+    = f.submit_primary 'Log in'
     = render 'devise/shared/links'
