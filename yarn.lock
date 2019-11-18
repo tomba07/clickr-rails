@@ -677,10 +677,10 @@ balena-auth@^3.0.0:
     bluebird "^3.0.0"
     jwt-decode "^2.1.0"
 
-balena-cli@^11.18.0:
-  version "11.18.0"
-  resolved "https://registry.yarnpkg.com/balena-cli/-/balena-cli-11.18.0.tgz#0fae7c05efa809713032e99bb783384c01a33b54"
-  integrity sha512-Dt4CAyHSPW7uv7NM0jiw+OVqt9dx4NQ+ay/r48Mdb0OtlPGAg22dddheVLs3cNkBGQ4zxFa31uYH150k9mu2lA==
+balena-cli@^11.18.2:
+  version "11.18.2"
+  resolved "https://registry.yarnpkg.com/balena-cli/-/balena-cli-11.18.2.tgz#265cc27dde0d30a066b63ff5371222494f471501"
+  integrity sha512-umnu/CzDwftRECCpuD9Bff7LdqGbwZ2OeR6po7TC77msmL898o5mYmZBBblSaY1p2kX0HqiwUz47XjxUyYlUhQ==
   dependencies:
     "@oclif/command" "^1.5.12"
     "@oclif/errors" "^1.2.2"
@@ -712,7 +712,7 @@ balena-cli@^11.18.0:
     denymount "^2.3.0"
     docker-modem "^2.0.2"
     docker-progress "^4.0.0"
-    docker-qemu-transpose "^1.0.1"
+    docker-qemu-transpose "^1.0.2"
     docker-toolbelt "^3.3.7"
     dockerode "^2.5.8"
     ejs "^2.5.7"
@@ -2150,10 +2150,10 @@ docker-progress@^4.0.0:
     request "^2.65.0"
     semver "^5.3.0"
 
-docker-qemu-transpose@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/docker-qemu-transpose/-/docker-qemu-transpose-1.0.1.tgz#15f9a3b54e0a1b348f9e32f011b9502d9c46f447"
-  integrity sha512-qTNis+0NUBYhxdigLu6gT9bxMnck0NOd6gc8ci6n3yfSZPiIjtsuWeci3Os0P+GJw8tH08I0pckrtrD/MZ/0Rw==
+docker-qemu-transpose@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/docker-qemu-transpose/-/docker-qemu-transpose-1.0.2.tgz#4bac2c14e0980b9def04b48c3745d7bc0a158564"
+  integrity sha512-DzyYPX3Gx6/g0dM9KVqeTgGYYM559J0TeWDxdZ4spSSc37M44XrrUw/yG8B48Wo0ENMlb+orHSt7NFt8cTuYiA==
   dependencies:
     "@types/bluebird" "^3.5.2"
     "@types/event-stream" "^3.3.31"
@@ -2161,6 +2161,7 @@ docker-qemu-transpose@^1.0.1:
     "@types/lodash" "^4.14.61"
     "@types/node" "^7.0.12"
     bluebird "^3.5.0"
+    common-tags "^1.8.0"
     docker-file-parser "^1.0.1"
     event-stream "3.3.4"
     jsesc "^2.5.0"
