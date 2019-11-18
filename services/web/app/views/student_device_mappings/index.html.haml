@@ -18,7 +18,7 @@
         %td= student_device_mapping.device_type
         %td
           .buttons
-            = link_to 'Show', student_device_mappings_path, class: 'button'
+            = link_to 'Show', student_device_mapping_path(student_device_mapping), class: 'button'
             = link_to 'Edit', edit_student_device_mapping_path(student_device_mapping), class: 'button'
             = link_to 'Destroy', student_device_mapping, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 

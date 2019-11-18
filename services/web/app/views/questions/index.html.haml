@@ -16,7 +16,7 @@
         %td= question.lesson&.name
         %td
           .buttons
-            = link_to 'Show', questions_path, class: 'button'
+            = link_to 'Show', question_path(question), class: 'button'
             = link_to 'Edit', edit_question_path(question), class: 'button'
             = link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-danger'
 
