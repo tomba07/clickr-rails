@@ -28,6 +28,28 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to click_url(Click.last)
   end
 
+  test "should create click and leave ID unchanged if it is already prefixed with type" do
+    new_click = create(:click, device_type: 'rfid', device_id: 'rfid:123')
+    post clicks_url, as: :json, params: { click: { device_id: new_click.device_id, device_type: new_click.device_type } }
+
+    assert_equal 'rfid:123', assigns(:click).device_id
+  end
+
+  test "should create click and prefix ID with type" do
+    new_click = create(:click, device_id: '123')
+    post clicks_url, as: :json, params: { click: { device_id: new_click.device_id, device_type: new_click.device_type } }
+
+    assert_equal 'rfid:123', assigns(:click).device_id
+  end
+
+  test "should create click and not require authentication" do
+    sign_out @user
+    new_click = create(:click)
+    post clicks_url, as: :json, params: { click: { device_id: new_click.device_id, device_type: new_click.device_type } }
+
+    assert_equal 201, response.status
+  end
+
   test "should show click" do
     get click_url(@click)
     assert_response :success

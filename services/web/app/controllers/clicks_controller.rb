@@ -1,4 +1,7 @@
 class ClicksController < ApplicationController
+  # TODO Authenticate API requests to create endpoint as well, e.g. via Token
+  skip_before_action :authenticate_user!, only: :create
+
   before_action :set_click, only: [:show, :edit, :update, :destroy]
 
   # GET /clicks
@@ -24,9 +27,7 @@ class ClicksController < ApplicationController
   # POST /clicks
   # POST /clicks.json
   def create
-    # TODO Prefix ID with type if not already done
-    # TODO API only, delete HTML
-    @click = Click.new(click_params)
+    @click = Click.new(prefix_id_with_type! click_params)
 
     respond_to do |format|
       if @click.save
@@ -64,7 +65,15 @@ class ClicksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
+  def prefix_id_with_type!(params)
+    prefix = "#{params[:device_type]}:"
+    id = params[:device_id] || ''
+    params[:device_id] = "#{prefix}#{id}" if not id.start_with? prefix
+    params
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
     def set_click
       @click = Click.find(params[:id])
     end
