@@ -10,7 +10,7 @@ class ApiClient:
 
     def submit_token_id(self, token_id):
         r = requests.post(self.post_endpoint, json={'device_id': token_id, 'device_type': 'rfid'})
-        if r.status_code is 200:
+        if r.status_code == 200:
             log.info(f'Successfully submitted token {token_id}')
         else:
             log.error(f'Failed to submit token {token_id}, status: {r.status_code}, response: {r.text}')
