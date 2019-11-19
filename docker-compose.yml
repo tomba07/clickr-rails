@@ -13,6 +13,8 @@ services:
   rfid-keyboard-reader:
     build: services/rfid-keyboard-reader
     privileged: true
+    depends_on:
+      - web
     # environment:
       # Balena adds env vars automatically and env var substitution in compose file is not yet supported
       # RFID_KEYBOARD_READER_USB_IDS: "${RFID_KEYBOARD_READER_USB_IDS}"

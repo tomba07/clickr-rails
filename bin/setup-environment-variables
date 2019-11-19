@@ -6,7 +6,9 @@ set -ex
 echo "RAILS_MASTER_KEY=$1" > .env
 echo "RFID_KEYBOARD_READER_USB_IDS=16c0:27db" >> .env
 echo "RFID_KEYBOARD_READER_DEBOUNCE_SECONDS=3" >> .env
+echo "RFID_KEYBOARD_READER_POST_ENDPOINT=http://web/clicks"
 
 yarn balena env add --application clickr RAILS_MASTER_KEY "$1"
 yarn balena env add --application clickr RFID_KEYBOARD_READER_USB_IDS "16c0:27db"
 yarn balena env add --application clickr RFID_KEYBOARD_READER_DEBOUNCE_SECONDS "3"
+yarn balena env add --application clickr RFID_KEYBOARD_READER_POST_ENDPOINT "http://web/clicks"

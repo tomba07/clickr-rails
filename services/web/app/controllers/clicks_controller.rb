@@ -1,6 +1,7 @@
 class ClicksController < ApplicationController
   # TODO Authenticate API requests to create endpoint as well, e.g. via Token
   skip_before_action :authenticate_user!, only: :create
+  skip_before_action :verify_authenticity_token, only: :create
 
   before_action :set_click, only: [:show, :edit, :update, :destroy]
 

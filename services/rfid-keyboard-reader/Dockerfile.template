@@ -28,4 +28,4 @@ COPY --from=build /root/.local /root/.local
 
 COPY . .
 
-CMD ["python", "./main.py"]
+CMD ["python", "./src/main.py"]

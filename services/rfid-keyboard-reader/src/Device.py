@@ -1,5 +1,5 @@
 import evdev
-import logging, os, sys
+import logging, sys
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -7,10 +7,11 @@ log = logging.getLogger(__name__)
 # http://blog.ssokolow.com/archives/2017/11/02/usb-rfid-reader-on-linux-proof-of-concept/
 # https://python-evdev.readthedocs.io/en/latest/tutorial.html
 class Device:
-    def __init__(self, ev_device, debounce_seconds):
+    def __init__(self, ev_device, debounce_seconds, token_id_handler):
         ev_device.grab()
         self.accumulator = []
         self.ev_device = ev_device
+        self.token_id_handler = token_id_handler
         self.last_seen = {}
         self.debounce_seconds = debounce_seconds
 
@@ -28,8 +29,8 @@ class Device:
             log.error("Invalid token ID (len != 10)")
             return
 
-        log.info(f"Token: {token_id}")
-        # TODO Pass token to web app (pass in fn reference when instantiating Device)
+        log.info(f"Read token: {token_id}")
+        if callable(self.token_id_handler): self.token_id_handler(token_id)
 
     def handle_event(self, event):
         if event.type != evdev.ecodes.EV_KEY:
