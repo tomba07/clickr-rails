@@ -25,7 +25,7 @@ class LessonsController < ApplicationController
   # POST /lessons
   # POST /lessons.json
   def create
-    @lesson = Lesson.new({ school_class_id: current_user.school_class&.id }.merge lesson_params)
+    @lesson = Lesson.new({ school_class_id: current_user.school_class&.id, **lesson_params })
 
     respond_to do |format|
       if @lesson.save
@@ -76,6 +76,6 @@ class LessonsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lesson_params
-      params.require(:lesson).permit(:name, :school_class_id).reject{|_, v| v.blank?}
+      params.require(:lesson).permit(:name, :school_class_id).reject{|_, v| v.blank?}.to_h.symbolize_keys
     end
 end
