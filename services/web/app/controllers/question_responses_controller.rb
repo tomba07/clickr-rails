@@ -30,7 +30,7 @@ class QuestionResponsesController < ApplicationController
 
     respond_to do |format|
       if @question_response.save
-        format.html { redirect_to @question_response, notice: I18n.t('.notice') }
+        format.html { redirect_to @question_response, notice: t('.notice') }
         format.json { render :show, status: :created, location: @question_response }
       else
         format.html { render :new }
@@ -44,7 +44,7 @@ class QuestionResponsesController < ApplicationController
   def update
     respond_to do |format|
       if @question_response.update(question_response_params)
-        format.html { redirect_to @question_response, notice: I18n.t('.notice') }
+        format.html { redirect_to @question_response, notice: t('.notice') }
         format.json { render :show, status: :ok, location: @question_response }
       else
         format.html { render :edit }
@@ -58,7 +58,7 @@ class QuestionResponsesController < ApplicationController
   def destroy
     @question_response.destroy
     respond_to do |format|
-      format.html { redirect_to question_responses_url, notice: I18n.t('.notice') }
+      format.html { redirect_to question_responses_url, notice: t('.notice') }
       format.json { head :no_content }
     end
   end

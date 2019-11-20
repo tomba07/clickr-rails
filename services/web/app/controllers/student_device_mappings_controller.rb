@@ -30,7 +30,7 @@ class StudentDeviceMappingsController < ApplicationController
 
     respond_to do |format|
       if @student_device_mapping.save
-        format.html { redirect_to @student_device_mapping, notice: I18n.t('.notice') }
+        format.html { redirect_to @student_device_mapping, notice: t('.notice') }
         format.json { render :show, status: :created, location: @student_device_mapping }
       else
         format.html { render :new }
@@ -44,7 +44,7 @@ class StudentDeviceMappingsController < ApplicationController
   def update
     respond_to do |format|
       if @student_device_mapping.update(student_device_mapping_params)
-        format.html { redirect_to @student_device_mapping, notice: I18n.t('.notice') }
+        format.html { redirect_to @student_device_mapping, notice: t('.notice') }
         format.json { render :show, status: :ok, location: @student_device_mapping }
       else
         format.html { render :edit }
@@ -58,7 +58,7 @@ class StudentDeviceMappingsController < ApplicationController
   def destroy
     @student_device_mapping.destroy
     respond_to do |format|
-      format.html { redirect_to student_device_mappings_url, notice: I18n.t('.notice') }
+      format.html { redirect_to student_device_mappings_url, notice: t('.notice') }
       format.json { head :no_content }
     end
   end
