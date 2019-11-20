@@ -32,24 +32,19 @@ class SchoolClassTest < ActiveSupport::TestCase
     assert_equal false, @subject.suggest_creating_new_lesson?
   end
 
-  test 'floor_plan works if minimumm size is exceeded' do
+  test 'finds unoccupied seats with one extra row and column' do
     s1, s2, s3, s4 = @subject.students.create! [
-      { name: '1', seat_row: 0, seat_col: 0 },
+      { name: '1', seat_row: 1, seat_col: 1 },
       { name: '2', seat_row: 4, seat_col: 1 },
-      { name: '3', seat_row: 0, seat_col: 4 },
-      { name: '4', seat_row: 2, seat_col: 0 }
+      { name: '3', seat_row: 1, seat_col: 4 },
+      { name: '4', seat_row: 2, seat_col: 1 }
    ]
     assert_equal [
-      [s1,  nil, nil, nil, s3 ],
-      [nil, nil, nil, nil, nil],
-      [s4,  nil, nil, nil, nil],
-      [nil, nil, nil, nil, nil],
-      [nil, s2,  nil, nil, nil]
-    ], @subject.floor_plan
-  end
-
-  test 'floor_plan has minimum size if there are no students' do
-    config = Rails.application.config.clickr
-    assert_equal Array.new(config.min_seat_rows) { Array.new(config.min_seat_cols) }, @subject.floor_plan
+              [1, 2], [1, 3],         [1, 5],
+              [2, 2], [2, 3], [2, 4], [2, 5],
+      [3, 1], [3, 2], [3, 3], [3, 4], [3, 5],
+              [4, 2], [4, 3], [4, 4], [4, 5],
+      [5, 1], [5, 2], [5, 3], [5, 4], [5, 5],
+    ], @subject.unoccupied_seats
   end
 end

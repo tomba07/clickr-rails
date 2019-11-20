@@ -2,6 +2,8 @@
   %b #{t('common.name')}:
   = @school_class.name
 
+= render 'seating_plan', school_class: @school_class
+
 .buttons
   = link_to t('common.edit'), edit_school_class_path(@school_class), class: 'button is-primary'
   = link_to I18n.t('common.back'), school_classes_path, class: 'button'
