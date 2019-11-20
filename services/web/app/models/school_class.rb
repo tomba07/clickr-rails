@@ -22,6 +22,8 @@ class SchoolClass < ApplicationRecord
   end
 
   def seating_plan
+    return [] if !students.exists?
+
     row_min, row_max = students.map { |s| s.seat_row }.minmax
     col_min, col_max = students.map { |s| s.seat_col }.minmax
     row_offset = row_min - 2
