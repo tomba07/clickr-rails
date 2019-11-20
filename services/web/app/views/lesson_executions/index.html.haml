@@ -5,7 +5,8 @@
     .notification.is-warning
       = t('.create_new_lesson_text')
 
-      = form_with model: Lesson.new, format: :json do |f|
+      -# TODO Show potential errors on this page
+      = form_with model: Lesson.new, local: true do |f|
         = f.hidden_field :redirect_to_previous_page, value: true
         = f.text_field :name, value: "#{@school_class.name} - #{I18n.l Date.today, format: :short}"
         .actions.buttons
