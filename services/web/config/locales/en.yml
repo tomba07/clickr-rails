@@ -93,6 +93,8 @@ en:
       notice: "School was updated."
     destroy:
       notice: "School was destroyed."
+    seating_plan:
+      notice: "Seating plan was updated."
     title: "School class"
     edit:
       title: "Editing school class"
@@ -135,6 +137,9 @@ en:
       title: "Lesson execution"
       create_new_lesson_text: "The last lesson seems to be quite old. Do you want to create a new one?"
       create_new_lesson_submit: "Create lesson"
+  users:
+    school_class:
+      notice: "Your selected school class has been updated."
   common:
     back: "Back"
     show: "Show"

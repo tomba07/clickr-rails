@@ -21,12 +21,42 @@ class SchoolClass < ApplicationRecord
     latest_timestamp < comparison_timestamp
   end
 
-  def unoccupied_seats
-    number_of_rows = students.map { |s| s.seat_row }.max
-    number_of_cols = students.map { |s| s.seat_col }.max
-    # Add one extra row and column as drag and drop targets
-    all_seats = (1..number_of_rows + 1).to_a.product((1..number_of_cols + 1).to_a)
-    occupied_seats = students.map{ |s| [s.seat_row, s.seat_col] }
-    return all_seats - occupied_seats
+  def seating_plan
+    row_min, row_max = students.map { |s| s.seat_row }.minmax
+    col_min, col_max = students.map { |s| s.seat_col }.minmax
+    row_offset = row_min - 2
+    col_offset = col_min - 2
+    # Can't use double splat operator { **tmp, s.seat_hash => s } with non-symbol (object) keys
+    students_index = students.reduce({}) { |tmp, s| tmp.merge({seat_hash(s.seat_row, s.seat_col) => s}) }
+    seat_coordinates = (row_min - 1..row_max + 1).to_a.product((col_min - 1..col_max + 1).to_a)
+    return seat_coordinates.map do |row, col|
+      {
+        row: row - row_offset,
+        col: col - col_offset,
+        is_empty: !students_index.has_key?(seat_hash(row, col)),
+        student: students_index[seat_hash(row, col)],
+        is_border: row < row_min || row > row_max || col < col_min || col > col_max,
+      }
+    end
+  end
+
+  def seating_plan=(seats)
+    # TODO exception handling
+    transaction do
+      seats.each(&(method :update_seat))
+    end
+  end
+
+  private
+
+  def seat_hash(row, col)
+    {row: row, col: col}.freeze
+  end
+
+  def update_seat(student_id:, row:, col:)
+    student = students.find(student_id)
+    # Bypass validation (when swapping seats, one seat is briefly occupied twice)
+    student.attributes = { seat_row: row, seat_col: col }
+    student.save! validate: false
   end
 end

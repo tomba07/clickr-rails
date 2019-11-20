@@ -62,6 +62,8 @@ de:
       notice: "School wurde geändert."
     destroy:
       notice: "School wurde gelöscht."
+    seating_plan:
+      notice: "Sitzplan wurde geändert."
     title: "Schulklasse"
     edit:
       title: "Schulklasse bearbeiten"
@@ -104,6 +106,9 @@ de:
       title: "Stunde durchführen"
       create_new_lesson_text: "Die letzte Stunde scheint schon etwas her zu sein. Willst du eine neue anlegen?"
       create_new_lesson_submit: "Stunde anlegen"
+  users:
+    school_class:
+      notice: "Deine ausgewählte Schulklasse wurde geändert."
   common:
     back: "Zurück"
     show: "Anzeigen"

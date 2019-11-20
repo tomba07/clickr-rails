@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :lessons
   resources :questions
   resources :students
-  resources :school_classes
+  resources :school_classes do
+    put 'seating_plan', on: :member
+  end
   put 'users/school_class'
   devise_for :users
 

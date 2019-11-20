@@ -1,23 +1,26 @@
 -# https://johnbeatty.co/2018/03/09/stimulus-js-tutorial-how-do-i-drag-and-drop-items-in-a-list/
-.seating-plan{ 'data-controller': 'seating-plan',
-               'data-action': 'dragstart->seating-plan#onDragStart dragover->seating-plan#onDragOver dragenter->seating-plan#onDragEnter drop->seating-plan#onDrop dragend->seating-plan#onDragEnd' }
-  - school_class.students.each do |student|
-    .seating-plan__student{ draggable: 'true',
-                            'data-item-id': student.id,
-                            'data-row': student.seat_row,
-                            'data-col': student.seat_col,
-                            style: "grid-row: #{student.seat_row}; grid-column: #{student.seat_col};" }
-      .card
-        .card-content
-          %p.title.has-text-centered= student.name
-        %footer.card-footer
-          %p.card-footer-item.has-text-weight-bold
-            -# TODO Add sum
-            4
-          %p.card-footer-item.has-text-grey
-            -# TODO Add sum
-            10
-  - school_class.unoccupied_seats.each do |seat|
-    .seating-plan__unoccupied-seat.has-background-grey-light{ 'data-row': seat[0],
-                                    'data-col': seat[1],
-                                    style: "grid-row: #{seat[0]}; grid-column: #{seat[1]};" }
+.grid--draggable{ 'data-controller': 'seating-plan',
+                  'data-seating-plan-endpoint': endpoint,
+                  'data-action': 'dragstart->seating-plan#onDragStart dragover->seating-plan#onDragOver dragenter->seating-plan#onDragEnter drop->seating-plan#onDrop dragend->seating-plan#onDragEnd' }
+  - seating_plan.each do |seat|
+    - if seat[:is_empty]
+      .grid__item.grid__item--empty{ 'data-row': seat[:row],
+                                     'data-col': seat[:col],
+                                     style: "grid-row: #{seat[:row]}; grid-column: #{seat[:col]};",
+                                     class: ('grid__item--border' if seat[:is_border]) }
+    - else
+      .grid__item{ draggable: 'true',
+                  'data-item-id': seat[:student].id,
+                  'data-row': seat[:row],
+                  'data-col': seat[:col],
+                  style: "grid-row: #{seat[:row]}; grid-column: #{seat[:col]};" }
+        .card
+          .card-content
+            %p.title.has-text-centered= seat[:student].name
+          %footer.card-footer
+            %p.card-footer-item.has-text-weight-bold
+              -# TODO Add sum
+              4
+            %p.card-footer-item.has-text-grey
+              -# TODO Add sum
+              10

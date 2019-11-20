@@ -32,19 +32,31 @@ class SchoolClassTest < ActiveSupport::TestCase
     assert_equal false, @subject.suggest_creating_new_lesson?
   end
 
-  test 'finds unoccupied seats with one extra row and column' do
-    s1, s2, s3, s4 = @subject.students.create! [
+  test 'students_and_empty_seats adds empty seats (inside and as a border) and enforces positive row/col values' do
+    s1, s2 = @subject.students.create! [
       { name: '1', seat_row: 1, seat_col: 1 },
-      { name: '2', seat_row: 4, seat_col: 1 },
-      { name: '3', seat_row: 1, seat_col: 4 },
-      { name: '4', seat_row: 2, seat_col: 1 }
+      { name: '4', seat_row: 2, seat_col: 2 }
    ]
     assert_equal [
-              [1, 2], [1, 3],         [1, 5],
-              [2, 2], [2, 3], [2, 4], [2, 5],
-      [3, 1], [3, 2], [3, 3], [3, 4], [3, 5],
-              [4, 2], [4, 3], [4, 4], [4, 5],
-      [5, 1], [5, 2], [5, 3], [5, 4], [5, 5],
-    ], @subject.unoccupied_seats
+      {row: 1, col: 1, is_empty: true, student: nil, is_border: true},  {row: 1, col: 2, is_empty: true, student: nil, is_border: true},  {row: 1, col: 3, is_empty: true, student: nil, is_border: true},  {row: 1, col: 4, is_empty: true, student: nil, is_border: true},
+      {row: 2, col: 1, is_empty: true, student: nil, is_border: true},  {row: 2, col: 2, is_empty: false, student: s1, is_border: false}, {row: 2, col: 3, is_empty: true, student: nil, is_border: false}, {row: 2, col: 4, is_empty: true, student: nil, is_border: true},
+      {row: 3, col: 1, is_empty: true, student: nil, is_border: true},  {row: 3, col: 2, is_empty: true, student: nil, is_border: false}, {row: 3, col: 3, is_empty: false, student: s2, is_border: false}, {row: 3, col: 4, is_empty: true, student: nil, is_border: true},
+      {row: 4, col: 1, is_empty: true, student: nil, is_border: true},  {row: 4, col: 2, is_empty: true, student: nil, is_border: true},  {row: 4, col: 3, is_empty: true, student: nil, is_border: true},  {row: 4, col: 4, is_empty: true, student: nil, is_border: true},
+    ], @subject.seating_plan
+  end
+
+  test 'seating_plan= updates all students in transaction (swap places)' do
+    s1, s2 = @subject.students.create! [
+      { name: '1', seat_row: 1, seat_col: 1 },
+      { name: '4', seat_row: 2, seat_col: 2 }
+   ]
+    @subject.seating_plan = [
+      { student_id: s1.id, row: 2, col: 2 },
+      { student_id: s2.id, row: 1, col: 1 },
+    ]
+    s1.reload
+    s2.reload
+    assert_equal [2, 2], [s1.seat_row, s1.seat_col]
+    assert_equal [1, 1], [s2.seat_row, s2.seat_col]
   end
 end
