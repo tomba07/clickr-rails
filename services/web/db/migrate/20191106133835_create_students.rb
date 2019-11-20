@@ -10,6 +10,7 @@ class CreateStudents < ActiveRecord::Migration[6.0]
     end
 
     add_index :students, %i[school_class_id name], unique: true
-    add_index :students, %i[school_class_id seat_row seat_col], unique: true
+    # Do not enforce unique seat coordinates at DB level (swapping student seats otherwise cannot be done easily)
+    # add_index :students, %i[school_class_id seat_row seat_col], unique: true
   end
 end

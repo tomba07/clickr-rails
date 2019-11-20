@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 2019_11_13_115657) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_class_id", "name"], name: "index_students_on_school_class_id_and_name", unique: true
-    t.index ["school_class_id", "seat_row", "seat_col"], name: "index_students_on_school_class_id_and_seat_row_and_seat_col", unique: true
     t.index ["school_class_id"], name: "index_students_on_school_class_id"
   end
 
