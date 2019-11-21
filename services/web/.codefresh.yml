@@ -40,6 +40,7 @@ steps:
     environment:
       - GIT_BRANCH=$CF_BRANCH
       - GIT_COMMIT_SHA=$CF_REVISION
+      - GIT_COMMITTED_AT=$CF_BUILD_TIMESTAMP
     commands:
       - ./cc-test-reporter before-build
       - bundle exec rails test
