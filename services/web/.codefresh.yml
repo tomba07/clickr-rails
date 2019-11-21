@@ -37,11 +37,10 @@ steps:
     stage: "test"
     image: '${{build_test}}'
     working_directory: IMAGE_WORK_DIR
-    environment:
-      - GIT_BRANCH=$CF_BRANCH
-      - GIT_COMMIT_SHA=$CF_REVISION
-      - GIT_COMMITTED_AT=$CF_BUILD_TIMESTAMP
     commands:
+      - export GIT_BRANCH=$CF_BRANCH
+      - export GIT_COMMIT_SHA=$CF_REVISION
+      - export GIT_COMMITTED_AT=$CF_BUILD_TIMESTAMP
       - ./cc-test-reporter before-build
       - bundle exec rails test
       - ./cc-test-reporter after-build --exit-code $?
