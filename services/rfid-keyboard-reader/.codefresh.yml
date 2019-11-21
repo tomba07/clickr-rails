@@ -1,0 +1,25 @@
+version: "1.0"
+stages:
+  - "clone"
+  - "build"
+steps:
+  main_clone:
+    type: "git-clone"
+    description: "Cloning main repository..."
+    repo: "ftes/clickr-rails"
+    revision: "${{CF_BRANCH}}"
+    stage: "clone"
+  build_dockerfile:
+    title: "Building Dockerfile"
+    stage: "build"
+    image: "alpine"
+    commands:
+      - "./bin/docker-template"
+  build:
+    title: "Building Docker Image"
+    stage: "build"
+    type: "build"
+    image_name: "ftes/clickr-rails-rfid-keyboard-reader"
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}"
+    working_directory: ./services/rfid-keyboard-reader
+    dockerfile: Dockerfile
