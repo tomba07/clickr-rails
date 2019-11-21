@@ -23,8 +23,7 @@ steps:
     stage: "run"
     image: '${{build}}'
     working_directory: IMAGE_WORK_DIR
-    volumes:
-      - ${{main_clone}}:/repository
+    environment:
+      - BALENA_TOKEN=$BALENA_TOKEN
     commands:
-      - yarn balena login --token $BALENA_TOKEN
-      - yarn balena push clickr -s /repository
+      - yarn balena push clickr -s /codefresh/volume/clickr-rails
