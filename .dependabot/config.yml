@@ -2,7 +2,7 @@ version: 1
 
 update_configs:
   - package_manager: "javascript"
-    directory: "/"
+    directory: "/build/balena-cli"
     update_schedule: "live"
 
   - package_manager: "ruby:bundler"
