@@ -43,7 +43,8 @@ steps:
       - export GIT_COMMITTED_AT=$CF_BUILD_TIMESTAMP
       - ./cc-test-reporter before-build
       - bundle exec rails test
-      - ./cc-test-reporter after-build --exit-code $?
+      - ./cc-test-reporter format-coverage --add-prefix services/web/
+      - ./cc-test-reporter upload-coverage
     on_success:
       metadata:
         set:
