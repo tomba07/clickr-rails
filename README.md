@@ -51,25 +51,25 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 .
 ├── bin
 │   ├── docker-build
-│   ├── docker-run
 │   ├── docker-template
+│   ├── docker-test
 │   ├── list-devices
 │   ├── release-to-pi
 │   ├── setup-environment-variables
 │   └── show-device-info
-├── node_modules [805 entries exceeds filelimit, not opening dir]
+├── build
+│   └── balena-cli
 ├── services
 │   ├── rfid-keyboard-reader
 │   └── web
 ├── docker-compose.yml
-├── package.json
-├── README.md
-└── yarn.lock
+└── README.md
 ```
 
 - `bin` contains development scripts
+- `buiild/balena-cli` contains a docker image capable of performing balena push commands (TODO replace with simpler git push)
 - `services` contains services which can be bundled as docker images (e.g. the rails web app and hardware connectors)
-- `docker-compose.yml` defines how to run those services together
+- `docker-compose.yml` defines how to run those services together (TODO multi pi setup -> several applications)
 
 ## Getting started
 1. `yarn install --cwd build/balena-cli`
