@@ -37,6 +37,13 @@ steps:
     stage: "test"
     image: '${{build_test}}'
     working_directory: IMAGE_WORK_DIR
+    environment:
+      - GIT_BRANCH=$CF_BRANCH
+      - GIT_COMMIT_SHA=$CF_REVISION
+    commands:
+      - ./cc-test-reporter before-build
+      - bundle exec rails test
+      - ./cc-test-reporter after-build --exit-code $?
     on_success:
       metadata:
         set:

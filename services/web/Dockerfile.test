@@ -19,6 +19,9 @@ RUN apk add --no-cache \
   # For nokogiri gem
   zlib-dev
 
+ADD https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 ./cc-test-reporter
+RUN chmod +x ./cc-test-reporter
+
 # Copy only files for bundle/yarn install first (layer does not change as often)
 COPY Gemfile .
 COPY Gemfile.lock .
