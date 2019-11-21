@@ -7,12 +7,17 @@ class SchoolClass < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
+  def most_recent_lesson
+    lessons.last
+  end
+
   def most_recent_lesson_or_create
-    lessons.last || lessons.create!(name: I18n.t('lesson.create.default_name', school_class_name: name))
+    most_recent_lesson || lessons.create!(name: I18n.t('lesson.create.default_name', school_class_name: name))
   end
 
   def suggest_creating_new_lesson?
-    lesson = most_recent_lesson_or_create
+    lesson = most_recent_lesson or return true
+
     question = lesson.most_recent_question
 
     latest_timestamp = question&.created_at || lesson&.created_at

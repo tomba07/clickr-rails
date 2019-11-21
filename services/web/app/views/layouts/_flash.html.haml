@@ -2,6 +2,6 @@
   %section.section
     .container
       - if notice
-        .notification.is-info= notice
+        .notification.is-info= notice.html_safe
       - if alert
-        .notification.is-danger= alert
+        .notification.is-danger= alert.html_safe

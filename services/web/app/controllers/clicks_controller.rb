@@ -4,6 +4,7 @@ class ClicksController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :create
 
   before_action :set_click, only: [:show, :edit, :update, :destroy]
+  before_action :set_click_with_includes, only: [:show]
 
   # GET /clicks
   # GET /clicks.json
@@ -28,11 +29,18 @@ class ClicksController < ApplicationController
   # POST /clicks
   # POST /clicks.json
   def create
-    @click = Click.new(prefix_id_with_type! click_params)
+    c = @click = Click.new(click_params)
 
     respond_to do |format|
       if @click.save
-        format.html { redirect_to @click, notice: t('.notice') }
+        m = @student_device_mapping = update_oldest_incomplete_student_device_mapping! @click
+        r = @question_response = create_question_response! @click if !@student_device_mapping
+
+        format.html { redirect_to @click, notice: [
+          t('.notice'),
+          (t('.mapping_notice', device_id: c.device_id, student_name: m.student&.name, class_name: m.school_class&.name) if @student_device_mapping),
+          (t('.response_notice', student_name: r.student&.name, question_name: r.question&.name, class_name: r.school_class&.name, lesson_name: r.lesson&.name) if @question_response),
+        ].compact.join('<br/>') }
         format.json { render :show, status: :created, location: @click }
       else
         format.html { render :new }
@@ -67,20 +75,45 @@ class ClicksController < ApplicationController
 
   private
 
-  def prefix_id_with_type!(params)
-    prefix = "#{params[:device_type]}:"
-    id = params[:device_id] || ''
-    params[:device_id] = "#{prefix}#{id}" if not id.start_with? prefix
-    params
+  # Use callbacks to share common setup or constraints between actions.
+  def set_click
+    @click = Click.find(params[:id])
   end
 
   # Use callbacks to share common setup or constraints between actions.
-    def set_click
-      @click = Click.find(params[:id])
-    end
+  def set_click_with_includes
+    @click = Click.includes(:question_response).find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def click_params
-      params.require(:click).permit(:device_id, :device_type)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def click_params
+    params.require(:click).permit(:device_id, :device_type).to_h.symbolize_keys
+  end
+
+  def update_oldest_incomplete_student_device_mapping!(click)
+    return nil if StudentDeviceMapping.exists?(device_id: click.device_id)
+    mapping = StudentDeviceMapping.oldest_incomplete or return nil
+    mapping.update!(
+      device_type: click.device_type,
+      device_id: click.device_id,
+    )
+    return mapping
+  end
+
+  def create_question_response!(click)
+    mapping = StudentDeviceMapping.includes(:school_class).find_by(device_id: click.device_id) or return nil
+
+    school_class = mapping.school_class
+    lesson = school_class.most_recent_lesson
+    question = lesson&.most_recent_question or return nil
+    return nil if QuestionResponse.exists?(student_id: mapping.student_id, question: question)
+
+    return click.create_question_response!(
+      student_id: mapping.student_id,
+      question: question,
+      lesson: lesson,
+      school_class: school_class,
+      score: 1,
+    )
+  end
 end

@@ -8,6 +8,7 @@ class QuestionResponse < ApplicationRecord
 
   validates :score, presence: true
   validates :click, uniqueness: true
+  validates :student, uniqueness: { scope: :question }
   # TODO validates student.school_class = school_class
   # TODO validates lesson.school_class = school_class
   # TODO validates question.lesson = lesson

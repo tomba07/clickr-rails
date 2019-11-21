@@ -6,8 +6,8 @@ class SchoolClassTest < ActiveSupport::TestCase
     @long_ago = Rails.application.config.clickr.suggest_new_lesson_after_minutes.minutes.ago - 1.minute
   end
 
-  test 'suggest_creating_new_lesson is false if no lesson existed (new one was created)' do
-    assert_equal false, @subject.suggest_creating_new_lesson?
+  test 'suggest_creating_new_lesson is false if no lesson existed' do
+    assert_equal true, @subject.suggest_creating_new_lesson?
   end
 
   test 'suggest_creating_new_lesson is false if a new lesson exists' do

@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_115657) do
     t.index ["click_id"], name: "index_question_responses_on_click_id", unique: true
     t.index ["created_at"], name: "index_question_responses_on_created_at", order: :desc
     t.index ["lesson_id"], name: "index_question_responses_on_lesson_id"
+    t.index ["question_id", "student_id"], name: "index_question_responses_on_question_id_and_student_id", unique: true
     t.index ["question_id"], name: "index_question_responses_on_question_id"
     t.index ["school_class_id"], name: "index_question_responses_on_school_class_id"
     t.index ["student_id", "lesson_id"], name: "index_question_responses_on_student_id_and_lesson_id"
@@ -71,13 +72,15 @@ ActiveRecord::Schema.define(version: 2019_11_13_115657) do
   create_table "student_device_mappings", force: :cascade do |t|
     t.integer "student_id", null: false
     t.integer "school_class_id", null: false
-    t.string "device_id", null: false
-    t.string "device_type", null: false
+    t.string "device_id"
+    t.string "device_type"
+    t.boolean "incomplete", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_student_device_mappings_on_created_at", order: :desc
     t.index ["device_id"], name: "index_student_device_mappings_on_device_id"
     t.index ["device_type"], name: "index_student_device_mappings_on_device_type"
+    t.index ["incomplete"], name: "index_student_device_mappings_on_incomplete"
     t.index ["school_class_id", "device_id"], name: "index_student_device_mappings_on_school_class_id_and_device_id", unique: true
     t.index ["school_class_id"], name: "index_student_device_mappings_on_school_class_id"
     t.index ["student_id"], name: "index_student_device_mappings_on_student_id"

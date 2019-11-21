@@ -25,9 +25,10 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    clazz = SchoolClass.find_by_id(question_params[:school_class_id]) || current_user.school_class
-    lesson_id = question_params[:lesson_id] || clazz&.most_recent_lesson_or_create&.id
-    @question = Question.new({ school_class_id: clazz&.id, lesson_id: lesson_id, **question_params })
+    # find_by_id does not raise exception if ID does not exist
+    school_class = SchoolClass.find_by_id(question_params[:school_class_id]) || current_user.school_class
+    lesson_id = question_params[:lesson_id] || school_class&.most_recent_lesson_or_create&.id
+    @question = Question.new({ school_class_id: school_class&.id, lesson_id: lesson_id, **question_params })
 
     respond_to do |format|
       if @question.save
