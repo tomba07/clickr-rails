@@ -1,17 +1,6 @@
-# Let's maybe not put our git sources in here
-.git
-.gitignore
+**/*
+!requirements.txt
+!src/**/*.py
 
-# dotenv
-.env
-
-/.idea
-
-# Docker configs
-Dockerfile
-docker-compose.yml
-.dockerignore
-# NOT Dockerfile.template (balena cloud build needs this)
-
-# Various configs and assorted dotfiles
-.DS_Store
+# Needed by balena cloud
+!Dockerfile.template
