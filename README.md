@@ -8,6 +8,40 @@
 ## Introduction
 TODO briefly explain domain model
 
+## Tech Stack
+Languages, frameworks and libraries:
+- web service:
+    - Ruby
+    - Rails (webpacker, stimulus)
+    - SQLite
+    - Devise gem (authentication)
+    - bulma (styling)
+    - fontawesome (icons)
+- input adapters:
+    - python
+
+Build/CI/Deployment:
+- docker and docker-compose
+- Travis (run tests, non-dockerized)
+- Codefresh (build docker image, run tests in docker container)
+- Codeclimate (code quality)
+- balena.io (build ARM docker image, manage devices)
+
+## Concepts
+
+### Incomplete student-device-mapping
+An incomplete mapping is helpful when setting up a new school class.
+A lot of new students are created and need to be mapped to devices.
+
+Technically, students and incomplete mappings (without a device ID) are created.
+
+When a new click is registered, and
+1. that device is not yet mapped
+2. at least one incomplete mapping exists
+
+then the oldest incomplete mapping is updated with that device ID.
+So, effectively, the first student that is not yet mapped is now mapped to that device.
+
 ## Technical overview
 ```
 $ tree -L 2 --filelimit 10 --dirsfirst
@@ -35,7 +69,7 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 - `docker-compose.yml` defines how to run those services together
 
 ## Getting started
-1. `yarn install`
+1. `yarn install --cwd build/balena-cli`
 2. `bin/setup-environment-variables <rails-master-key>`
 3. `cd services/web`
 4. `bundle install`
@@ -44,7 +78,7 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 7. `xdg-open http://localhost:80`, credentials: `f@ftes.de`/`password`
 
 ## Docker
-1. `yarn install && bin/setup-environment-variables <rails-master-key>` (if you haven't done so already)
+1. `yarn install --cwd build/balena-cli && bin/setup-environment-variables <rails-master-key>` (if you haven't done so already)
 2. `./bin/docker-build` (build locally first, that's faster, but not for ARM/Raspberry Pi)
 3. `./bin/release-to-pi` (balena.io cloud build and push to devices)
 
