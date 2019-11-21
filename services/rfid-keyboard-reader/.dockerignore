@@ -2,5 +2,5 @@
 !requirements.txt
 !src/**/*.py
 
-# Needed by balena cloud
+# Needed by balena push
 !Dockerfile.template
