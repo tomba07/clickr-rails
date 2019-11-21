@@ -23,7 +23,7 @@ steps:
     stage: "run"
     image: '${{build}}'
     working_directory: IMAGE_WORK_DIR
-    environment:
-      - BALENA_TOKEN=$BALENA_TOKEN
     commands:
+      # Codefresh overrides docker entrypoint
+      - yarn balena login --token $BALENA_TOKEN
       - yarn balena push clickr -s /codefresh/volume/clickr-rails
