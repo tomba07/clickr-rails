@@ -43,7 +43,6 @@ jobs:
           - $HOME/.rvm # Probably already the case with `language: ruby`
           - $HOME/.nvm
           - $HOME/.npm
-          - $HOME/.yarn
           - services/web/node_modules
           - services/web/vendor/bundle # bundler cache
           - services/web/tmp/cache # rails cache
@@ -52,14 +51,14 @@ jobs:
           - services/web/public/packs-test
       before_install:
         # Install codeclimate test reporter if not present
-        - ls $HOME/.codeclimate > /dev/null || (mkdir $HOME/.codeclimate && curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/.codeclimate/cc-test-reporter && chmod +x $HOME/.codeclimate/cc-test-reporter)
         - cd services/web
         # update to bundler 2.0 https://docs.travis-ci.com/user/languages/ruby/#bundler-20
         - gem install bundler
         - nvm install node
         - nvm use node
         # Install yarn if not present
-        - ls $HOME/.yarn > /dev/null || (curl -o- -L https://yarnpkg.com/install.sh | bash)
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
       install:
         - bundler install --jobs 4 --without development production --deployment
         - yarn install --production --frozen-lockfile
@@ -68,10 +67,10 @@ jobs:
         - REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
         - bundle exec rails db:migrate
       script:
-        - $HOME/.codeclimate/cc-test-reporter before-build
+        - ./cc-test-reporter before-build
         - bundle exec rails test
-        - $HOME/.codeclimate/cc-test-reporter format-coverage --add-prefix services/web/
-        - $HOME/.codeclimate/cc-test-reporter upload-coverage
+        - ./cc-test-reporter format-coverage --add-prefix services/web/
+        - ./cc-test-reporter upload-coverage
     - <<: *test-web
       arch: arm64
 
