@@ -78,6 +78,7 @@ jobs:
     - &build-docker-image-web
       stage: build-docker-images
       arch: amd64
+      language: minimal
       env:
         - RAILS_ENV=production
       before_install:
