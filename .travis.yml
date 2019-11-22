@@ -7,6 +7,12 @@ os: linux
 # Don't use top-level `arch` field. Different languages cannot be added to the build matrix but must be specified
 # via jobs.include anyway.
 
+# TODO docker build (use correct base image per arch)
+# TODO python
+# TODO push docker image on after_success
+# TODO balena push on success (using git -> easier)
+# TODO heroku release on success
+
 jobs:
   include:
     # stage: test is the default (can be omitted)
@@ -32,7 +38,7 @@ jobs:
       bundler_args: --without development production
       before_script:
         # precompile for (hopefully) better speed when executing. Does this help with caching?
-        - RAILS_ENV=production bundle exec rails assets:precompile
+        - RAILS_ENV=production REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
       rvm: 2.5.7
       env:
         - RAILS_ENV=test
