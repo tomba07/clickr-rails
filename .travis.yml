@@ -1,6 +1,10 @@
+# CC_TEST_REPORTER_ID env var configured via Travis UI
+
+# Helpful links
 # https://docs.travis-ci.com/user/build-stages/matrix-expansion/
 # https://docs.travis-ci.com/user/build-stages/using-yaml-aliases/
 # https://docs.travis-ci.com/user/multi-cpu-architectures/
+# https://docs.travis-ci.com/user/build-stages/share-docker-image/
 
 os: linux
 
@@ -8,24 +12,21 @@ os: linux
 # via jobs.include anyway.
 
 # TODO python
-# TODO push docker image on after_success
+# TODO push docker image on success
 # TODO balena push on success (using git -> easier)
 # TODO heroku release on success
+# TODO python test and combine code coverage before reporting https://docs.travis-ci.com/user/build-stages/share-files-s3/
+# TODO remove codefresh config files and project
+# TODO un-dockerize build/balena-cli
 
 stages:
   - test
-  - build-docker-images
-#  - name: deploy
-#    if: branch = master
+  - build-and-push-docker-images
+  - name: balena-push
+    if: branch = master
 
 services:
   - docker
-
-env:
-  global:
-    # Configured as secret environment variable via Travis UI
-    #- CC_TEST_REPORTER_ID=ABC123
-
 
 jobs:
   include:
@@ -76,7 +77,7 @@ jobs:
 
     # Build services/web docker image
     - &build-docker-image-web
-      stage: build-docker-images
+      stage: build-and-push-docker-images
       arch: amd64
       language: minimal
       env:
@@ -89,8 +90,25 @@ jobs:
     - <<: *build-docker-image-web
       arch: arm64
       before_install:
-        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
+        # TODO Use balena base images
+        - ./bin/docker-template
         - cd services/web
+
+    # Build and deploy using balena cloud
+    # https://github.com/balena-io-playground/balena-travis-test
+    - stage: balena-push
+      language: minimal
+      # skip installation
+      install: true
+      script:
+        - eval "$(ssh-agent -s)" #start the ssh agent
+        - echo -e $BALENA_SSH_KEY > id_rsa
+        - chmod 0600 id_rsa
+        - ssh-add ./id_rsa
+        - cat build/balena-cli/git.balena-cloud.com.ssh-keyscan >> ~/.ssh/known_hosts
+        - git remote add balena $BALENA_REMOTE
+        - git push balena master
+
 
 #jobs:
 #  include:
