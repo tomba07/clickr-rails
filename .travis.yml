@@ -31,7 +31,6 @@ jobs:
   include:
     # Test services/web
     - &test-web
-      # $TRAVIS_CPU_ARCH
       arch: amd64
       language: ruby
       rvm: 2.5.7
@@ -71,8 +70,9 @@ jobs:
         - bundle exec rails test
         - ./cc-test-reporter format-coverage --add-prefix services/web/
         - ./cc-test-reporter upload-coverage
-    - <<: *test-web
-      arch: arm64
+     # Won't perform tests on ARM for now
+     #- <<: *test-web
+     #  arch: arm64
 
     # Build services/web docker image
     - &build-docker-image-web
@@ -82,12 +82,15 @@ jobs:
       env:
         - RAILS_ENV=production
       before_install:
-        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
+        - ./bin/docker-template
         - cd services/web
       script:
         - docker build -t ftes/clickr-rails-$TRAVIS_CPU_ARCH .
     - <<: *build-docker-image-web
       arch: arm64
+      before_install:
+        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
+        - cd services/web
 
 #jobs:
 #  include:
