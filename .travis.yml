@@ -32,14 +32,13 @@ jobs:
       env:
         - RAILS_ENV=test
       cache:
-        bundler: true
         yarn: true # $HOME/.cache/yarn
-        npm: true # $HOME/.npm or node_modules
         directories:
-        - $HOME/.yarn
-        - services/web/node_modules
-        - services/web/vendor/bundle # bundler cache
-        - services/web/tmp/cache # rails cache
+          - $HOME/.rvm # Probably already the case with `language: ruby`
+          - $HOME/.nvm
+          - services/web/node_modules
+          - services/web/vendor/bundle # bundler cache
+          - services/web/tmp/cache # rails cache
       before_install:
         - cd services/web
         # update to bundler 2.0 https://docs.travis-ci.com/user/languages/ruby/#bundler-20
