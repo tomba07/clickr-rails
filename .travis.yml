@@ -51,7 +51,6 @@ jobs:
           - services/web/public/assets
           - services/web/public/packs
           - services/web/public/packs-test
-          - docker_images
       before_install:
         # Install codeclimate test reporter if not present
         - cd services/web
@@ -84,13 +83,12 @@ jobs:
       stage: build-and-push-docker-images
       arch: amd64
       language: minimal
-      env:
-        - RAILS_ENV=production
       before_install:
-        - docker load -i docker_images/images.tar || true
         - ./bin/docker-template
         - cd services/web
       script:
+        # Warm up docker cache
+        - docker pull ftes/clickr-rails-web-$TRAVIS_CPU_ARCH || true
         - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
         # TODO push if branch master
     - <<: *build-docker-image-web
@@ -98,7 +96,7 @@ jobs:
       arch: arm64
       before_install:
         # TODO Use balena base images
-        - ./bin/docker-template
+        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
         - cd services/web
 
     # Push docker image
