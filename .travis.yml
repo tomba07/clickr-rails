@@ -7,7 +7,6 @@ os: linux
 # Don't use top-level `arch` field. Different languages cannot be added to the build matrix but must be specified
 # via jobs.include anyway.
 
-# TODO docker build (use correct base image per arch)
 # TODO python
 # TODO push docker image on after_success
 # TODO balena push on success (using git -> easier)
@@ -22,8 +21,15 @@ stages:
 services:
   - docker
 
+env:
+  global:
+    # Configured as secret environment variable via Travis UI
+    #- CC_TEST_REPORTER_ID=ABC123
+
+
 jobs:
   include:
+    # Test services/web
     - &test-web
       # $TRAVIS_CPU_ARCH
       arch: amd64
@@ -41,25 +47,35 @@ jobs:
           - services/web/node_modules
           - services/web/vendor/bundle # bundler cache
           - services/web/tmp/cache # rails cache
+          - services/web/public/assets
+          - services/web/public/packs
+          - services/web/public/packs-test
       before_install:
+        # Install codeclimate test reporter if not present
+        - ls $HOME/.codeclimate > /dev/null || (mkdir $HOME/.codeclimate && curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/.codeclimate/cc-test-reporter && chmod +x $HOME/.codeclimate/cc-test-reporter)
         - cd services/web
         # update to bundler 2.0 https://docs.travis-ci.com/user/languages/ruby/#bundler-20
         - gem install bundler
         - nvm install node
         - nvm use node
         # Install yarn if not present
-        - ls $HOME/.yarn > /dev/null || curl -o- -L https://yarnpkg.com/install.sh | bash
+        - ls $HOME/.yarn > /dev/null || (curl -o- -L https://yarnpkg.com/install.sh | bash)
       install:
         - bundler install --jobs 4 --without development production --deployment
         - yarn install --production --frozen-lockfile
       before_script:
         # precompile for (hopefully) better speed when executing. Does this help with caching?
-        - RAILS_ENV=production REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
-      script:
+        - REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
         - bundle exec rails db:migrate
+      script:
+        - $HOME/.codeclimate/cc-test-reporter before-build
         - bundle exec rails test
+        - $HOME/.codeclimate/cc-test-reporter format-coverage --add-prefix services/web/
+        - $HOME/.codeclimate/cc-test-reporter upload-coverage
     - <<: *test-web
       arch: arm64
+
+    # Build services/web docker image
     - &build-docker-image-web
       stage: build-docker-images
       arch: amd64
