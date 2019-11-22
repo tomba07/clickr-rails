@@ -22,7 +22,7 @@ os: linux
 
 stages:
   - test
-  - build-and-push-docker-images
+  - build
   - name: deploy
     if: branch = master
 
@@ -79,8 +79,8 @@ jobs:
 
     # Build services/web docker image
     - &build-docker-image-web
-      name: Build services/web docker image (amd64)
-      stage: build-and-push-docker-images
+      name: Build services/web docker image and push if branch=master (amd64)
+      stage: build
       arch: amd64
       language: minimal
       before_install:
@@ -90,27 +90,19 @@ jobs:
         # Warm up docker cache
         - docker pull ftes/clickr-rails-web-$TRAVIS_CPU_ARCH || true
         - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
-        # TODO push if branch master
+        -
+      deploy:
+        on:
+          branch: master
+        provider: script
+        script: bash bin/docker-push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
     - <<: *build-docker-image-web
-      name: Build services/web docker image (arm64)
+      name: Build services/web docker image and push if branch=master (arm64)
       arch: arm64
       before_install:
         # TODO Use balena base images
         - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
         - cd services/web
-
-    # Push docker image
-    - &deploy-docker-image-web
-      name: Deploy services/web docker image to docker hub (amd64)
-      stage: deploy
-      arch: amd64
-      language: minimal
-      deploy:
-        provider: script
-        script: bash bin/docker-push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
-    - <<: *deploy-docker-image-web
-      name: Deploy services/web docker image to docker hub (arm64)
-      arch: arm64
 
     # Build and deploy using balena cloud
     # https://github.com/balena-io-playground/balena-travis-test
