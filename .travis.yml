@@ -90,12 +90,11 @@ jobs:
         # Warm up docker cache
         - docker pull ftes/clickr-rails-web-$TRAVIS_CPU_ARCH || true
         - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
-        -
       deploy:
         on:
           branch: master
         provider: script
-        script: bash bin/docker-push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
+        script: bash ../../bin/docker-push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
     - <<: *build-docker-image-web
       name: Build services/web docker image and push if branch=master (arm64)
       arch: arm64
