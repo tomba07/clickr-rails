@@ -13,7 +13,6 @@ os: linux
 # Don't use top-level `arch` field. Different languages cannot be added to the build matrix but must be specified
 # via jobs.include anyway.
 
-# TODO python
 # TODO heroku release on success
 # TODO python test and combine code coverage before reporting https://docs.travis-ci.com/user/build-stages/share-files-s3/
 # TODO remove codefresh config files and project
@@ -76,31 +75,45 @@ jobs:
      #- <<: *test-web
      #  arch: arm64
 
-    # Build services/web docker image
-    - &build-docker-image-web
+    # Build services/web docker images
+    - &build-docker-image
       name: Build services/web docker image and push if branch=master (amd64)
+      env: SERVICE=web
       stage: build
       arch: amd64
       language: minimal
       before_install:
         - ./bin/docker-template
-        - cd services/web
+        - cd services/$SERVICE
       script:
         # Warm up docker cache
-        - docker pull ftes/clickr-rails-web-$TRAVIS_CPU_ARCH || true
-        - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
+        - docker pull ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH || true
+        - docker build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
       deploy:
         on:
           branch: master
         provider: script
-        script: bash ../../bin/docker-push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
-    - <<: *build-docker-image-web
+        script: bash ../../bin/docker-push ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH
+    - <<: *build-docker-image
       name: Build services/web docker image and push if branch=master (arm64)
       arch: arm64
       before_install:
         # TODO Use balena base images
         - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
-        - cd services/web
+        - cd services/$SERVICE
+
+    # Build services/rfid-keyboard-reader docker images
+    - <<: *build-docker-image
+      name: Build services/rfid-keyboard-reader docker image and push if branch=master (amd64)
+      env: SERVICE=rfid-keyboard-reader
+    - <<: *build-docker-image
+      name: Build services/rfid-keyboard-reader docker image and push if branch=master (arm64)
+      env: SERVICE=rfid-keyboard-reader
+      arch: arm64
+      before_install:
+        # TODO Use balena base images
+        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
+        - cd services/$SERVICE
 
     # Build and deploy using balena cloud
     # https://github.com/balena-io-playground/balena-travis-test
@@ -124,19 +137,3 @@ jobs:
 #        provider: heroku
 #        api_key: # Use travis cli
 #        app: # not needed if app = clickr
-
-
-#jobs:
-#  include:
-#    - stage: test
-#    - stage: deploy
-#      install: skip # bundle install is not required
-#        - docker build -t ftes/clickr-rails-web .
-#    - language: python
-#      cache: pip
-#      before_install:
-#        - cd services/rfid-keyboard-reader
-#      install:
-#        - pip install -r requirements.txt
-#      script:
-#        - docker build -t ftes/clickr-rails-rfid-keyboard-reader .
