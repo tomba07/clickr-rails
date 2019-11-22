@@ -1,12 +1,7 @@
 # Clickr
-|   |   |
-|---|---|
-| [![Codefresh services/web build status]( https://g.codefresh.io/api/badges/pipeline/ftes/clickr-rails%2Fclickr-rails-web?type=cf-1)]( https://g.codefresh.io/public/accounts/ftes/pipelines/5dcdbe007ede0267dbdef058) | services/web tests + docker build (codefresh) |
-| [![Travis services/web build Status](https://travis-ci.com/ftes/clickr-rails.svg?branch=master)](https://travis-ci.com/ftes/clickr-rails) | services/web tests (travis) |
-| [![Codefresh services/rfid-keyboard-reader build status]( https://g.codefresh.io/api/badges/pipeline/ftes/clickr-rails%2Fclickr-rails-rfid-keyboard-reader?type=cf-1)]( https://g.codefresh.io/public/accounts/ftes/pipelines/5dd70d839c2d0250e78eec04) | services/rfid-keyboard-reader docker build (codefresh)
-| [![Codefresh build/balena-cli push build status]( https://g.codefresh.io/api/badges/pipeline/ftes/clickr-rails%2Fclickr-rails-balena-push?type=cf-1)]( https://g.codefresh.io/public/accounts/ftes/pipelines/5dd6ea6f9c2d0232918eebf2) | all services docker build for ARM (balena) |
-| [![Maintainability](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/maintainability)](https://codeclimate.com/github/ftes/clickr-rails/maintainability) | |
-| [![Test Coverage](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/test_coverage)](https://codeclimate.com/github/ftes/clickr-rails/test_coverage) | |
+[![Travis services/web build Status](https://travis-ci.com/ftes/clickr-rails.svg?branch=master)](https://travis-ci.com/ftes/clickr-rails)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/maintainability)](https://codeclimate.com/github/ftes/clickr-rails/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/test_coverage)](https://codeclimate.com/github/ftes/clickr-rails/test_coverage)
 
 ## Introduction
 TODO briefly explain domain model

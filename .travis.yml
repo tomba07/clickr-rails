@@ -14,7 +14,6 @@ os: linux
 # via jobs.include anyway.
 
 # TODO python
-# TODO push docker image on success
 # TODO heroku release on success
 # TODO python test and combine code coverage before reporting https://docs.travis-ci.com/user/build-stages/share-files-s3/
 # TODO remove codefresh config files and project
