@@ -1,0 +1,4 @@
+#!/bin/sh
+# Install travis first (gem install travis)
+
+travis lint .travis.yml
