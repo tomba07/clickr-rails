@@ -1,10 +1,10 @@
-os: linux
-arch:
-  - amd64
-  - arm64
-
-services:
-  - docker
+#os: linux
+#arch:
+#  - amd64
+#  - arm64
+#
+#services:
+#  - docker
 
 jobs:
   include:
@@ -27,13 +27,13 @@ jobs:
       script:
         - bundle exec rails db:migrate
         - bundle exec rails test
-        - docker build -t ftes/clickr-rails-web .
-    - language: python
-      cache: pip
-      before_install:
-        - cd services/rfid-keyboard-reader
-      install:
-        - pip install -r requirements.txt
-      script:
-        - docker build -t ftes/clickr-rails-rfid-keyboard-reader .
+#        - docker build -t ftes/clickr-rails-web .
+#    - language: python
+#      cache: pip
+#      before_install:
+#        - cd services/rfid-keyboard-reader
+#      install:
+#        - pip install -r requirements.txt
+#      script:
+#        - docker build -t ftes/clickr-rails-rfid-keyboard-reader .
 # TODO balena push
