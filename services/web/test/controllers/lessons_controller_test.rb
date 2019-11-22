@@ -33,7 +33,7 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
     new_lesson = build(:lesson)
 
     assert_difference('Lesson.count') do
-      post lessons_url, params: { lesson: { redirect_to_previous_page: true, school_class_id: new_lesson.school_class_id, name: new_lesson.name } }, headers: { HTTP_REFERER: 'http://clickr.ftes.de'}
+      post lessons_url, params: { lesson: { redirect_back: true, school_class_id: new_lesson.school_class_id, name: new_lesson.name } }, headers: { HTTP_REFERER: 'http://clickr.ftes.de'}
     end
 
     assert_redirected_to 'http://clickr.ftes.de'

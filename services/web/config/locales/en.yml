@@ -122,6 +122,7 @@ en:
   students:
     create:
       notice: "Student was created."
+      mapping_notice: "An incomplete device mapping was also created for the student."
     update:
       notice: "Student was updated."
     destroy:
@@ -138,7 +139,7 @@ en:
   lesson_executions:
     index:
       select_school_class_notice: "Select a class."
-      title: "Lesson execution"
+      title: "Lesson %{lesson_name}"
       create_new_lesson_text: "The last lesson seems to be quite old. Do you want to create a new one?"
       create_new_lesson_submit: "Create lesson"
   users:

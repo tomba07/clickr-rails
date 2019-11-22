@@ -36,7 +36,7 @@ class SchoolClass < ApplicationRecord
     # Can't use double splat operator { **tmp, s.seat_hash => s } with non-symbol (object) keys
     students_index = students.reduce({}) { |tmp, s| tmp.merge({seat_hash(s.seat_row, s.seat_col) => s}) }
     seat_coordinates = (row_min - 1..row_max + 1).to_a.product((col_min - 1..col_max + 1).to_a)
-    return seat_coordinates.map do |row, col|
+    seats = seat_coordinates.map do |row, col|
       {
         row: row - row_offset,
         col: col - col_offset,
@@ -45,6 +45,8 @@ class SchoolClass < ApplicationRecord
         is_border: row < row_min || row > row_max || col < col_min || col > col_max,
       }
     end
+
+    return { seats: seats, row_offset: row_offset, col_offset: col_offset}
   end
 
   def seating_plan=(seats)

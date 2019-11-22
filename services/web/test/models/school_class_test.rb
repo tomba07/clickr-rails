@@ -42,7 +42,7 @@ class SchoolClassTest < ActiveSupport::TestCase
       {row: 2, col: 1, is_empty: true, student: nil, is_border: true},  {row: 2, col: 2, is_empty: false, student: s1, is_border: false}, {row: 2, col: 3, is_empty: true, student: nil, is_border: false}, {row: 2, col: 4, is_empty: true, student: nil, is_border: true},
       {row: 3, col: 1, is_empty: true, student: nil, is_border: true},  {row: 3, col: 2, is_empty: true, student: nil, is_border: false}, {row: 3, col: 3, is_empty: false, student: s2, is_border: false}, {row: 3, col: 4, is_empty: true, student: nil, is_border: true},
       {row: 4, col: 1, is_empty: true, student: nil, is_border: true},  {row: 4, col: 2, is_empty: true, student: nil, is_border: true},  {row: 4, col: 3, is_empty: true, student: nil, is_border: true},  {row: 4, col: 4, is_empty: true, student: nil, is_border: true},
-    ], @subject.seating_plan
+    ], @subject.seating_plan[:seats]
   end
 
   test 'seating_plan= updates all students in transaction (swap places)' do

@@ -2,7 +2,7 @@
   %b #{t('common.name')}:
   = @school_class.name
 
-= render 'seating_plan', seating_plan: @school_class.seating_plan, endpoint: seating_plan_school_class_path(@school_class)
+= render 'seating_plan', school_class: @school_class
 
 .buttons
   = link_to t('common.edit'), edit_school_class_path(@school_class), class: 'button is-primary'

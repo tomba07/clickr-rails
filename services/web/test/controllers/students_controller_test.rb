@@ -29,6 +29,18 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_url(Student.last)
   end
 
+  test "should create incomplete device mapping when creating student if requested" do
+    new_student = build(:student)
+
+    assert_difference 'Student.count', 1 do
+      assert_difference 'StudentDeviceMapping.count', 1 do
+        post students_url, params: { student: { name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row, create_incomplete_mapping: true } }
+      end
+    end
+
+    assert_redirected_to student_url(Student.last)
+  end
+
   test "should show student" do
     get student_url(@student)
     assert_response :success

@@ -29,7 +29,15 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to @student, notice: t('.notice') }
+        @student_device_mapping = StudentDeviceMapping.create!(student: @student, school_class_id: @student.school_class_id) if params.dig(:student, :create_incomplete_mapping)
+        notice = [
+          t('.notice'),
+          (t('.mapping_notice') if @student_device_mapping),
+        ].compact.join('<br/>')
+
+        redirect_back fallback_location: student_path(@student), notice: notice and return if params.dig(:student, :redirect_back)
+
+        format.html { redirect_to @student, notice: notice }
         format.json { render :show, status: :created, location: @student }
       else
         format.html { render :new }

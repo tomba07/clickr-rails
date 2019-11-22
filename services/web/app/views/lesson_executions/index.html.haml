@@ -1,14 +1,15 @@
-%h1.title= t('.title')
+%h1.title= t('.title', lesson_name: @lesson&.name)
 
 - if @suggest_creating_new_lesson
-  .section
-    .notification.is-warning
-      = t('.create_new_lesson_text')
+  .notification.is-warning
+    = t('.create_new_lesson_text')
 
-      -# TODO Show potential errors on this page
-      = form_with model: Lesson.new, local: true do |f|
-        = f.hidden_field :redirect_to_previous_page, value: true
-        = f.text_field :name, value: "#{@school_class.name} - #{I18n.l Date.today, format: :short}"
-        .actions.buttons
-          = f.submit_primary t('.create_new_lesson_submit')
-          = yield
+    -# TODO Show potential errors on this page
+    = form_with model: Lesson.new, local: true do |f|
+      = f.hidden_field :redirect_back, value: true
+      = f.text_field :name, value: "#{@school_class.name} - #{I18n.l Date.today, format: :short}"
+      .actions.buttons
+        = f.submit_primary t('.create_new_lesson_submit')
+        = yield
+
+= render 'school_classes/seating_plan', school_class: @school_class
