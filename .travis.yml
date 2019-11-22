@@ -1,3 +1,6 @@
+# Enables build config validation
+version: ~> 1.0
+
 os: linux
 arch:
   - amd64
