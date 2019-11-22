@@ -15,9 +15,7 @@ jobs:
       arch: amd64
       stage: test
       language: ruby
-      cache:
-#        yarn: true
-        bundler: true
+      cache: bundler
       before_install:
         - cd services/web
         # update to bundler 2.0 https://docs.travis-ci.com/user/languages/ruby/#bundler-20

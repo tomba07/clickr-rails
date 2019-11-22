@@ -48,6 +48,7 @@ Rails.application.configure do
 
   # Disable asset compilation in tests (do not require yarn/node_modules/bulma)
   config.assets.compile = false
+  config.assets.unknown_asset_fallback = true # do not raise an error when asset is not found
 
   # create associations when building (not saving) parent
   FactoryBot.use_parent_strategy = false
