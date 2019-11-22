@@ -77,6 +77,7 @@ development:
 
 test:
   <<: *default
+  # Disable compilation for tests (do not require yarn/node_modules)
   compile: false
 
   # Compile test packs to a separate directory

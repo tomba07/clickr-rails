@@ -46,6 +46,9 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
+  # Disable asset compilation in tests (do not require yarn/node_modules/bulma)
+  config.assets.compile = false
+
   # create associations when building (not saving) parent
   FactoryBot.use_parent_strategy = false
 end
