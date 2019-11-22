@@ -33,6 +33,7 @@ jobs:
   include:
     # Test services/web
     - &test-web
+      name: Test services/web (amd64)
       arch: amd64
       language: ruby
       rvm: 2.5.7
@@ -50,6 +51,7 @@ jobs:
           - services/web/public/assets
           - services/web/public/packs
           - services/web/public/packs-test
+          - docker_images
       before_install:
         # Install codeclimate test reporter if not present
         - cd services/web
@@ -78,18 +80,21 @@ jobs:
 
     # Build services/web docker image
     - &build-docker-image-web
+      name: Build services/web docker image (amd64)
       stage: build-and-push-docker-images
       arch: amd64
       language: minimal
       env:
         - RAILS_ENV=production
       before_install:
+        - docker load -i docker_images/images.tar || true
         - ./bin/docker-template
         - cd services/web
       script:
         - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
         # TODO push if branch master
     - <<: *build-docker-image-web
+      name: Build services/web docker image (arm64)
       arch: arm64
       before_install:
         # TODO Use balena base images
@@ -98,6 +103,7 @@ jobs:
 
     # Push docker image
     - &deploy-docker-image-web
+      name: Deploy services/web docker image to docker hub (amd64)
       stage: deploy
       arch: amd64
       language: minimal
@@ -107,11 +113,13 @@ jobs:
           - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           - docker push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
     - <<: *deploy-docker-image-web
+      name: Deploy services/web docker image to docker hub (arm64)
       arch: arm64
 
     # Build and deploy using balena cloud
     # https://github.com/balena-io-playground/balena-travis-test
-    - stage: deploy
+    - name: Deploy everything to balena
+      stage: deploy
       language: minimal
       script:
         - eval "$(ssh-agent -s)" #start the ssh agent
@@ -120,7 +128,7 @@ jobs:
         - ssh-add ./id_rsa
         - cat build/balena-cli/git.balena-cloud.com.ssh-keyscan >> ~/.ssh/known_hosts
         - git remote add balena $BALENA_REMOTE
-        - git push balena master
+        - git push --force balena master
 
     # Deploy to heroku
 #    - stage: deploy
