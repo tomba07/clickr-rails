@@ -13,13 +13,20 @@ os: linux
 # TODO balena push on success (using git -> easier)
 # TODO heroku release on success
 
+stages:
+  - test
+  - build-docker-images
+#  - name: deploy
+#    if: branch = master
+
+services:
+  - docker
+
 jobs:
   include:
-    # stage: test is the default (can be omitted)
     - &test-web
       # $TRAVIS_CPU_ARCH
       arch: amd64
-      stage: test
       language: ruby
       cache:
         bundler: true
@@ -48,15 +55,15 @@ jobs:
         - bundle exec rails test
     - <<: *test-web
       arch: arm64
-
-#services:
-#  - docker
-
-#stages:
-#  - compile
-#  - test
-#  - name: deploy
-#    if: branch = master
+    - &build-docker-image-web
+      stage: build-docker-images
+      arch: amd64
+      before_install:
+        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
+        - cd services/web
+      script:
+        -
+        - docker build -t ftes/clickr-rails-$TRAVIS_CPU_ARCH .
 
 #jobs:
 #  include:
@@ -72,4 +79,3 @@ jobs:
 #        - pip install -r requirements.txt
 #      script:
 #        - docker build -t ftes/clickr-rails-rfid-keyboard-reader .
-# TODO balena push
