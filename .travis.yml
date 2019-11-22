@@ -5,6 +5,8 @@
 # https://docs.travis-ci.com/user/build-stages/using-yaml-aliases/
 # https://docs.travis-ci.com/user/multi-cpu-architectures/
 # https://docs.travis-ci.com/user/build-stages/share-docker-image/
+# https://docs.travis-ci.com/user/docker/#pushing-a-docker-image-to-a-registry
+# https://docs.travis-ci.com/user/deployment/heroku/
 
 os: linux
 
@@ -13,7 +15,6 @@ os: linux
 
 # TODO python
 # TODO push docker image on success
-# TODO balena push on success (using git -> easier)
 # TODO heroku release on success
 # TODO python test and combine code coverage before reporting https://docs.travis-ci.com/user/build-stages/share-files-s3/
 # TODO remove codefresh config files and project
@@ -22,7 +23,7 @@ os: linux
 stages:
   - test
   - build-and-push-docker-images
-  - name: balena-push
+  - name: deploy
     if: branch = master
 
 services:
@@ -86,7 +87,8 @@ jobs:
         - ./bin/docker-template
         - cd services/web
       script:
-        - docker build -t ftes/clickr-rails-$TRAVIS_CPU_ARCH .
+        - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
+        # TODO push if branch master
     - <<: *build-docker-image-web
       arch: arm64
       before_install:
@@ -94,12 +96,23 @@ jobs:
         - ./bin/docker-template
         - cd services/web
 
+    # Push docker image
+    - &deploy-docker-image-web
+      stage: deploy
+      arch: amd64
+      language: minimal
+      deploy:
+        provider: script
+        script:
+          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          - docker push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
+    - <<: *deploy-docker-image-web
+      arch: arm64
+
     # Build and deploy using balena cloud
     # https://github.com/balena-io-playground/balena-travis-test
-    - stage: balena-push
+    - stage: deploy
       language: minimal
-      # skip installation
-      install: true
       script:
         - eval "$(ssh-agent -s)" #start the ssh agent
         - echo -e $BALENA_SSH_KEY > id_rsa
@@ -108,6 +121,14 @@ jobs:
         - cat build/balena-cli/git.balena-cloud.com.ssh-keyscan >> ~/.ssh/known_hosts
         - git remote add balena $BALENA_REMOTE
         - git push balena master
+
+    # Deploy to heroku
+#    - stage: deploy
+#      language: minimal
+#      deploy:
+#        provider: heroku
+#        api_key: # Use travis cli
+#        app: # not needed if app = clickr
 
 
 #jobs:
