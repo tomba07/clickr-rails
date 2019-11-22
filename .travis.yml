@@ -89,7 +89,7 @@ jobs:
       script:
         # Warm up docker cache
         - docker pull ftes/clickr-rails-web-$TRAVIS_CPU_ARCH || true
-        - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
+        - docker build -t ftes/clickr-rails-web-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-web-$TRAVIS_CPU_ARCH .
         # TODO push if branch master
     - <<: *build-docker-image-web
       name: Build services/web docker image (arm64)
@@ -107,9 +107,7 @@ jobs:
       language: minimal
       deploy:
         provider: script
-        script:
-          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          - docker push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
+        script: bash bin/docker-push ftes/clickr-rails-web-$TRAVIS_CPU_ARCH
     - <<: *deploy-docker-image-web
       name: Deploy services/web docker image to docker hub (arm64)
       arch: arm64
