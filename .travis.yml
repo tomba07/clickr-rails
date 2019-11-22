@@ -28,14 +28,18 @@ jobs:
       # $TRAVIS_CPU_ARCH
       arch: amd64
       language: ruby
+      rvm: 2.5.7
+      env:
+        - RAILS_ENV=test
       cache:
         bundler: true
         yarn: true # $HOME/.cache/yarn
         npm: true # $HOME/.npm or node_modules
         directories:
-        - node_modules # redundant to above?
         - $HOME/.yarn
-        - tmp/cache
+        - services/web/node_modules
+        - services/web/vendor/bundle # bundler cache
+        - services/web/tmp/cache # rails cache
       before_install:
         - cd services/web
         # update to bundler 2.0 https://docs.travis-ci.com/user/languages/ruby/#bundler-20
@@ -43,13 +47,12 @@ jobs:
         - nvm install node
         - nvm use node
         - curl -o- -L https://yarnpkg.com/install.sh | bash
-      bundler_args: --without development production --deployment
+      install:
+        - bundler install --jobs 4 --without development production --deployment
+        - yarn install --production --frozen-lockfile
       before_script:
         # precompile for (hopefully) better speed when executing. Does this help with caching?
         - RAILS_ENV=production REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
-      rvm: 2.5.7
-      env:
-        - RAILS_ENV=test
       script:
         - bundle exec rails db:migrate
         - bundle exec rails test
@@ -58,12 +61,15 @@ jobs:
     - &build-docker-image-web
       stage: build-docker-images
       arch: amd64
+      env:
+        - RAILS_ENV=production
       before_install:
         - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
         - cd services/web
       script:
-        -
         - docker build -t ftes/clickr-rails-$TRAVIS_CPU_ARCH .
+    - <<: *build-docker-image-web
+      arch: arm64
 
 #jobs:
 #  include:
