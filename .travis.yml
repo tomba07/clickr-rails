@@ -1,14 +1,20 @@
-#os: linux
-#arch:
-#  - amd64
-#  - arm64
-#
-#services:
-#  - docker
+# https://docs.travis-ci.com/user/build-stages/matrix-expansion/
+# https://docs.travis-ci.com/user/build-stages/using-yaml-aliases/
+# https://docs.travis-ci.com/user/multi-cpu-architectures/
+
+os: linux
+
+# Don't use top-level `arch` field. Different languages cannot be added to the build matrix but must be specified
+# via jobs.include anyway.
 
 jobs:
   include:
-    - language: ruby
+    # stage: test is the default (can be omitted)
+    - &test-web
+      # $TRAVIS_CPU_ARCH
+      arch: amd64
+      stage: test
+      language: ruby
       cache:
         yarn: true
         bundler: true
@@ -21,12 +27,29 @@ jobs:
       install:
         - bundle install --jobs 4 --without development --deployment
         - yarn install --production --frozen-lockfile
-    rvm: 2.5.7
+      rvm: 2.5.7
       env:
         - RAILS_ENV=test
       script:
         - bundle exec rails db:migrate
         - bundle exec rails test
+    - <<: *test-web
+      arch: arm64
+
+#services:
+#  - docker
+
+#stages:
+#  - compile
+#  - test
+#  - name: deploy
+#    if: branch = master
+
+#jobs:
+#  include:
+#    - stage: test
+#    - stage: deploy
+#      install: skip # bundle install is not required
 #        - docker build -t ftes/clickr-rails-web .
 #    - language: python
 #      cache: pip
