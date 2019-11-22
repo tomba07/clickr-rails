@@ -36,6 +36,8 @@ jobs:
         directories:
           - $HOME/.rvm # Probably already the case with `language: ruby`
           - $HOME/.nvm
+          - $HOME/.npm
+          - $HOME/.yarn
           - services/web/node_modules
           - services/web/vendor/bundle # bundler cache
           - services/web/tmp/cache # rails cache
@@ -45,7 +47,8 @@ jobs:
         - gem install bundler
         - nvm install node
         - nvm use node
-        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        # Install yarn if not present
+        - ls $HOME/.yarn > /dev/null || curl -o- -L https://yarnpkg.com/install.sh | bash
       install:
         - bundler install --jobs 4 --without development production --deployment
         - yarn install --production --frozen-lockfile
