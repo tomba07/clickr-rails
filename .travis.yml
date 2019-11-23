@@ -20,7 +20,6 @@ os: linux
 
 stages:
   - test
-  - build
   - name: deploy
     if: branch = master
 
@@ -84,15 +83,15 @@ jobs:
     - &build-docker-image
       name: Build services/web docker image and push if branch=master (amd64)
       env: SERVICE=web
-      stage: build
+      stage: test
       arch: amd64
       language: minimal
       before_install:
         - ./bin/docker-template
         - cd services/$SERVICE
       script:
-        # TODO Cache is not used for build stage (docker multi stage build)
         # Warm up docker cache
+        # Pull, build and push `build` stage seperately so that it is cached
         - docker pull ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build || true
         - docker pull ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH || true
         - docker build --target build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
