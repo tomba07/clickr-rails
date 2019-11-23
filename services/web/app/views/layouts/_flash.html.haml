@@ -1,5 +1,5 @@
 - if notice or alert
-  %section.section
+  %section.section#flash{ 'data-controller': 'flash' }
     .container
       - if notice
         .notification.is-info= notice.html_safe
