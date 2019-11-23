@@ -27,7 +27,7 @@ COPY Gemfile.lock .
 COPY package.json .
 COPY yarn.lock .
 
-RUN bundle install --jobs 4 --without development test heroku --no-cache --deployment \
+RUN bundle install --jobs 4 --without development test --no-cache --deployment \
 # https://www.georg-ledermann.de/blog/2018/04/19/dockerize-rails-the-lean-way/
   && rm -rf vendor/bundle/cache/*.gem \
   && find vendor/bundle/gems/ -name "*.c" -delete || true \

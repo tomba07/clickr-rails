@@ -65,7 +65,7 @@ jobs:
         - curl -o- -L https://yarnpkg.com/install.sh | bash
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
       install:
-        - bundle install --jobs 4 --without development production heroku --deployment
+        - bundler install --jobs 4 --without development production --deployment
         - yarn install --production --frozen-lockfile
       before_script:
         # precompile for (hopefully) better speed when executing. Does this help with caching?
