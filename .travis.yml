@@ -135,10 +135,12 @@ jobs:
         - git remote add balena $BALENA_REMOTE
         - git push balena master
 
-    # Deploy to heroku
-#    - stage: deploy
-#      language: minimal
-#      deploy:
-#        provider: heroku
-#        api_key: # Use travis cli
-#        app: # not needed if app = clickr
+    # Deploy services/web to heroku
+    - name: Deploy services/web to heroku
+      stage: deploy
+      language: minimal
+      script:
+        - docker pull ftes/clickr-rails-web-amd64
+        - docker login --username=_ --password=$HEROKU_TOKEN registry.heroku.com
+        - docker tag ftes/clickr-rails-web-amd64 registry.heroku.com/clickr-rails/web
+        - docker push registry.heroku.com/clickr-rails/web
