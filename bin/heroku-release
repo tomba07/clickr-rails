@@ -1,0 +1,14 @@
+#!/bin/sh
+set -xe
+
+curl -n -X PATCH https://api.heroku.com/apps/clickr-rails/formation \
+  -d "{
+  \"updates\": [
+    {
+      \"type\": \"web\",
+      \"docker_image\": \"$1\"
+    }
+  ]
+}" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/vnd.heroku+json; version=3.docker-releases"
