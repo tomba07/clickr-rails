@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :buttons, only: [:index]
   resources :student_device_mappings
   resources :question_responses
   resources :clicks

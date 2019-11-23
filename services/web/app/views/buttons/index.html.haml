@@ -1,0 +1,10 @@
+.virtual-buttons
+  - @coordinates.each do |c|
+    - if c[:empty]
+      %div{ style: "grid-row: #{c[:y]}; grid-column: #{c[:x]};" }
+    - else
+      %div{ style: "grid-row: #{c[:y]}; grid-column: #{c[:x]};" }
+        = form_with model: Click.new, url: clicks_path(format: :json) do |f|
+          = f.hidden_field :device_id, value: "#{c[:x]}/#{c[:y]}"
+          = f.hidden_field :device_type, value: "web_virtual_button"
+          = f.submit 'Press me', class: 'is-danger is-fullwidth'

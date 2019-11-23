@@ -45,6 +45,11 @@
                   = icon('fas', 'reply')
                 %div= t('.admin.question_responses')
       .navbar-end
+        - if Rails.application.config.clickr.show_virtual_buttons_link_in_navbar
+          = link_to buttons_path, class: "navbar-item #{'is-active' if controller_name == 'buttons'}" do
+            .icon
+              = icon('fas', 'bolt')
+            %div= t('.buttons')
         - if user_signed_in?
           .navbar-item.has-dropdown.is-hoverable.is-right
             %a.navbar-link

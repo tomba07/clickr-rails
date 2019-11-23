@@ -1,8 +1,10 @@
 defaults: &defaults
-  suggest_new_lesson_after_minutes: 120
+  suggest_new_lesson_after_minutes: <= ENV.fetch('CLICKR_SUGGEST_NEW_LESSON_AFTER_MINUTES', 120 %>
+  show_virtual_buttons_link_in_navbar: <%= ENV.fetch('CLICKR_SHOW_VIRTUAL_BUTTONS_LINK', false) %>
 
 development:
   <<: *defaults
+  show_virtual_buttons_link_in_navbar: true
 
 test:
   <<: *defaults

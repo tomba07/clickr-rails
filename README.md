@@ -91,3 +91,8 @@ Initialized via `bin/setup-environment-variables`.
 - new adapters (e.g. raw I/O)
 - `rfid-keyboar-reader`: support selecting by device.name (`HXGCoLtd Keyboard`)
 - `web`: check that created_at indexes are used (order by desc)
+
+## Configuration
+App environment variables:
+- `CLICKR_SUGGEST_NEW_LESSON_AFTER_MINUTES`: default `120`
+- `CLICKR_SHOW_VIRTUAL_BUTTONS_LINK`: default `false` (in `RAILS_ENV=development` default `true`)

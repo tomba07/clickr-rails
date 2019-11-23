@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  */
 
-@import '@bulma.scss';
-@import '@fontawesome.scss';
-@import 'seating_plan.scss';
+@import '@bulma';
+@import '@fontawesome';
+@import 'buttons';
+@import 'seating_plan';
