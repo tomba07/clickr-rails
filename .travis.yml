@@ -28,6 +28,11 @@ services:
   - docker
 
 jobs:
+  # Do not wait for deploy jobs (allow_failures: true)
+  fast_finish: true
+  allow_failures:
+    - stage: deploy
+
   include:
     # Test services/web
     - &test-web
