@@ -29,9 +29,6 @@
           .card-content
             %p.title.has-text-centered= seat[:student].name
           %footer.card-footer
-            %p.card-footer-item.has-text-weight-bold
-              -# TODO Add sum
-              4
-            %p.card-footer-item.has-text-grey
-              -# TODO Add sum
-              10
+            -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
+            %p.card-footer-item.has-text-weight-bold= seat[:student].question_response_sum_for_most_recent_lesson
+            %p.card-footer-item.has-text-grey= seat[:student].question_response_sum
