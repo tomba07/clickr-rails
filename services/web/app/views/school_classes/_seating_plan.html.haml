@@ -1,34 +1,51 @@
+- edit = params['edit-seating-plan'] == 'true'
+- border = edit ? 1 : 0
+- row_offset_to_base_1 = seating_plan.row_min - 1 - border
+- col_offset_to_base_1 = seating_plan.col_min - 1 - border
+
 -# https://johnbeatty.co/2018/03/09/stimulus-js-tutorial-how-do-i-drag-and-drop-items-in-a-list/
-.grid--draggable{ 'data-controller': 'seating-plan',
-                  'data-seating-plan-endpoint': seating_plan_school_class_path(school_class),
-                  'data-action': 'dragstart->seating-plan#onDragStart dragover->seating-plan#onDragOver dragenter->seating-plan#onDragEnter drop->seating-plan#onDrop dragend->seating-plan#onDragEnd' }
-  - school_class.seating_plan[:seats].each_with_index do |seat, i|
-    - if seat[:is_empty]
-      .grid__item.grid__item--empty{ 'data-row': seat[:row],
-                                     'data-col': seat[:col],
-                                     'tabindex': i,
-                                     onmousedown: 'setTimeout(() => this.querySelector("input[type=text]").focus(), 0)',
-                                     style: "grid-row: #{seat[:row]}; grid-column: #{seat[:col]};",
-                                     class: ('grid__item--border' if seat[:is_border]) }
-        .create-student
-          = form_with model: Student.new, local: true do |f|
-            = f.text_field_with_label :name
-            = f.hidden_field :school_class_id, value: school_class.id
-            = f.hidden_field :seat_row, value: seat[:row] + school_class.seating_plan[:row_offset]
-            = f.hidden_field :seat_col, value: seat[:col] + school_class.seating_plan[:col_offset]
-            = f.hidden_field :create_incomplete_mapping, value: true
-            = f.hidden_field :redirect_back, value: true
-            = f.submit_primary t('common.save')
-    - else
-      .grid__item{ draggable: 'true',
-                  'data-item-id': seat[:student].id,
-                  'data-row': seat[:row],
-                  'data-col': seat[:col],
-                  style: "grid-row: #{seat[:row]}; grid-column: #{seat[:col]};" }
+.seating-plan{ data: { controller: 'seating-plan',
+                       'seating-plan-row-offset': row_offset_to_base_1,
+                       'seating-plan-col-offset': col_offset_to_base_1,
+                       'seating-plan-endpoint': seating_plan_school_class_path(school_class),
+                       action: 'dragstart->seating-plan#onDragStart dragover->seating-plan#onDragOver dragenter->seating-plan#onDragEnter drop->seating-plan#onDrop dragend->seating-plan#onDragEnd',
+                     },
+              class: [('seating-plan--editable' if edit)].compact.join(' ') }
+  - seating_plan.coordinates(border: border).each do |row, col|
+    - student = seating_plan.student(row: row, col: col)
+    - if student
+      .seat--student{ draggable: "#{edit}",
+                      data: { 'item-id': student.id,
+                              row: row,
+                              col: col,
+                            },
+                      style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
         .card
           .card-content
-            %p.title.has-text-centered= seat[:student].name
+            %p.title.has-text-centered= student.name
           %footer.card-footer
             -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
-            %p.card-footer-item.has-text-weight-bold= seat[:student].question_response_sum_for_most_recent_lesson
-            %p.card-footer-item.has-text-grey= seat[:student].question_response_sum
+            %p.card-footer-item.has-text-weight-bold= student.question_response_sum_for_most_recent_lesson
+            %p.card-footer-item.has-text-grey= student.question_response_sum
+    - else
+      .seat--empty{ data: { row: row, col: col },
+                    onmousedown: 'setTimeout(() => this.querySelector("input[type=text]").focus(), 0)',
+                    style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
+        - if edit
+          .card
+            .card-content
+              .create-student
+                = form_with model: Student.new, local: true, class: 'has-text-centered' do |f|
+                  = f.text_field :name
+                  = f.hidden_field :school_class_id, value: school_class.id
+                  = f.hidden_field :seat_row, value: row
+                  = f.hidden_field :seat_col, value: col
+                  = f.hidden_field :create_incomplete_mapping, value: true
+                  = f.hidden_field :redirect_back, value: true
+                  = f.submit_primary t('common.create')
+
+.has-text-centered
+  - if edit
+    = link_to t('seating_plan.done'), { 'edit-seating-plan': nil }, class: 'button is-primary'
+  - else
+    = link_to t('seating_plan.edit'), { 'edit-seating-plan': true }, class: 'button is-primary'

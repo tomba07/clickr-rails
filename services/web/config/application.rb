@@ -17,5 +17,8 @@ module Clickr
     # the framework and any gems in your application.
 
     config.clickr = config_for(:clickr)
+
+    # Autoload /lib folder
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

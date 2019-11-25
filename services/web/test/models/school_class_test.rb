@@ -32,25 +32,12 @@ class SchoolClassTest < ActiveSupport::TestCase
     assert_equal false, @subject.suggest_creating_new_lesson?
   end
 
-  test 'students_and_empty_seats adds empty seats (inside and as a border) and enforces positive row/col values' do
-    s1, s2 = @subject.students.create! [
-      { name: '1', seat_row: 1, seat_col: 1 },
-      { name: '4', seat_row: 2, seat_col: 2 }
-   ]
-    assert_equal [
-      {row: 1, col: 1, is_empty: true, student: nil, is_border: true},  {row: 1, col: 2, is_empty: true, student: nil, is_border: true},  {row: 1, col: 3, is_empty: true, student: nil, is_border: true},  {row: 1, col: 4, is_empty: true, student: nil, is_border: true},
-      {row: 2, col: 1, is_empty: true, student: nil, is_border: true},  {row: 2, col: 2, is_empty: false, student: s1, is_border: false}, {row: 2, col: 3, is_empty: true, student: nil, is_border: false}, {row: 2, col: 4, is_empty: true, student: nil, is_border: true},
-      {row: 3, col: 1, is_empty: true, student: nil, is_border: true},  {row: 3, col: 2, is_empty: true, student: nil, is_border: false}, {row: 3, col: 3, is_empty: false, student: s2, is_border: false}, {row: 3, col: 4, is_empty: true, student: nil, is_border: true},
-      {row: 4, col: 1, is_empty: true, student: nil, is_border: true},  {row: 4, col: 2, is_empty: true, student: nil, is_border: true},  {row: 4, col: 3, is_empty: true, student: nil, is_border: true},  {row: 4, col: 4, is_empty: true, student: nil, is_border: true},
-    ], @subject.seating_plan[:seats]
-  end
-
   test 'seating_plan= updates all students in transaction (swap places)' do
     s1, s2 = @subject.students.create! [
       { name: '1', seat_row: 1, seat_col: 1 },
       { name: '4', seat_row: 2, seat_col: 2 }
    ]
-    @subject.seating_plan = [
+    @subject.update_seats [
       { student_id: s1.id, row: 2, col: 2 },
       { student_id: s2.id, row: 1, col: 1 },
     ]

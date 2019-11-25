@@ -127,6 +127,7 @@ de:
     name: "Name"
     new: "Neu"
     select: "Auswählen"
+    create: "Hinzufügen"
   devices:
     device: "Gerät"
     device_type: "Gerätetyp"
@@ -155,3 +156,6 @@ de:
         question_responses: "Antworten"
       select_a_class: "Klasse auswählen"
       buttons: "Knöpfe"
+  seating_plan:
+    done: "Bearbeitung des Sitzplans beenden"
+    edit: "Sitzplan bearbeiten"

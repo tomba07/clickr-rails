@@ -10,6 +10,7 @@ class SchoolClassesController < ApplicationController
   # GET /school_classes/1
   # GET /school_classes/1.json
   def show
+    @seating_plan = SeatingPlan.new(@school_class.students)
   end
 
   # GET /school_classes/new
@@ -64,7 +65,7 @@ class SchoolClassesController < ApplicationController
   def seating_plan
     seating_plan = seating_plan_params[:students].map { |s| s.to_h.symbolize_keys }
     puts "Plan: #{seating_plan.inspect}"
-    @school_class.seating_plan = seating_plan
+    @school_class.update_seats seating_plan
     respond_to do |format|
       format.html { redirect_back fallback_location: school_classes_path, notice: t('.notice') }
     end

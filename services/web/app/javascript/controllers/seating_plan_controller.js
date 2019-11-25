@@ -4,7 +4,6 @@ import Rails from '@rails/ujs'
 // https://johnbeatty.co/2018/03/09/stimulus-js-tutorial-how-do-i-drag-and-drop-items-in-a-list/
 export default class extends Controller {
   onDragStart(event) {
-    this.element.classList.add('grid--dragging')
     const data = JSON.stringify({
       row: event.target.getAttribute('data-row'),
       col: event.target.getAttribute('data-col'),
@@ -27,7 +26,7 @@ export default class extends Controller {
   }
 
   getPositions() {
-    const items = [...this.element.querySelectorAll('.grid__item[draggable]')]
+    const items = [...this.element.querySelectorAll('.seat--student')]
     return items.map(el => ({
       student_id: el.getAttribute('data-item-id'),
       row: this.getPosition(el)[0],
@@ -38,8 +37,8 @@ export default class extends Controller {
   setPosition(el, [row, col]) {
     el.setAttribute('data-row', row)
     el.setAttribute('data-col', col)
-    el.style['grid-row'] = row
-    el.style['grid-column'] = col
+    el.style['grid-row'] = row - parseInt(this.data.get('row-offset'))
+    el.style['grid-column'] = col - parseInt(this.data.get('col-offset'))
   }
 
   swap(el1, el2) {
@@ -72,7 +71,6 @@ export default class extends Controller {
   }
 
   onDragEnd(event) {
-    this.element.classList.remove('grid--dragging')
     this.submit({
       school_class: {
         students: this.getPositions()

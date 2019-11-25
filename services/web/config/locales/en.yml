@@ -158,6 +158,7 @@ en:
     name: "Name"
     new: "New"
     select: "Select"
+    create: "Create"
   devices:
     device: "Device"
     device_type: "Device type"
@@ -186,3 +187,6 @@ en:
         question_responses: "Responses"
       select_a_class: "Select a class"
       buttons: "Buttons"
+  seating_plan:
+    done: "Done editing seating plan"
+    edit: "Edit seating plan"
