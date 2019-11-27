@@ -34,9 +34,6 @@ class StudentsController < ApplicationController
           t('.notice'),
           (t('.mapping_notice') if @student_device_mapping),
         ].compact.join('<br/>')
-
-        redirect_back fallback_location: student_path(@student), notice: notice and return if params.dig(:student, :redirect_back)
-
         format.html { redirect_to @student, notice: notice }
         format.json { render :show, status: :created, location: @student }
       else

@@ -29,8 +29,8 @@ export default class extends Controller {
     const items = [...this.element.querySelectorAll('.seat--student')]
     return items.map(el => ({
       student_id: el.getAttribute('data-item-id'),
-      row: this.getPosition(el)[0],
-      col: this.getPosition(el)[1],
+      seat_row: this.getPosition(el)[0],
+      seat_col: this.getPosition(el)[1],
     }))
   }
 
@@ -56,10 +56,27 @@ export default class extends Controller {
     event.preventDefault()
   }
 
+  get endpoint() {
+    return this.data.get('endpoint')
+  }
+
+  onStudentCreated(event) {
+    Rails.ajax({
+      type: 'GET',
+      url: this.endpoint,
+      success: this.onSeatingPlanResponse,
+    })
+  }
+
+  onSeatingPlanResponse = (response, status, xhr) => {
+    this.element.innerHTML = xhr.responseText
+  }
+
   submit(data) {
     Rails.ajax({
-      url: this.data.get('endpoint'),
-      type: 'put',
+      url: this.endpoint,
+      type: 'PUT',
+      success: this.onSeatingPlanResponse,
       beforeSend(xhr, options) {
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
         // Workaround: add options.data late to avoid Content-Type header to already being set in stone
@@ -72,9 +89,7 @@ export default class extends Controller {
 
   onDragEnd(event) {
     this.submit({
-      school_class: {
-        students: this.getPositions()
-      }
+      students: this.getPositions()
     })
   }
 }

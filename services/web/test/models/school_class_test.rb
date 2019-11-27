@@ -38,8 +38,8 @@ class SchoolClassTest < ActiveSupport::TestCase
       { name: '4', seat_row: 2, seat_col: 2 }
    ]
     @subject.update_seats [
-      { student_id: s1.id, row: 2, col: 2 },
-      { student_id: s2.id, row: 1, col: 1 },
+      { student_id: s1.id, seat_row: 2, seat_col: 2 },
+      { student_id: s2.id, seat_row: 1, seat_col: 1 },
     ]
     s1.reload
     s2.reload

@@ -3,17 +3,17 @@ Rails.application.routes.draw do
   resources :student_device_mappings
   resources :question_responses
   resources :clicks
-  resources :lesson_executions, only: [:index]
+  resource :lesson_execution, only: [:show]
   resources :lessons
   resources :questions
   resources :students
   resources :school_classes do
-    put 'seating_plan', on: :member
+    resource :seating_plan, only: [:update, :show]
   end
   put 'users/school_class'
   devise_for :users
 
-  root 'lesson_executions#index'
+  root 'lesson_executions#show'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

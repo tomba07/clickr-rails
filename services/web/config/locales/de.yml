@@ -106,11 +106,13 @@ de:
     new:
       title: "Neuer Schüler"
   lesson_executions:
-    index:
+    show:
       select_school_class_notice: "Wähle eine Klasse aus."
       title: "Stunde %{lesson_name}"
       create_new_lesson_text: "Die letzte Stunde scheint schon etwas her zu sein. Willst du eine neue anlegen?"
       create_new_lesson_submit: "Stunde anlegen"
+      done_editing_seating_plan: "Bearbeitung des Sitzplans beenden"
+      edit_seating_plan: "Sitzplan bearbeiten"
   users:
     school_class:
       notice: "Deine ausgewählte Schulklasse wurde geändert."
@@ -156,6 +158,3 @@ de:
         question_responses: "Antworten"
       select_a_class: "Klasse auswählen"
       buttons: "Knöpfe"
-  seating_plan:
-    done: "Bearbeitung des Sitzplans beenden"
-    edit: "Sitzplan bearbeiten"

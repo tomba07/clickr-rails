@@ -12,7 +12,7 @@ class SchoolClass < ApplicationRecord
   end
 
   def most_recent_lesson_or_create
-    most_recent_lesson || lessons.create!(name: I18n.t('lesson.create.default_name', school_class_name: name))
+    most_recent_lesson || lessons.create!(name: I18n.t('lessons.create.default_name', school_class_name: name))
   end
 
   def suggest_creating_new_lesson?
@@ -33,10 +33,10 @@ class SchoolClass < ApplicationRecord
     end
   end
 
-  def update_seat(student_id:, row:, col:)
+  def update_seat(student_id:, seat_row:, seat_col:)
     student = students.find(student_id)
     # Bypass validation (when swapping seats, one seat is briefly occupied twice)
-    student.attributes = { seat_row: row, seat_col: col }
+    student.attributes = { seat_row: seat_row, seat_col: seat_col }
     student.save! validate: false
   end
 end

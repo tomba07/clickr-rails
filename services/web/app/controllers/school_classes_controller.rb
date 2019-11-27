@@ -1,5 +1,5 @@
 class SchoolClassesController < ApplicationController
-  before_action :set_school_class, only: [:show, :edit, :update, :destroy, :seating_plan]
+  before_action :set_school_class, only: [:show, :edit, :update, :destroy]
 
   # GET /school_classes
   # GET /school_classes.json
@@ -10,7 +10,6 @@ class SchoolClassesController < ApplicationController
   # GET /school_classes/1
   # GET /school_classes/1.json
   def show
-    @seating_plan = SeatingPlan.new(@school_class.students)
   end
 
   # GET /school_classes/new
@@ -62,28 +61,15 @@ class SchoolClassesController < ApplicationController
     end
   end
 
-  def seating_plan
-    seating_plan = seating_plan_params[:students].map { |s| s.to_h.symbolize_keys }
-    puts "Plan: #{seating_plan.inspect}"
-    @school_class.update_seats seating_plan
-    respond_to do |format|
-      format.html { redirect_back fallback_location: school_classes_path, notice: t('.notice') }
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_school_class
+    @school_class = SchoolClass.find(params[:id])
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_school_class
-      @school_class = SchoolClass.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def school_class_params
-      params.require(:school_class).permit(:name)
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def seating_plan_params
-    params.require(:school_class).permit(students: [:student_id, :row, :col])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def school_class_params
+    params.require(:school_class).permit(:name)
+  end
 end

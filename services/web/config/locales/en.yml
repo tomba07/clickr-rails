@@ -137,11 +137,13 @@ en:
     new:
       title: "New student"
   lesson_executions:
-    index:
+    show:
       select_school_class_notice: "Select a class."
       title: "Lesson %{lesson_name}"
       create_new_lesson_text: "The last lesson seems to be quite old. Do you want to create a new one?"
       create_new_lesson_submit: "Create lesson"
+      done_editing_seating_plan: "Done editing seating plan"
+      edit_seating_plan: "Edit seating plan"
   users:
     school_class:
       notice: "Your selected school class has been updated."
@@ -187,6 +189,3 @@ en:
         question_responses: "Responses"
       select_a_class: "Select a class"
       buttons: "Buttons"
-  seating_plan:
-    done: "Done editing seating plan"
-    edit: "Edit seating plan"
