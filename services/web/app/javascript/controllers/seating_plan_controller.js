@@ -27,8 +27,11 @@ export default class extends Controller {
   }
 
   connect() {
-    this.subscription = websocketConsumer.subscriptions.create({channel: 'SchoolClassChannel', school_class_id: this.schoolClassId}, {
-      received: ({ type, ...data }) => {
+    this.subscription = websocketConsumer.subscriptions.create({
+      channel: 'SchoolClassChannel',
+      school_class_id: this.schoolClassId
+    }, {
+      received: ({type, ...data}) => {
         console.debug(`Received ${type} websocket frame`, data)
 
         if (data.browser_window_id === this.browserWindowId) {
@@ -41,6 +44,7 @@ export default class extends Controller {
           case 'mapping':
           case 'seating_plan':
           case 'student':
+          case 'question':
             this.refresh()
             break
           default:

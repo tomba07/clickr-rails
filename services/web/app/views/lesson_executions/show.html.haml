@@ -12,6 +12,8 @@
         = f.submit_primary t('.create_new_lesson_submit')
         = yield
 
+-# TODO Show question form (with hidden browser_window_id param)
+
 = render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, edit: @edit, browser_window_id: @browser_window_id
 
 .has-text-centered
