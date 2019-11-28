@@ -1,0 +1,11 @@
+#!/bin/sh
+# ./heroku-deploy
+set -ex
+
+IMAGE=registry.heroku.com/clickr-rails/web
+
+`dirname "$0"`/docker-template
+docker build -t $IMAGE -f services/web/Dockerfile services/web
+docker push $IMAGE
+HEROKU_TOKEN=`heroku auth:token` `dirname "$0"`/heroku-release "`docker inspect $IMAGE --format={{.Id}}`"
+rm services/**/Dockerfile
