@@ -141,7 +141,6 @@ export default class extends Controller {
 
   onDragEnd(event) {
     this.submit({
-      browser_window_id: this.browserWindowId,
       students: this.getPositions(),
     })
   }
