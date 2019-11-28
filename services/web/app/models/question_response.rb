@@ -12,4 +12,6 @@ class QuestionResponse < ApplicationRecord
   # TODO validates student.school_class = school_class
   # TODO validates lesson.school_class = school_class
   # TODO validates question.lesson = lesson
+
+  scope :for_most_recent_question, -> (school_class) { where(question: school_class.most_recent_question) }
 end

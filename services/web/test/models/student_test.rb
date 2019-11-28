@@ -36,4 +36,20 @@ class StudentTest < ActiveSupport::TestCase
 
     assert_nil @student.nth_incomplete_mapping
   end
+
+  test 'responded_to_most_recent_question returns true if student responded' do
+    lesson = @school_class.most_recent_lesson_or_create
+    question = lesson.questions.create!(school_class: @school_class, name: 'Question')
+    click = create(:click)
+    @student.question_responses.create!(school_class: @school_class, lesson: lesson, question: question, click: click)
+
+    assert_equal true, @student.responded_to_most_recent_question
+  end
+
+  test 'responded_to_most_recent_question returns false if student did not respond' do
+    lesson = @school_class.most_recent_lesson_or_create
+    question = lesson.questions.create!(school_class: @school_class, name: 'Question')
+
+    assert_equal false, @student.responded_to_most_recent_question
+  end
 end

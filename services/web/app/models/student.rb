@@ -21,4 +21,8 @@ class Student < ApplicationRecord
   def nth_incomplete_mapping
     student_device_mappings.incomplete.first&.nth_incomplete
   end
+
+  def responded_to_most_recent_question
+    question_responses.for_most_recent_question(school_class).exists?
+  end
 end

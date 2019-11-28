@@ -26,6 +26,10 @@ class SchoolClass < ApplicationRecord
     latest_timestamp < comparison_timestamp
   end
 
+  def most_recent_question
+    most_recent_lesson&.most_recent_question
+  end
+
   def update_seats(seats)
     # TODO exception handling
     transaction do
