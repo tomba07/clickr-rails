@@ -10,9 +10,16 @@ class StudentDeviceMapping < ApplicationRecord
 
   before_validation :set_incomplete!
 
+  scope :incomplete, -> { where(incomplete: true) }
+
   # Can't be a scope, as it returns only a single record
   def self.oldest_incomplete
-    where(incomplete: true).first
+    incomplete.first
+  end
+
+  def nth_incomplete
+    return nil if !incomplete
+    self.class.incomplete.pluck(:id).index(id)
   end
 
   private

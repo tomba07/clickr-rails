@@ -17,4 +17,8 @@ class Student < ApplicationRecord
     lesson = school_class.most_recent_lesson or return 0
     question_responses.where(lesson: lesson).sum(:score)
   end
+
+  def nth_incomplete_mapping
+    student_device_mappings.incomplete.first&.nth_incomplete
+  end
 end
