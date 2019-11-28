@@ -1,5 +1,14 @@
 version: '2'
 services:
+  db:
+    # Balena does not support env var substitution, so we hardcode the ARM image
+    image: arm64v8/postgres:alpine
+    # image: postgres:alpine
+    volumes:
+      - db:/var/lib/postgresql/data
+    expose:
+      - 5432
+
   web:
     build: services/web
     # environment:
@@ -9,6 +18,8 @@ services:
       - db:/app/db/data
     ports:
       - "80:80"
+    depends_on:
+      - db
 
   rfid-keyboard-reader:
     build: services/rfid-keyboard-reader

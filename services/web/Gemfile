@@ -7,8 +7,10 @@ ruby '2.5.7'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
-# Ues SQLite as database adapter
-gem 'sqlite3', '~> 1.4'
+# Ues Postgresql as database adapter in production
+gem "pg", "~> 1.1", group: :production
+# Ues SQLite as database adapter in development and test
+gem "sqlite3", "~> 1.4", group: [:development, :test]
 # Use SCSS for stylesheets (version 5 avoids sassc, which won't compile on RPi: https://github.com/sass/sassc-rails/issues/138)
 gem "sass-rails", "~> 5.0"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker

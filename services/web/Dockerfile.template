@@ -8,13 +8,13 @@ WORKDIR /app
 RUN apk add --no-cache \
   build-base \
   git \
+  postgresql-dev \
   # For node-sass (in old sass-rails version)
   python \
   ruby-dev \
   ruby-bundler \
   # Required by activesupport (assets:precompile)
   ruby-json \
-  sqlite-dev \
   # For assets:precompile: Timezone information
   tzdata \
   yarn \
@@ -57,12 +57,12 @@ LABEL maintainer="f@ftes.de"
 WORKDIR /app
 
 RUN apk add --no-cache \
+  postgresql-dev \
   ruby \
   # Required for db:create etc.
   ruby-bundler \
   # Required by activesupport
   ruby-json \
-  sqlite-dev \
   # Timezone information
   tzdata
 
@@ -73,14 +73,10 @@ ENV RAILS_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
 
-# Prepoluate /app/db/data volume
-RUN REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails db:migrate db:seed
-
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-VOLUME /app/db/data
 EXPOSE 80
 
 # TODO puma
