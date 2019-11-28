@@ -91,8 +91,9 @@ jobs:
         # Pull, build and push `build` stage seperately so that it is cached
         - docker pull ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build || true
         - docker pull ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH || true
-        - docker build --target build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
-        - docker build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
+        # travis_wait 30 because ARM docker build can take a long time
+        - travis_wait 30 docker build --target build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
+        - travis_wait 30 docker build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
       deploy:
         on:
           branch: master
