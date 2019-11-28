@@ -69,7 +69,7 @@ export default class extends Controller {
   }
 
   onSeatingPlanResponse = (response, status, xhr) => {
-    this.element.innerHTML = xhr.responseText
+    this.element.outerHTML = xhr.responseText
   }
 
   submit(data) {
