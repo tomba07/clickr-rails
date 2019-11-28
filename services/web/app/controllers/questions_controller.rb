@@ -33,6 +33,8 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save
         SchoolClassChannel.broadcast_to(@question.school_class, type: SchoolClassChannel::QUESTION, browser_window_id: params[:browser_window_id])
+
+        redirect_back fallback_location: question_path(@question), notice: t('.notice') and return if params[:redirect_back]
         format.html { redirect_to @question, notice: t('.notice') }
         format.json { render :show, status: :created, location: @question }
       else

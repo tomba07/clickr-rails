@@ -14,6 +14,7 @@ class SeatingPlansController < ApplicationController
     @school_class.update_seats seating_plan
     @seating_plan = SeatingPlan.new(@school_class)
     SchoolClassChannel.broadcast_to(@school_class, type: SchoolClassChannel::SEATING_PLAN, browser_window_id: @browser_window_id)
+
     respond_to do |format|
       format.html { render action: :show, layout: false }
     end

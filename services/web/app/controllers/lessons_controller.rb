@@ -29,7 +29,8 @@ class LessonsController < ApplicationController
 
     respond_to do |format|
       if @lesson.save
-        redirect_back fallback_location: lesson_path(@lesson), notice: t('.notice') and return if params.dig(:lesson, :redirect_back)
+        SchoolClassChannel.broadcast_to(@lesson.school_class, type: SchoolClassChannel::LESSON, browser_window_id: params[:browser_window_id])
+        redirect_back fallback_location: lesson_path(@lesson), notice: t('.notice') and return if params[:redirect_back]
 
         format.html { redirect_to @lesson, notice: t('.notice') }
         format.json { render :show, status: :created, location: @lesson }

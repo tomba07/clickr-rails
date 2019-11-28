@@ -44,9 +44,11 @@ export default class extends Controller {
           case 'mapping':
           case 'seating_plan':
           case 'student':
-          case 'question':
             this.refresh()
             break
+          // Question and lesson changed? Entire page reload needed anyway.
+          case 'question':
+          case 'lesson':
           default:
             console.debug(`Ignoring ${type} websocket frame`)
         }

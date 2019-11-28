@@ -1,3 +1,4 @@
+# TODO Move model-related translations to proper activerecord locale https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models
 de:
   clicks:
     create:
@@ -59,6 +60,7 @@ de:
       title: "Fragen"
     new:
       title: "Neue Frage"
+    default_name: "Frage #%{number}"
   school_classes:
     create:
       notice: "School wurde erstellt."
@@ -113,6 +115,8 @@ de:
       create_new_lesson_submit: "Stunde anlegen"
       done_editing_seating_plan: "Bearbeitung des Sitzplans beenden"
       edit_seating_plan: "Sitzplan bearbeiten"
+      question_title: "Frage: %{question}"
+      ask_question_submit: "Frage stellen"
   users:
     school_class:
       notice: "Deine ausgewählte Schulklasse wurde geändert."

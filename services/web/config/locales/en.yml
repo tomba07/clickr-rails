@@ -90,6 +90,7 @@ en:
       title: "Questions"
     new:
       title: "New question"
+    default_name: "Question %{number}"
   school_classes:
     create:
       notice: "School was created."
@@ -149,6 +150,8 @@ en:
       create_new_lesson_submit: "Create lesson"
       done_editing_seating_plan: "Done editing seating plan"
       edit_seating_plan: "Edit seating plan"
+      question_title: "Question: %{question}"
+      ask_question_submit: "Ask question"
   users:
     school_class:
       notice: "Your selected school class has been updated."
