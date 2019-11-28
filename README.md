@@ -95,3 +95,10 @@ Initialized via `bin/setup-environment-variables`.
 App environment variables:
 - `CLICKR_SUGGEST_NEW_LESSON_AFTER_MINUTES`: default `120`
 - `CLICKR_SHOW_VIRTUAL_BUTTONS_LINK`: default `false` (in `RAILS_ENV=development` default `true`)
+
+## Heroku setup
+One-time database setup:
+```sh
+heroku run sh --type=worker
+$ bundle exec rails db:create db:migrate db:seed
+```
