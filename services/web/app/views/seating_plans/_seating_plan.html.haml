@@ -3,46 +3,48 @@
 - col_offset_to_base_1 = seating_plan.col_min - 1 - border
 
 -# https://johnbeatty.co/2018/03/09/stimulus-js-tutorial-how-do-i-drag-and-drop-items-in-a-list/
-.seating-plan{ data: { controller: 'seating-plan',
+.seating-plan-controller{ data: { controller: 'seating-plan',
                        'seating-plan-row-offset': row_offset_to_base_1,
                        'seating-plan-col-offset': col_offset_to_base_1,
                        'seating-plan-endpoint': school_class_seating_plan_path(school_class, edit_seating_plan: edit),
+                       'seating-plan-school-class-id': seating_plan.school_class.id,
+                       'seating-plan-browser-window-id': browser_window_id,
                        action: 'dragstart->seating-plan#onDragStart dragover->seating-plan#onDragOver dragenter->seating-plan#onDragEnter drop->seating-plan#onDrop dragend->seating-plan#onDragEnd',
-                     },
-              class: [('seating-plan--editable' if edit)].compact.join(' ') }
-  - seating_plan.coordinates(border: border).each do |row, col|
-    - student = seating_plan.student(row: row, col: col)
-    - if student
-      .seat--student{ draggable: "#{edit}",
-                      data: { 'item-id': student.id,
-                              row: row,
-                              col: col,
-                            },
-                      style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
-        .card
-          .card-content
-            %p.title.has-text-centered= student.name
-          %footer.card-footer
-            -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
-            %p.card-footer-item.has-text-weight-bold{title: t('.lesson_sum')}= student.question_response_sum_for_most_recent_lesson
-            %p.card-footer-item.has-text-grey{title: t('.overall_sum')}= student.question_response_sum
-            - nth_incomplete_mapping = student.nth_incomplete_mapping
-            - unless nth_incomplete_mapping.nil?
-              %p.card-footer-item.has-text-danger{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)} ##{nth_incomplete_mapping + 1}
-
-    - else
-      .seat--empty{ data: { row: row, col: col },
-                    onmousedown: 'setTimeout(() => this.querySelector("input[type=text]").focus(), 0)',
-                    style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
-        - if edit
+                     } }
+  .seating-plan{class: [('seating-plan--editable' if edit)].compact.join(' '), data: { target: 'seating-plan.content' } }
+    - seating_plan.coordinates(border: border).each do |row, col|
+      - student = seating_plan.student(row: row, col: col)
+      - if student
+        .seat--student{ draggable: "#{edit}",
+                        data: { 'item-id': student.id,
+                                row: row,
+                                col: col,
+                              },
+                        style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
           .card
             .card-content
-              .create-student
-                = form_with model: Student.new, class: 'has-text-centered', data: { type: :json, action: 'ajax:success->seating-plan#onStudentCreated' } do |f|
-                  = f.text_field :name
-                  = f.hidden_field :school_class_id, value: school_class.id
-                  = f.hidden_field :seat_row, value: row
-                  = f.hidden_field :seat_col, value: col
-                  = f.hidden_field :create_incomplete_mapping, value: true
-                  = f.hidden_field :edit_seating_plan, value: edit
-                  = f.submit t('common.create')
+              %p.title.has-text-centered= student.name
+            %footer.card-footer
+              -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
+              %p.card-footer-item.has-text-weight-bold{title: t('.lesson_sum')}= student.question_response_sum_for_most_recent_lesson
+              %p.card-footer-item.has-text-grey{title: t('.overall_sum')}= student.question_response_sum
+              - nth_incomplete_mapping = student.nth_incomplete_mapping
+              - unless nth_incomplete_mapping.nil?
+                %p.card-footer-item.has-text-danger{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)} ##{nth_incomplete_mapping + 1}
+
+      - else
+        .seat--empty{ data: { row: row, col: col },
+                      onmousedown: 'setTimeout(() => this.querySelector("input[type=text]").focus(), 0)',
+                      style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
+          - if edit
+            .card
+              .card-content
+                .create-student
+                  = form_with model: Student.new, class: 'has-text-centered', data: { type: :json, action: 'ajax:success->seating-plan#onStudentCreated' } do |f|
+                    = f.text_field :name
+                    = f.hidden_field :school_class_id, value: school_class.id
+                    = f.hidden_field :seat_row, value: row
+                    = f.hidden_field :seat_col, value: col
+                    = hidden_field_tag :create_incomplete_mapping, true
+                    = hidden_field_tag :browser_window_id, browser_window_id
+                    = f.submit t('common.create')

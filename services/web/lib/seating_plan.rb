@@ -1,7 +1,9 @@
 class SeatingPlan
-  attr_reader :row_min, :row_max, :col_min, :col_max
+  attr_reader :school_class, :row_min, :row_max, :col_min, :col_max
 
-  def initialize(students)
+  def initialize(school_class)
+    @school_class = school_class
+    students = school_class.students
     @row_min, @row_max = students.map { |s| s.seat_row }.minmax.map { |i| i || 0 }
     @col_min, @col_max = students.map { |s| s.seat_col }.minmax.map { |i| i || 0 }
     @students_by_coordinates = students.reduce({}) { |tmp, s| tmp.merge({ seat_hash(s.seat_row, s.seat_col) => s }) }

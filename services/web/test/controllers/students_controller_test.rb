@@ -34,7 +34,7 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Student.count', 1 do
       assert_difference 'StudentDeviceMapping.count', 1 do
-        post students_url, params: { student: { name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row, create_incomplete_mapping: true } }
+        post students_url, params: { create_incomplete_mapping: true, student: { name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row } }
       end
     end
 

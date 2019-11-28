@@ -35,6 +35,8 @@ class ClicksController < ApplicationController
       if @click.save
         m = @student_device_mapping = update_oldest_incomplete_student_device_mapping! @click
         r = @question_response = create_question_response! @click if !@student_device_mapping
+        SchoolClassChannel.broadcast_to(@student_device_mapping.school_class, type: SchoolClassChannel::MAPPING) if @student_device_mapping
+        SchoolClassChannel.broadcast_to(@question_response.school_class, type: SchoolClassChannel::RESPONSE) if @question_response
 
         format.html { redirect_to @click, notice: [
           t('.notice'),

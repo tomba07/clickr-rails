@@ -1,8 +1,59 @@
 import {Controller} from 'stimulus'
 import Rails from '@rails/ujs'
+import websocketConsumer from '../channels/consumer'
 
 // https://johnbeatty.co/2018/03/09/stimulus-js-tutorial-how-do-i-drag-and-drop-items-in-a-list/
 export default class extends Controller {
+  static targets = ['content']
+
+  get endpoint() {
+    return this.data.get('endpoint')
+  }
+
+  get rowOffset() {
+    return this.data.get('row-offset')
+  }
+
+  get colOffset() {
+    return this.data.get('col-offset')
+  }
+
+  get schoolClassId() {
+    return this.data.get('school-class-id')
+  }
+
+  get browserWindowId() {
+    return this.data.get('browser-window-id')
+  }
+
+  connect() {
+    this.subscription = websocketConsumer.subscriptions.create({channel: 'SchoolClassChannel', school_class_id: this.schoolClassId}, {
+      received: ({ type, ...data }) => {
+        console.debug(`Received ${type} websocket frame`, data)
+
+        if (data.browser_window_id === this.browserWindowId) {
+          console.debug(`Ignoring ${type} websocket frame caused by this browser window`)
+          return
+        }
+
+        switch (type) {
+          case 'response':
+          case 'mapping':
+          case 'seating_plan':
+          case 'student':
+            this.refresh()
+            break
+          default:
+            console.debug(`Ignoring ${type} websocket frame`)
+        }
+      },
+    })
+  }
+
+  disconnect() {
+    this.subscription.unsubscribe()
+  }
+
   onDragStart(event) {
     const data = JSON.stringify({
       row: event.target.getAttribute('data-row'),
@@ -37,8 +88,8 @@ export default class extends Controller {
   setPosition(el, [row, col]) {
     el.setAttribute('data-row', row)
     el.setAttribute('data-col', col)
-    el.style['grid-row'] = row - parseInt(this.data.get('row-offset'))
-    el.style['grid-column'] = col - parseInt(this.data.get('col-offset'))
+    el.style['grid-row'] = row - parseInt(this.rowOffset)
+    el.style['grid-column'] = col - parseInt(this.colOffset)
   }
 
   swap(el1, el2) {
@@ -49,18 +100,18 @@ export default class extends Controller {
   }
 
   onDrop(event) {
-    const { row, col } = JSON.parse(event.dataTransfer.getData("application/drag-key"))
+    const {row, col} = JSON.parse(event.dataTransfer.getData("application/drag-key"))
     const targetEl = event.target.closest('[data-row][data-col]')
     const sourceEl = this.element.querySelector(`[data-row='${row}'][data-col='${col}']`)
     this.swap(sourceEl, targetEl)
     event.preventDefault()
   }
 
-  get endpoint() {
-    return this.data.get('endpoint')
+  onStudentCreated(event) {
+    this.refresh()
   }
 
-  onStudentCreated(event) {
+  refresh() {
     Rails.ajax({
       type: 'GET',
       url: this.endpoint,
@@ -69,7 +120,8 @@ export default class extends Controller {
   }
 
   onSeatingPlanResponse = (response, status, xhr) => {
-    this.element.outerHTML = xhr.responseText
+    // Replace only inner element, to keep this controller alive and avoid stimulus disconnect/connect cycle.
+    this.contentTarget.replaceWith(response.querySelector('.seating-plan'))
   }
 
   submit(data) {
@@ -89,7 +141,8 @@ export default class extends Controller {
 
   onDragEnd(event) {
     this.submit({
-      students: this.getPositions()
+      browser_window_id: this.browserWindowId,
+      students: this.getPositions(),
     })
   }
 }

@@ -12,10 +12,10 @@
         = f.submit_primary t('.create_new_lesson_submit')
         = yield
 
-= render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, edit: @edit
+= render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, edit: @edit, browser_window_id: @browser_window_id
 
 .has-text-centered
   - if @edit
-    = link_to t('.done_editing_seating_plan'), { 'edit-seating-plan': nil }, class: 'button is-primary'
+    = link_to t('.done_editing_seating_plan'), { edit_seating_plan: nil }, class: 'button is-primary'
   - else
-    = link_to t('.edit_seating_plan'), { 'edit-seating-plan': true }, class: 'button is-primary'
+    = link_to t('.edit_seating_plan'), { edit_seating_plan: true }, class: 'button is-primary'

@@ -29,7 +29,8 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        @student_device_mapping = StudentDeviceMapping.create!(student: @student, school_class_id: @student.school_class_id) if params.dig(:student, :create_incomplete_mapping)
+        SchoolClassChannel.broadcast_to(@student.school_class, type: SchoolClassChannel::STUDENT, browser_window_id: params[:browser_window_id])
+        @student_device_mapping = StudentDeviceMapping.create!(student: @student, school_class_id: @student.school_class_id) if params[:create_incomplete_mapping]
         notice = [
           t('.notice'),
           (t('.mapping_notice') if @student_device_mapping),
