@@ -13,10 +13,7 @@ os: linux
 # Don't use top-level `arch` field. Different languages cannot be added to the build matrix but must be specified
 # via jobs.include anyway.
 
-# TODO heroku release on success
 # TODO python test and combine code coverage before reporting https://docs.travis-ci.com/user/build-stages/share-files-s3/
-# TODO remove codefresh config files and project
-# TODO un-dockerize build/balena-cli
 
 stages:
   - test

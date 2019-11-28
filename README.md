@@ -20,8 +20,7 @@ Languages, frameworks and libraries:
 
 Build/CI/Deployment:
 - docker and docker-compose
-- Travis (run tests, non-dockerized)
-- Codefresh (build docker image, run tests in docker container)
+- Travis (run tests, push code coverage results to Codeclimate, build and push AMD64 amd ARM64 docker images, deploy master branch to heroku, trigger balena.io build and deploy)
 - Codeclimate (code quality)
 - balena.io (build ARM docker image, manage devices)
 

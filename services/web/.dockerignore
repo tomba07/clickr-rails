@@ -50,6 +50,3 @@ docker-compose.yml
 # Various configs and assorted dotfiles
 .DS_Store
 .postcssrc.yml
-
-# Codefresh CI
-.codefresh.yml
