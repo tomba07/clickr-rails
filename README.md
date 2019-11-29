@@ -43,14 +43,7 @@ So, effectively, the first student that is not yet mapped is now mapped to that 
 ```
 $ tree -L 2 --filelimit 10 --dirsfirst
 .
-├── bin
-│   ├── docker-build
-│   ├── docker-template
-│   ├── docker-test
-│   ├── list-devices
-│   ├── release-to-pi
-│   ├── setup-environment-variables
-│   └── show-device-info
+├── bin [11 entries exceeds filelimit, not opening dir]
 ├── build
 │   └── balena-cli
 ├── services
