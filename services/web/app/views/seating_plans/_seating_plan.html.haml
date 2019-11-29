@@ -26,8 +26,8 @@
               %p.title.has-text-centered= student.name
             %footer.card-footer
               -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
-              %p.card-footer-item.has-text-weight-bold{title: t('.lesson_sum')}= student.question_response_sum_for_most_recent_lesson
-              %p.card-footer-item.has-text-grey{title: t('.overall_sum')}= student.question_response_sum
+              %p.card-footer-item.is-size-4.has-text-weight-bold{title: t('.lesson_sum')}= student.question_response_sum_for_most_recent_lesson
+              %p.card-footer-item.is-size-4.has-text-grey{title: t('.overall_sum')}= student.question_response_sum
               - nth_incomplete_mapping = student.nth_incomplete_mapping
               - unless nth_incomplete_mapping.nil?
                 %p.card-footer-item.has-text-danger{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)} ##{nth_incomplete_mapping + 1}
