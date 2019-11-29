@@ -64,17 +64,18 @@ class QuestionResponsesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_question_response
-      @question_response = QuestionResponse.find(params[:id])
-    end
 
-    def set_question_response_with_includes
-      @question_response = QuestionResponse.includes(:student, :lesson, :question, :school_class).find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_question_response
+    @question_response = QuestionResponse.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def question_response_params
-      params.require(:question_response).permit(:click_id, :student_id, :question_id, :lesson_id, :school_class_id)
-    end
+  def set_question_response_with_includes
+    @question_response = QuestionResponse.includes(:student, :lesson, :question, :school_class).find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def question_response_params
+    params.require(:question_response).permit(:click_id, :student_id, :question_id, :lesson_id, :school_class_id)
+  end
 end

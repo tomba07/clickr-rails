@@ -23,7 +23,7 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
     new_lesson = build(:lesson)
 
     assert_difference('Lesson.count') do
-      post lessons_url, params: { lesson: { school_class_id: new_lesson.school_class_id, name: new_lesson.name } }
+      post lessons_url, params: {lesson: {school_class_id: new_lesson.school_class_id, name: new_lesson.name}}
     end
 
     assert_redirected_to lesson_url(Lesson.last)
@@ -33,7 +33,7 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
     new_lesson = build(:lesson)
 
     assert_difference('Lesson.count') do
-      post lessons_url, params: { redirect_back: true, lesson: { school_class_id: new_lesson.school_class_id, name: new_lesson.name } }, headers: { HTTP_REFERER: 'http://clickr.ftes.de'}
+      post lessons_url, params: {redirect_back: true, lesson: {school_class_id: new_lesson.school_class_id, name: new_lesson.name}}, headers: {HTTP_REFERER: 'http://clickr.ftes.de'}
     end
 
     assert_redirected_to 'http://clickr.ftes.de'
@@ -45,7 +45,7 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
     new_lesson = build(:lesson, school_class: nil)
 
     assert_difference('Lesson.count', 1) do
-      post lessons_url, params: { lesson: { name: new_lesson.name } }
+      post lessons_url, params: {lesson: {name: new_lesson.name}}
     end
 
     assert_equal new_school_class, assigns(:lesson).school_class
@@ -62,7 +62,7 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update lesson" do
-    patch lesson_url(@lesson), params: { lesson: { school_class_id: @lesson.school_class_id, name: @lesson.name } }
+    patch lesson_url(@lesson), params: {lesson: {school_class_id: @lesson.school_class_id, name: @lesson.name}}
     assert_redirected_to lesson_url(@lesson)
   end
 

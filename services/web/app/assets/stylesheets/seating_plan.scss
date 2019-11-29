@@ -10,9 +10,10 @@
   // full height
   .card {
     height: 100%;
-    display:flex;
+    display: flex;
     flex-direction: column;
   }
+
   .card-footer {
     margin-top: auto;
 
@@ -32,4 +33,3 @@
     }
   }
 }
-

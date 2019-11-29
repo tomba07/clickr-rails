@@ -74,9 +74,9 @@ jobs:
         - bundle exec rails test
         - ./cc-test-reporter format-coverage --add-prefix services/web/
         - ./cc-test-reporter upload-coverage
-     # Won't perform tests on ARM for now
-     #- <<: *test-web
-     #  arch: arm64
+      # Won't perform tests on ARM for now
+      #- <<: *test-web
+      #  arch: arm64
 
     # Build services/web docker images
     - &build-docker-image

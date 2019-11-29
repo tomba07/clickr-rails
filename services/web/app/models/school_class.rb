@@ -40,7 +40,7 @@ class SchoolClass < ApplicationRecord
   def update_seat(student_id:, seat_row:, seat_col:)
     student = students.find(student_id)
     # Bypass validation (when swapping seats, one seat is briefly occupied twice)
-    student.attributes = { seat_row: seat_row, seat_col: seat_col }
+    student.attributes = {seat_row: seat_row, seat_col: seat_col}
     student.save! validate: false
   end
 end

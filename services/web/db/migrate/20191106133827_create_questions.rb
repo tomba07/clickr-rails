@@ -8,6 +8,6 @@ class CreateQuestions < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :questions, :created_at, order: { created_at: :desc }
+    add_index :questions, :created_at, order: {created_at: :desc}
   end
 end

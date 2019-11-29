@@ -99,21 +99,22 @@ class StudentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_student
-      @student = Student.find(params[:id])
-    end
 
-    def set_student_with_includes
-      @student = Student.includes(:school_class).find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_student
+    @student = Student.find(params[:id])
+  end
 
-    def set_browser_window_id
-      @browser_window_id = params[:browser_window_id]
-    end
+  def set_student_with_includes
+    @student = Student.includes(:school_class).find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def student_params
-      params.require(:student).permit(:school_class_id, :name, :seat_row, :seat_col)
-    end
+  def set_browser_window_id
+    @browser_window_id = params[:browser_window_id]
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def student_params
+    params.require(:student).permit(:school_class_id, :name, :seat_row, :seat_col)
+  end
 end

@@ -25,7 +25,7 @@ class LessonsController < ApplicationController
   # POST /lessons
   # POST /lessons.json
   def create
-    @lesson = Lesson.new({ school_class_id: current_user.school_class&.id, **lesson_params })
+    @lesson = Lesson.new({school_class_id: current_user.school_class&.id, **lesson_params})
 
     respond_to do |format|
       if @lesson.save
@@ -66,17 +66,18 @@ class LessonsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lesson
-      @lesson = Lesson.find(params[:id])
-    end
 
-    def set_lesson_with_includes
-      @lesson = Lesson.includes(:school_class).find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_lesson
+    @lesson = Lesson.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def lesson_params
-      params.require(:lesson).permit(:name, :school_class_id).reject{|_, v| v.blank?}.to_h.symbolize_keys
-    end
+  def set_lesson_with_includes
+    @lesson = Lesson.includes(:school_class).find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def lesson_params
+    params.require(:lesson).permit(:name, :school_class_id).reject { |_, v| v.blank? }.to_h.symbolize_keys
+  end
 end

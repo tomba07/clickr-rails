@@ -64,17 +64,18 @@ class StudentDeviceMappingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_student_device_mapping
-      @student_device_mapping = StudentDeviceMapping.find(params[:id])
-    end
 
-    def set_student_device_mapping_with_includes
-      @student_device_mapping = StudentDeviceMapping.includes(:student, :school_class).find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_student_device_mapping
+    @student_device_mapping = StudentDeviceMapping.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def student_device_mapping_params
-      params.require(:student_device_mapping).permit(:student_id, :school_class_id, :device_id, :device_type)
-    end
+  def set_student_device_mapping_with_includes
+    @student_device_mapping = StudentDeviceMapping.includes(:student, :school_class).find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def student_device_mapping_params
+    params.require(:student_device_mapping).permit(:student_id, :school_class_id, :device_id, :device_type)
+  end
 end

@@ -23,7 +23,7 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     new_student = build(:student)
 
     assert_difference('Student.count') do
-      post students_url, params: { student: { name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row } }
+      post students_url, params: {student: {name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row}}
     end
 
     assert_redirected_to student_url(Student.last)
@@ -34,7 +34,7 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Student.count', 1 do
       assert_difference 'StudentDeviceMapping.count', 1 do
-        post students_url, params: { create_incomplete_mapping: true, student: { name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row } }
+        post students_url, params: {create_incomplete_mapping: true, student: {name: new_student.name, school_class_id: new_student.school_class_id, seat_col: new_student.seat_col, seat_row: new_student.seat_row}}
       end
     end
 
@@ -52,7 +52,7 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update student" do
-    patch student_url(@student), params: { student: { name: @student.name, school_class_id: @student.school_class_id, seat_col: @student.seat_col, seat_row: @student.seat_row } }
+    patch student_url(@student), params: {student: {name: @student.name, school_class_id: @student.school_class_id, seat_col: @student.seat_col, seat_row: @student.seat_row}}
     assert_redirected_to student_url(@student)
   end
 

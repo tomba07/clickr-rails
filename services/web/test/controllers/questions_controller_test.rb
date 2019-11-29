@@ -23,7 +23,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     new_question = build(:question)
 
     assert_difference('Question.count') do
-      post questions_url, params: { question: { school_class_id: new_question.school_class_id, lesson_id: new_question.lesson_id, name: new_question.name } }
+      post questions_url, params: {question: {school_class_id: new_question.school_class_id, lesson_id: new_question.lesson_id, name: new_question.name}}
     end
 
     assert_redirected_to question_url(Question.last)
@@ -34,7 +34,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     @user.update_attribute(:school_class, new_school_class)
 
     assert_difference('Lesson.count', 1) do
-      post questions_url, params: { question: { name: @question.name } }
+      post questions_url, params: {question: {name: @question.name}}
     end
 
     assert_equal new_school_class, assigns(:question).school_class
@@ -51,7 +51,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update question" do
-    patch question_url(@question), params: { question: { school_class_id: @question.school_class_id, lesson_id: @question.lesson_id, name: @question.name } }
+    patch question_url(@question), params: {question: {school_class_id: @question.school_class_id, lesson_id: @question.lesson_id, name: @question.name}}
     assert_redirected_to question_url(@question)
   end
 

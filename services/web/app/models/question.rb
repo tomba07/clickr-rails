@@ -5,7 +5,7 @@ class Question < ApplicationRecord
   has_many :question_responses
   has_many :students_that_responded, through: :question_responses, class_name: 'Student'
 
-  validates :name, presence: true, uniqueness: { scope: :lesson }
+  validates :name, presence: true, uniqueness: {scope: :lesson}
   # TODO validates lesson.school_class = school_class
 
   def self.default_name(lesson)
