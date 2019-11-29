@@ -28,6 +28,8 @@ jobs:
   fast_finish: true
   allow_failures:
     - stage: deploy
+    - stage: test
+      arch: arm64
 
   include:
     # Test services/web
@@ -101,6 +103,7 @@ jobs:
         script: bash ../../bin/docker-push ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH
     - <<: *build-docker-image
       name: Build services/web docker image and push if branch=master (arm64)
+      env: SERVICE=web
       arch: arm64
       before_install:
         # TODO Use balena base images
