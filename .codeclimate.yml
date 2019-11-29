@@ -6,3 +6,5 @@ plugins:
     enabled: true
   rubocop:
     enabled: true
+  editorconfig:
+    enabled: true
