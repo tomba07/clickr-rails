@@ -1,7 +1,6 @@
 - if notice or alert
-  %section.section#flash{ 'data-controller': 'flash' }
-    .container
-      - if notice
-        .notification.is-info= notice.html_safe
-      - if alert
-        .notification.is-danger= alert.html_safe
+  .flash--fixed
+    - if notice
+      .flash__content.navbar-item.has-background-info.has-text-white= notice.html_safe
+    - if alert
+    .flash__content.navbar-item.has-background-danger.has-text-white= alert.html_safe

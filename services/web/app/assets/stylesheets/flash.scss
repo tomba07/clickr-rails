@@ -1,0 +1,22 @@
+.flash--fixed {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 31; // More than navbar
+
+  animation: fade-out 2s 5s forwards;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.flash__content {
+  height: 3.25rem;
+}
