@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_115657) do
+ActiveRecord::Schema.define(version: 2019_11_29_092830) do
 
   create_table "clicks", force: :cascade do |t|
     t.string "device_id", null: false
@@ -34,15 +34,15 @@ ActiveRecord::Schema.define(version: 2019_11_13_115657) do
 
   create_table "question_responses", force: :cascade do |t|
     t.integer "score", default: 1, null: false
-    t.integer "click_id", null: false
+    t.integer "click_id"
     t.integer "student_id", null: false
-    t.integer "question_id", null: false
+    t.integer "question_id"
     t.integer "lesson_id", null: false
     t.integer "school_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["click_id"], name: "index_question_responses_on_click_id", unique: true
-    t.index ["created_at"], name: "index_question_responses_on_created_at", order: :desc
+    t.index ["created_at"], name: "index_question_responses_on_created_at"
     t.index ["lesson_id"], name: "index_question_responses_on_lesson_id"
     t.index ["question_id", "student_id"], name: "index_question_responses_on_question_id_and_student_id", unique: true
     t.index ["question_id"], name: "index_question_responses_on_question_id"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_115657) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "score", default: 1, null: false
     t.index ["created_at"], name: "index_questions_on_created_at", order: :desc
     t.index ["lesson_id"], name: "index_questions_on_lesson_id"
     t.index ["school_class_id"], name: "index_questions_on_school_class_id"

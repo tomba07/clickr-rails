@@ -117,6 +117,10 @@ export default class extends Controller {
     this.refresh()
   }
 
+  onScoreAdjusted(event) {
+    this.refresh()
+  }
+
   refresh() {
     Rails.ajax({
       type: 'GET',

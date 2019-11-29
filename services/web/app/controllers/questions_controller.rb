@@ -81,6 +81,6 @@ class QuestionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
       # Remove blank values to allow merge
-      params.require(:question).permit(:school_class_id, :lesson_id, :name).reject{|_, v| v.blank?}.to_h.symbolize_keys
+      params.require(:question).permit(:school_class_id, :lesson_id, :name, :score).reject{|_, v| v.blank?}.to_h.symbolize_keys
     end
 end

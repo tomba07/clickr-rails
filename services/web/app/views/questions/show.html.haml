@@ -7,6 +7,9 @@
 %p
   %b #{t('lessons.title')}:
   = @question.lesson&.name
+%p
+  %b #{t('questions.score')}:
+  = @question.score
 
 .buttons
   = link_to t('common.edit'), edit_question_path(@question), class: 'button is-primary'

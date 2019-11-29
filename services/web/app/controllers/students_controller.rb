@@ -1,6 +1,7 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:edit, :update, :destroy]
+  before_action :set_student, only: [:edit, :update, :destroy, :increment_score, :decrement_score]
   before_action :set_student_with_includes, only: [:show]
+  before_action :set_browser_window_id, only: [:increment_score, :decrement_score]
 
   # GET /students
   # GET /students.json
@@ -69,6 +70,34 @@ class StudentsController < ApplicationController
     end
   end
 
+  def increment_score
+    lesson = @student.school_class.most_recent_lesson
+    question_response = @student.question_responses.create(score: 1, lesson: lesson, school_class: @student.school_class)
+
+    respond_to do |format|
+      if question_response.errors.empty?
+        SchoolClassChannel.broadcast_to(@student.school_class, type: SchoolClassChannel::RESPONSE, browser_window_id: @browser_window_id)
+        format.json { head :no_content }
+      else
+        format.json { render json: question_response.errors, status: :bad_request }
+      end
+    end
+  end
+
+  def decrement_score
+    lesson = @student.school_class.most_recent_lesson
+    question_response = @student.question_responses.create(score: -1, lesson: lesson, school_class: @student.school_class)
+
+    respond_to do |format|
+      if question_response.errors.empty?
+        SchoolClassChannel.broadcast_to(@student.school_class, type: SchoolClassChannel::RESPONSE, browser_window_id: @browser_window_id)
+        format.json { head :no_content }
+      else
+        format.json { render json: question_response.errors, status: :bad_request }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
@@ -77,6 +106,10 @@ class StudentsController < ApplicationController
 
     def set_student_with_includes
       @student = Student.includes(:school_class).find(params[:id])
+    end
+
+    def set_browser_window_id
+      @browser_window_id = params[:browser_window_id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

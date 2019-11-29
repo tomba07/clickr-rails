@@ -3,10 +3,12 @@
     = t('.create_new_lesson_text')
 
     -# TODO Show potential errors on this page
-    = form_with model: Lesson.new, local: true do |f|
-      = f.text_field :name, value: "#{@school_class.name} - #{I18n.l Date.today, format: :short}"
-      = hidden_field :redirect_back, true
-      = f.submit_primary t('.create_new_lesson_submit')
+    = form_with model: Lesson.new, local: true, class: 'is-flex' do |f|
+      .field.is-horizontal
+        .field-body
+          = f.text_field :name, value: "#{@school_class.name} - #{I18n.l Date.today, format: :short}", class: 'is-medium'
+          = hidden_field :redirect_back, true
+          = f.submit_primary t('.create_new_lesson_submit'), class: 'is-medium'
 
 .panel
   .panel-heading
@@ -16,10 +18,19 @@
   .panel-block
     -# TODO Show potential errors on this page
     = form_with model: Question.new, local: true do |f|
-      = f.text_field :name, value: @default_question_name
       = hidden_field :redirect_back, true
       = hidden_field_tag :browser_window_id, @browser_window_id
-      = f.submit_primary t('.ask_question_submit')
+      .score-input{ data: { controller: 'score-input' } }
+        .field.is-horizontal
+          .field-body
+            = f.text_field :name, value: @default_question_name, class: 'is-medium'
+            .field.has-addons{ title: 'Question score' }
+              .control
+                %button.field.button.is-medium{ type: 'button', data: { action: 'click->score-input#decrement', target: 'score-input.decrement' } } -
+              =f.text_field :score, value: 1, size: 1, no_field: true, class: 'is-medium has-addons score-input__field has-cursor-help', data: { target: 'score-input.field' }
+              .control
+                %button.field.button.is-medium{ type: 'button', data: { action: 'click->score-input#increment' } } +
+            = f.submit_primary t('.ask_question_submit'), class: 'is-medium'
 
 = render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, edit: @edit, browser_window_id: @browser_window_id
 

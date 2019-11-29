@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   resource :lesson_execution, only: [:show]
   resources :lessons
   resources :questions
-  resources :students
+  resources :students do
+    member do
+      post :decrement_score
+      post :increment_score
+    end
+  end
   resources :school_classes do
     resource :seating_plan, only: [:update, :show]
   end

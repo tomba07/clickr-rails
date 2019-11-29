@@ -21,3 +21,11 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 
+// Add cursor helpesr
+$cursors: (help pointer);
+
+@each $cursor in $cursors {
+  .has-cursor-#{$cursor} {
+    cursor: $cursor;
+  }
+}

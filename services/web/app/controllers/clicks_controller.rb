@@ -115,7 +115,7 @@ class ClicksController < ApplicationController
       question: question,
       lesson: lesson,
       school_class: school_class,
-      score: 1,
+      score: question.score || 1,
     )
   end
 end

@@ -52,4 +52,12 @@ class StudentTest < ActiveSupport::TestCase
 
     assert_equal false, @student.responded_to_most_recent_question
   end
+
+  test 'responded_to_most_recent_question returns false if only a virtual response is present' do
+    lesson = @school_class.most_recent_lesson_or_create
+    question = lesson.questions.create!(school_class: @school_class, name: 'Question')
+    @student.question_responses.create!(school_class: @school_class, lesson: lesson, question: nil, click: nil)
+
+    assert_equal false, @student.responded_to_most_recent_question
+  end
 end

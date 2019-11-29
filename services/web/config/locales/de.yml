@@ -60,6 +60,7 @@ de:
       title: "Fragen"
     new:
       title: "Neue Frage"
+    score: "Punkte"
     default_name: "Frage #%{number}"
   school_classes:
     create:
@@ -134,6 +135,8 @@ de:
     new: "Neu"
     select: "Auswählen"
     create: "Hinzufügen"
+    increment: "Hochzählen"
+    decrement: "Runterzählen"
   devices:
     device: "Gerät"
     device_type: "Gerätetyp"

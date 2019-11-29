@@ -90,6 +90,7 @@ en:
       title: "Questions"
     new:
       title: "New question"
+    score: "Score"
     default_name: "Question %{number}"
   school_classes:
     create:
@@ -169,6 +170,8 @@ en:
     new: "New"
     select: "Select"
     create: "Create"
+    increment: "Increment"
+    decrement: "Decrement"
   devices:
     device: "Device"
     device_type: "Device type"

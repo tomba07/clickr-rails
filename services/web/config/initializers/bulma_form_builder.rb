@@ -10,7 +10,8 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def text_field(method, options = {})
-    div_field do
+    wrapper = options[:no_field] ? method(:identity) : method(:div_field)
+    wrapper.call do
       (block_given? ? yield : nothing) + div_control do
         super(method, merge_class(options, 'input')) + errors(method)
       end
@@ -23,9 +24,25 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def number_field(method, options = {})
+    wrapper = options[:no_field] ? method(:identity) : method(:div_field)
+    wrapper.call do
+      (block_given? ? yield : nothing) + div_control do
+        super(method, merge_class(options, 'input')) + errors(method)
+      end
+    end
+  end
+
+  def number_field_with_label(method, options = {})
+    number_field(method, options) do
+      label(method)
+    end
+  end
+
   # Email field with an icon
   def email_field(method, options = {})
-    div_field do
+    wrapper = options[:no_field] ? method(:identity) : method(:div_field)
+    wrapper.call do
       (block_given? ? yield : nothing) + div_control_for_icons do
         super(method, merge_class(options, 'input')) + email_icon + errors(method)
       end
@@ -41,7 +58,8 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
 
   # Password field with an icon
   def password_field(method, options = {})
-    div_field do
+    wrapper = options[:no_field] ? method(:identity) : method(:div_field)
+    wrapper.call do
       (block_given? ? yield : nothing) + div_control_for_icons do
         super(method, merge_class(options, 'input')) + password_icon + errors(method)
       end
@@ -57,7 +75,8 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
 
   # Omit &block (custom option rendering)
   def select(method, choices = nil, options = {}, html_options = {})
-    div_field do
+    wrapper = options[:no_field] ? method(:identity) : method(:div_field)
+    wrapper.call do
       (block_given? ? yield : nothing) + div_control do
         div_select do
           super
@@ -74,7 +93,8 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
-    div_field do
+    wrapper = options[:no_field] ? method(:identity) : method(:div_field)
+    wrapper.call do
       (block_given? ? yield : nothing) + div_control do
         div_select do
           super
@@ -90,7 +110,8 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def check_box_with_label(method, options = {}, checked_value = "1", unchecked_value = "0")
-    div_field do
+    wrapper = options[:no_field] ? method(:identity) : method(:div_field)
+    wrapper.call do
       div_control do
         check_box(method, options = {}, checked_value, unchecked_value) + parent_label(method, nil, {class: 'checkbox m-l-5'})
       end
@@ -157,6 +178,10 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
 
   def nothing
     ActiveSupport::SafeBuffer.new()
+  end
+
+  def identity
+    yield if block_given?
   end
 
   # Errors for method (and for relations without `_id` suffix)

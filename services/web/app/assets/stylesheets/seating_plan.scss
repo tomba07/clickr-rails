@@ -15,6 +15,10 @@
   }
   .card-footer {
     margin-top: auto;
+
+    .button {
+      flex-grow: 0.2
+    }
   }
 
   [draggable=true] {
@@ -26,10 +30,6 @@
     .seat--empty .card {
       background-color: $grey-lightest;
     }
-  }
-
-  .card-footer-item {
-    cursor: help;
   }
 }
 
