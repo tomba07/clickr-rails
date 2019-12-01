@@ -18,12 +18,12 @@ de:
     title: "Click"
   lessons:
     create:
-      notice: "Lesson wurde erstellt."
+      notice: "Stunde wurde erstellt."
       default_name: "Stunde 1 (%{school_class_name})"
     update:
-      notice: "Lesson wurde geändert."
+      notice: "Stunde wurde geändert."
     destroy:
-      notice: "Lesson wurde gelöscht."
+      notice: "Stunde wurde gelöscht."
     edit:
       title: "Stunde bearbeiten"
     index:
@@ -33,11 +33,11 @@ de:
     title: "Stunde"
   question_responses:
     create:
-      notice: "Question response wurde erstellt."
+      notice: "Rückmeldung zu Frage wurde erstellt."
     update:
-      notice: "Question response wurde geändert."
+      notice: "Rückmeldung zu Frage wurde geändert."
     destroy:
-      notice: "Question response wurde gelöscht."
+      notice: "Rückmeldung zu Frage wurde gelöscht."
     edit:
       title: "Rückmeldung zu Frage bearbeiten"
     index:
@@ -48,11 +48,11 @@ de:
     score: "Punkte"
   questions:
     create:
-      notice: "Question wurde erstellt."
+      notice: "Frage wurde erstellt."
     update:
-      notice: "Question wurde geändert."
+      notice: "Frage wurde geändert."
     destroy:
-      notice: "Question wurde gelöscht."
+      notice: "Frage wurde gelöscht."
     stop:
       notice: "Frage wurde beendet."
     title: "Frage"
@@ -66,11 +66,11 @@ de:
     default_name: "Frage #%{number}"
   school_classes:
     create:
-      notice: "School wurde erstellt."
+      notice: "Schulklasse wurde erstellt."
     update:
-      notice: "School wurde geändert."
+      notice: "Schulklasse wurde geändert."
     destroy:
-      notice: "School wurde gelöscht."
+      notice: "Schulklasse wurde gelöscht."
     seating_plan:
       notice: "Sitzplan wurde geändert."
     title: "Schulklasse"
@@ -82,11 +82,11 @@ de:
       title: "Neue Schulklasse"
   student_device_mappings:
     create:
-      notice: "Student device mapping wurde erstellt."
+      notice: "Schülergerätezuordnung wurde erstellt."
     update:
-      notice: "Student device mapping wurde geändert."
+      notice: "Schülergerätezuordnung wurde geändert."
     destroy:
-      notice: "Student device mapping wurde gelöscht."
+      notice: "Schülergerätezuordnung wurde gelöscht."
     edit:
       title: "Schülergerätzuordnung bearbeiten"
     index:
@@ -95,12 +95,12 @@ de:
       title: "Neue Schülergerätzuordnung"
   students:
     create:
-      notice: "Student wurde erstellt."
+      notice: "Schüler wurde erstellt."
       mapping_notice: "Es wurde ebenfalls eine unvollständige Gerätezuordnung für den Schüler erstellt."
     update:
-      notice: "Student wurde geändert."
+      notice: "Schüler wurde geändert."
     destroy:
-      notice: "Student wurde gelöscht."
+      notice: "Schüler wurde gelöscht."
     title: "Schüler"
     edit:
       title: "Schüler bearbeiten"
