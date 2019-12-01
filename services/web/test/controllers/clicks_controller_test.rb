@@ -57,6 +57,19 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should not create question response if question does allow response" do
+    school_class = create(:school_class)
+    lesson = create(:lesson, school_class: school_class)
+    create(:question, school_class: school_class, lesson: lesson, response_allowed: false)
+    student = create(:student, school_class: school_class)
+    create(:student_device_mapping, school_class: school_class, student: student, device_type: 'rfid', device_id: '123')
+
+    assert_difference 'QuestionResponse.count', 0 do
+      post clicks_url, params: {click: {device_type: 'rfid', device_id: '123'}}
+      post clicks_url, params: {click: {device_type: 'rfid', device_id: '123'}}
+    end
+  end
+
   [:html, :json].each do |format|
     test "should create click and update incomplete mapping (#{format})" do
       student = create(:student)

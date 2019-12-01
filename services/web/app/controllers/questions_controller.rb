@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:edit, :update, :destroy]
+  before_action :set_question, only: [:edit, :update, :destroy, :stop]
   before_action :set_question_with_includes, only: [:show]
 
   # GET /questions
@@ -49,6 +49,8 @@ class QuestionsController < ApplicationController
   def update
     respond_to do |format|
       if @question.update(question_params)
+        SchoolClassChannel.broadcast_to(@question.school_class, type: SchoolClassChannel::QUESTION, browser_window_id: params[:browser_window_id])
+
         format.html { redirect_to @question, notice: t('.notice') }
         format.json { render :show, status: :ok, location: @question }
       else
@@ -65,6 +67,21 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to questions_url, notice: t('.notice') }
       format.json { head :no_content }
+    end
+  end
+
+  def stop
+    respond_to do |format|
+      if @question.update(response_allowed: false)
+        SchoolClassChannel.broadcast_to(@question.school_class, type: SchoolClassChannel::QUESTION, browser_window_id: params[:browser_window_id])
+
+        redirect_back fallback_location: question_path(@question), notice: t('.notice') and return if params[:redirect_back]
+        format.html { render :show, status: :ok, location: @question }
+        format.json { render :show, status: :ok, location: @question }
+      else
+        format.html { render :edit }
+        format.json { render json: @question.errors, status: :unprocessable_entity }
+      end
     end
   end
 

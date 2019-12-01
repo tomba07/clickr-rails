@@ -108,6 +108,7 @@ class ClicksController < ApplicationController
     school_class = mapping.school_class
     lesson = school_class.most_recent_lesson
     question = lesson&.most_recent_question or return nil
+    return nil unless question.response_allowed
     return nil if QuestionResponse.exists?(student_id: mapping.student_id, question: question)
 
     return click.create_question_response!(

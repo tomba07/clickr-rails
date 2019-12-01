@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   resources :clicks
   resource :lesson_execution, only: [:show]
   resources :lessons
-  resources :questions
+  resources :questions do
+    member do
+      post :stop
+    end
+  end
   resources :students do
     member do
       post :decrement_score

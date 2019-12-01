@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_092830) do
+ActiveRecord::Schema.define(version: 2019_12_01_192752) do
 
   create_table "clicks", force: :cascade do |t|
     t.string "device_id", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_092830) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "score", default: 1, null: false
+    t.boolean "response_allowed", default: true, null: false
     t.index ["created_at"], name: "index_questions_on_created_at", order: :desc
     t.index ["lesson_id"], name: "index_questions_on_lesson_id"
     t.index ["school_class_id"], name: "index_questions_on_school_class_id"

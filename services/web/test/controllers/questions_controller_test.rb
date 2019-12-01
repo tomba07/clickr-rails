@@ -55,6 +55,11 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to question_url(@question)
   end
 
+  test "should stop question (response_allowed = false)" do
+    post stop_question_url(@question)
+    assert_equal false, @question.reload.response_allowed
+  end
+
   test "should destroy question" do
     skip 'dependent rows in other tables'
     assert_difference('Question.count', -1) do

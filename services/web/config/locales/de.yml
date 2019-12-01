@@ -53,6 +53,8 @@ de:
       notice: "Question wurde geändert."
     destroy:
       notice: "Question wurde gelöscht."
+    stop:
+      notice: "Frage wurde beendet."
     title: "Frage"
     edit:
       title: "Frage bearbeiten"
@@ -118,6 +120,7 @@ de:
       edit_seating_plan: "Sitzplan bearbeiten"
       question_title: "Frage: %{question}"
       ask_question_submit: "Frage stellen"
+      stop_question_submit: "Frage beenden"
   users:
     school_class:
       notice: "Deine ausgewählte Schulklasse wurde geändert."

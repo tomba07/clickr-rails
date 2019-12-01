@@ -83,6 +83,8 @@ en:
       notice: "Question was updated."
     destroy:
       notice: "Question was destroyed."
+    stop:
+      notice: "Question was stopped."
     title: "Question"
     edit:
       title: "Editing question"
@@ -153,6 +155,7 @@ en:
       edit_seating_plan: "Edit seating plan"
       question_title: "Question: %{question}"
       ask_question_submit: "Ask question"
+      stop_question_submit: "Stop question"
   users:
     school_class:
       notice: "Your selected school class has been updated."

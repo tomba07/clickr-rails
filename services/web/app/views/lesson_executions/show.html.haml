@@ -1,3 +1,6 @@
+- if @question&.response_allowed?
+  - content_for :main_css_class, 'question--active'
+
 - if @suggest_creating_new_lesson
   .notification.is-warning
     = t('.create_new_lesson_text')
@@ -16,21 +19,32 @@
     - if @question
       %h1.title= t('lesson_executions.show.question_title', question: @question&.name)
   .panel-block
-    -# TODO Show potential errors on this page
-    = form_with model: Question.new, local: true do |f|
-      = hidden_field :redirect_back, true
-      = hidden_field_tag :browser_window_id, @browser_window_id
-      .score-input{ data: { controller: 'score-input' } }
-        .field.is-horizontal
-          .field-body
-            = f.text_field :name, value: @default_question_name, class: 'is-medium'
-            .field.has-addons{ title: 'Question score' }
-              .control
-                %button.field.button.is-medium{ type: 'button', data: { action: 'click->score-input#decrement', target: 'score-input.decrement' } } -
-              =f.text_field :score, value: 1, size: 1, no_field: true, class: 'is-medium has-addons score-input__field has-cursor-help', data: { target: 'score-input.field' }
-              .control
-                %button.field.button.is-medium{ type: 'button', data: { action: 'click->score-input#increment' } } +
-            = f.submit_primary t('.ask_question_submit'), class: 'is-medium'
+    - if @question&.response_allowed?
+      = form_with scope: :question, url: stop_question_path(@question), method: :post, local: true do |f|
+        = hidden_field :redirect_back, true
+        %button.button.is-primary.is-medium{ type: 'submit' }
+          %span.icon.is-small
+            %i.fas.fa-stop
+          %span= t('.stop_question_submit')
+    - else
+      -# TODO Show potential errors on this page
+      = form_with model: Question.new, local: true do |f|
+        = hidden_field :redirect_back, true
+        = hidden_field_tag :browser_window_id, @browser_window_id
+        .score-input{ data: { controller: 'score-input' } }
+          .field.is-horizontal
+            .field-body
+              = f.text_field :name, value: @default_question_name, class: 'is-medium'
+              .field.has-addons{ title: 'Question score' }
+                .control
+                  %button.field.button.is-medium{ type: 'button', data: { action: 'click->score-input#decrement', target: 'score-input.decrement' } } -
+                =f.text_field :score, value: 1, size: 1, no_field: true, class: 'is-medium has-addons score-input__field has-cursor-help', data: { target: 'score-input.field' }
+                .control
+                  %button.field.button.is-medium{ type: 'button', data: { action: 'click->score-input#increment' } } +
+              %button.button.is-primary.is-medium{ type: 'submit' }
+                %span.icon.is-small
+                  %i.fas.fa-play
+                %span= t('.ask_question_submit')
 
 = render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, edit: @edit, browser_window_id: @browser_window_id
 
