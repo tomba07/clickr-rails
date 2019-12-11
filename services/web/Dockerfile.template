@@ -9,6 +9,8 @@ RUN apk add --no-cache \
   build-base \
   git \
   postgresql-dev \
+  # Required by node-sass (webpacker dependency)
+  python2 \
   ruby-dev \
   ruby-bundler \
   # Required by activesupport (assets:precompile)
