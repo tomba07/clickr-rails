@@ -8,13 +8,6 @@ update_configs:
   - package_manager: "ruby:bundler"
     directory: "/services/web"
     update_schedule: "live"
-    ignored_updates:
-      - match:
-          # version 5 avoids sassc, which won't compile on RPi: https://github.com/sass/sassc-rails/issues/138
-          dependency_name: "sass-rails"
-      - match:
-          # Fontawesome icons (v5.0.9 still uses sass, not sassc -> important for ARMv8/Pi)
-          dependency_name: "font-awesome-sass"
 
   - package_manager: "javascript"
     directory: "/services/web"

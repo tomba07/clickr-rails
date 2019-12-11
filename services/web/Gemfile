@@ -11,8 +11,8 @@ gem 'puma', '~> 4.3'
 gem "pg", "~> 1.1", group: :production
 # Ues SQLite as database adapter in development and test
 gem "sqlite3", "~> 1.4", group: [:development, :test]
-# Use SCSS for stylesheets (version 5 avoids sassc, which won't compile on RPi: https://github.com/sass/sassc-rails/issues/138)
-gem "sass-rails", "~> 5.0"
+# Use SCSS for stylesheets
+gem "sass-rails", "~> 6.0"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -37,8 +37,8 @@ gem 'strip_attributes', '~> 1.9'
 gem 'devise', '~> 4.7'
 # Templating alternative to .erb
 gem 'haml-rails', '~> 2.0'
-# Fontawesome icons (v5.0.9 still uses sass, not sassc -> important for ARMv8/Pi)
-gem "font-awesome-sass", "5.0.9"
+# Fontawesome icons
+gem "font-awesome-sass", '~> 5.11.2'
 # Form generator
 
 

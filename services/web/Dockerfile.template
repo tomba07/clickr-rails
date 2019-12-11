@@ -9,8 +9,6 @@ RUN apk add --no-cache \
   build-base \
   git \
   postgresql-dev \
-  # For node-sass (in old sass-rails version)
-  python \
   ruby-dev \
   ruby-bundler \
   # Required by activesupport (assets:precompile)
@@ -26,6 +24,9 @@ COPY Gemfile .
 COPY Gemfile.lock .
 COPY package.json .
 COPY yarn.lock .
+
+# Fix sassc-ruby build on ARM
+ENV BUNDLE_BUILD__SASSC=--disable-march-tune-native
 
 RUN bundle install --jobs 4 --without development test --no-cache --deployment \
 # https://www.georg-ledermann.de/blog/2018/04/19/dockerize-rails-the-lean-way/
