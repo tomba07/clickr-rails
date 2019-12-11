@@ -2,7 +2,7 @@ version: '2'
 services:
   db:
     # Balena does not support env var substitution, so we hardcode the ARM image
-    image: arm64v8/postgres:alpine
+    image: arm64v8/postgres:12-alpine
     # image: postgres:alpine
     volumes:
       - db:/var/lib/postgresql/data
