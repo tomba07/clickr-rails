@@ -76,7 +76,3 @@ yarn-debug.log*
 !/storage/.keep
 
 # End of https://www.gitignore.io/api/rails
-
-
-# Add .bundle config (fix sassc on travis)
-!/.bundle/
