@@ -27,6 +27,8 @@ COPY yarn.lock .
 
 # Fix sassc-ruby build on ARM
 ENV BUNDLE_BUILD__SASSC=--disable-march-tune-native
+# Fix sassc on alpine https://github.com/sass/sassc-ruby/issues/141#issuecomment-522938845
+ENV BUNDLE_FORCE_RUBY_PLATFORM=true
 
 RUN bundle install --jobs 4 --without development test --no-cache --deployment \
 # https://www.georg-ledermann.de/blog/2018/04/19/dockerize-rails-the-lean-way/
