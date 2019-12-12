@@ -4,7 +4,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/test_coverage)](https://codeclimate.com/github/ftes/clickr-rails/test_coverage)
 
 ## Introduction
-TODO briefly explain domain model
+TODO briefly explain domain model!
 
 ## Tech Stack
 Languages, frameworks and libraries:
