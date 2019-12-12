@@ -63,6 +63,7 @@ jobs:
         - curl -o- -L https://yarnpkg.com/install.sh | bash
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
       install:
+        # https://github.com/sass/sassc-ruby/issues/146#issuecomment-541749126
         - bundle config --local build.sassc --disable-march-tune-native
         - bundler install --jobs 4 --without development production --deployment
         - yarn install --production --frozen-lockfile
