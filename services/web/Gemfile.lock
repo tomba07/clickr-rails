@@ -83,7 +83,7 @@ GEM
       factory_bot (~> 5.1.0)
       railties (>= 4.2.0)
     ffi (1.11.3)
-    font-awesome-sass (5.11.2)
+    font-awesome-sass (5.12.0)
       sassc (>= 1.11)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -239,7 +239,7 @@ DEPENDENCIES
   byebug
   devise (~> 4.7)
   factory_bot_rails (~> 5.1)
-  font-awesome-sass (~> 5.11.2)
+  font-awesome-sass (~> 5.12.0)
   haml-rails (~> 2.0)
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.3)
