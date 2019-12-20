@@ -11,7 +11,7 @@ RUN apk add --no-cache \
   postgresql-dev \
   # Required by node-sass (webpacker dependency)
   python2 \
-  ruby-dev \
+  ruby-dev=2.5.7-r0 \
   ruby-bundler \
   # Required by activesupport (assets:precompile)
   ruby-json \
