@@ -1,7 +1,8 @@
 ###############
 # Build stage #
 ###############
-FROM balenalib/%%BALENA_ARCH%%-alpine:latest-build as build
+# Pin ruby 2.5.7 in alpine 3.10
+FROM balenalib/%%BALENA_ARCH%%-alpine:3.10-build as build
 
 WORKDIR /app
 
@@ -11,7 +12,7 @@ RUN apk add --no-cache \
   postgresql-dev \
   # Required by node-sass (webpacker dependency)
   python2 \
-  ruby-dev=2.5.7-r0 \
+  ruby-dev \
   ruby-bundler \
   # Required by activesupport (assets:precompile)
   ruby-json \

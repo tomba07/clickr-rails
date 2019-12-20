@@ -2,11 +2,12 @@
 # Usage: ./bin/docker-template [<alpine-image>] [<python-image>]
 # Translate Dockerfile.template to Dockerfile for local development
 
-ALPINE="${1:-alpine:latest}"
+# Pin ruby 2.5.7 in alpine 3.10
+ALPINE="${1:-alpine:3.10}"
 PYTHON="${2:-python:3-alpine}"
 
 find services -name Dockerfile.template | while read template; do
     dockerfile="`dirname $template`/Dockerfile"
-    cat $template | sed -e "s~balenalib/%%BALENA_ARCH%%-alpine:latest-[a-z]*~$ALPINE~g" \
+    cat $template | sed -e "s~balenalib/%%BALENA_ARCH%%-alpine:.*-[a-z]*~$ALPINE~g" \
       -e "s~balenalib/%%BALENA_ARCH%%-alpine-python:[0-9\.]*-latest-[a-z]*~$PYTHON~g" > $dockerfile
 done
