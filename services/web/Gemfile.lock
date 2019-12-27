@@ -57,7 +57,7 @@ GEM
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
     bcrypt (3.1.13)
-    bigdecimal (1.4.4)
+    bigdecimal (2.0.0)
     bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
@@ -233,7 +233,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bigdecimal (~> 1.4)
+  bigdecimal (~> 2.0)
   bootsnap (>= 1.4.2)
   bullet (~> 6.0)
   byebug
