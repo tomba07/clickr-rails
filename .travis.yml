@@ -109,7 +109,7 @@ jobs:
       arch: arm64
       before_install:
         # TODO Use balena base images
-        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
+        - ./bin/docker-template arm64v8/alpine:3.10 arm64v8/python:3-alpine arm64v8/node:12-alpine
         - cd services/$SERVICE
 
     # Build services/rfid-keyboard-reader docker images
@@ -122,7 +122,20 @@ jobs:
       arch: arm64
       before_install:
         # TODO Use balena base images
-        - ./bin/docker-template arm64v8/alpine:latest arm64v8/python:3-alpine
+        - ./bin/docker-template arm64v8/alpine:3.10 arm64v8/python:3-alpine arm64v8/node:12-alpine
+        - cd services/$SERVICE
+
+    # Build services/zstack-zigbee-reader docker images
+    - <<: *build-docker-image
+      name: Build services/zstack-zigbee-reader docker image and push if branch=master (amd64)
+      env: SERVICE=zstack-zigbee-reader
+    - <<: *build-docker-image
+      name: Build services/zstack-zigbee-reader docker image and push if branch=master (arm64)
+      env: SERVICE=zstack-zigbee-reader
+      arch: arm64
+      before_install:
+        # TODO Use balena base images
+        - ./bin/docker-template arm64v8/alpine:3.10 arm64v8/python:3-alpine arm64v8/node:12-alpine
         - cd services/$SERVICE
 
     # Build and deploy using balena cloud
