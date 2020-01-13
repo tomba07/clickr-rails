@@ -82,8 +82,12 @@ Initialized via `bin/setup-environment-variables`.
 ## TODO
 - `web`: [balena update locking](https://www.balena.io/docs/learn/deploy/release-strategy/update-locking/) and trigger from within the app (do not update during lesson)
 - new adapters (e.g. raw I/O)
-- `rfid-keyboar-reader`: support selecting by device.name (`HXGCoLtd Keyboard`)
+- `rfid-keyboard-reader`: support selecting by device.name (`HXGCoLtd Keyboard`)
+- `rfid-keyboard-reader`: add unit tests
 - `web`: check that created_at indexes are used (order by desc)
+- `zstack-zigbee-reader`: add unit tests
+- `web`: Missing websocket events (sometimes no live update after click)
+- `web, zstack-zigbee-reader`: Battery indicators in lesson execution view
 
 ## Configuration
 App environment variables:
