@@ -23,7 +23,7 @@ def get_device(path, usb_ids, debounce_seconds, token_id_handler):
 def main():
     usb_ids_raw = os.getenv('RFID_KEYBOARD_READER_USB_IDS', '')
     debounce_seconds_raw = os.getenv('RFID_KEYBOARD_READER_DEBOUNCE_SECONDS', '3')
-    post_endpoint = os.getenv('RFID_KEYBOARD_READER_POST_ENDPOINT', 'http://localhost:3000/clicks')
+    post_endpoint = os.getenv('CLICKR_POST_ENDPOINT', 'http://localhost:3000/clicks')
     log.info(f"Params (raw):\n  USB_IDS: {usb_ids_raw}\n  DEBOUNCE_SECONDS: {debounce_seconds_raw}\n  POST_ENDPOINT: {post_endpoint}")
     usb_ids = parse_usb_ids(usb_ids_raw)
     debounce_seconds = int(debounce_seconds_raw)

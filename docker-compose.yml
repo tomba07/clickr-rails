@@ -11,9 +11,9 @@ services:
 
   web:
     build: services/web
-      # environment:
+    # environment:
     # Balena adds env vars automatically and env var substitution in compose file is not yet supported
-    # RAILS_MASTER_KEY: "${RAILS_MASTER_KEY}"
+      # RAILS_MASTER_KEY: "${RAILS_MASTER_KEY}"
     volumes:
       - db:/app/db/data
     ports:
@@ -26,10 +26,44 @@ services:
     privileged: true
     depends_on:
       - web
-      # environment:
+    # environment:
       # Balena adds env vars automatically and env var substitution in compose file is not yet supported
+      # CLICKR_POST_ENDPOINT: "${CLICKR_POST_ENDPOINT}"
       # RFID_KEYBOARD_READER_USB_IDS: "${RFID_KEYBOARD_READER_USB_IDS}"
       # RFID_KEYBOARD_READER_DEBOUNCE_SECONDS: "${RFID_KEYBOARD_READER_DEBOUNCE_SECONDS}"
+  
+  mqtt:
+    image: eclipse-mosquitto
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt
+    volumes:
+      # Overwrite configuration.yaml with env-var-substituted version of configuration.yaml.env on every startup
+      - ./services/zigbee2mqtt:/clickr
+      - zigbee2mqtt_data:/app/data
+    entrypoint: /clickr/entrypoints/envsubst.sh
+    depends_on:
+      - mqtt
+    privileged: true
+    environment:
+      TZ: Europe/Berlin
+      # Balena adds env vars automatically and env var substitution in compose file is not yet supported
+      # CLICKR_POST_ENDPOINT: "${CLICKR_POST_ENDPOINT}"
+      # ZIGBEE2MQTT_PERMIT_JOIN: "${ZIGBEE2MQTT_PERMIT_JOIN}"
+      # ZIGBEE2MQTT_SERIAL_PORT: "${ZIGBEE2MQTT_SERIAL_PORT}"
+
+  mqtt-reader:
+    build: services/mqtt-reader
+    depends_on:
+      - mqtt
+    environment:
+      MQTT_HOST: mqtt
 
 volumes:
   db:
+  zigbee2mqtt_data:
+  mosquitto_data:
+  mosquitto_log:

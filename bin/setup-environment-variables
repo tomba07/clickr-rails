@@ -3,12 +3,16 @@
 
 set -ex
 
-echo "RAILS_MASTER_KEY=$1" > .env
+echo "CLICKR_POST_ENDPOINT=http://web/clicks" > .env
+echo "RAILS_MASTER_KEY=$1" >> .env
 echo "RFID_KEYBOARD_READER_USB_IDS=16c0:27db" >> .env
 echo "RFID_KEYBOARD_READER_DEBOUNCE_SECONDS=3" >> .env
-echo "RFID_KEYBOARD_READER_POST_ENDPOINT=http://web/clicks"
+echo "ZIGBEE2MQTT_PERMIT_JOIN=true" >> .env
+echo "ZIGBEE2MQTT_SERIAL_PORT=/dev/ttyACM1" >> .env
 
+yarn --cwd build/balena-cli balena env add --application clickr CLICKR_POST_ENDPOINT "http://web/clicks"
 yarn --cwd build/balena-cli balena env add --application clickr RAILS_MASTER_KEY "$1"
 yarn --cwd build/balena-cli balena env add --application clickr RFID_KEYBOARD_READER_USB_IDS "16c0:27db"
 yarn --cwd build/balena-cli balena env add --application clickr RFID_KEYBOARD_READER_DEBOUNCE_SECONDS "3"
-yarn --cwd build/balena-cli balena env add --application clickr RFID_KEYBOARD_READER_POST_ENDPOINT "http://web/clicks"
+yarn --cwd build/balena-cli balena env add --application clickr ZIGBEE2MQTT_PERMIT_JOIN "true"
+yarn --cwd build/balena-cli balena env add --application clickr ZIGBEE2MQTT_SERIAL_PORT "/dev/ttyACM1"

@@ -1,0 +1,31 @@
+###############
+# Build stage #
+###############
+# https://github.com/balena-io-library/official-images/blob/master/library/generic-aarch64-alpine-python
+# Warning: 3-latest and latest-latest do not use newest python version (3.5 and 2.x respectively)
+FROM balenalib/%%BALENA_ARCH%%-alpine-python:3.8-latest-build as build
+
+WORKDIR /app
+
+RUN apk add --no-cache \
+  build-base \
+  linux-headers
+
+COPY requirements.txt .
+
+# --user installs dependencies to /root/.local
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+#############
+# Run stage #
+#############
+FROM balenalib/%%BALENA_ARCH%%-alpine-python:3.8-latest-run
+LABEL maintainer="f@ftes.de"
+
+WORKDIR /app
+
+COPY --from=build /root/.local /root/.local
+
+COPY . .
+
+CMD ["python", "./src/main.py"]

@@ -1,0 +1,6 @@
+**/*
+!requirements.txt
+!src/**/*.py
+
+# Needed by balena push
+!Dockerfile.template
