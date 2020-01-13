@@ -12,7 +12,10 @@ class SchoolClass < ApplicationRecord
   end
 
   def most_recent_lesson_or_create
-    most_recent_lesson || lessons.create!(name: I18n.t('lessons.create.default_name', school_class_name: name))
+    most_recent_lesson ||
+      lessons.create!(
+        name: I18n.t('lessons.create.default_name', school_class_name: name)
+      )
   end
 
   def suggest_creating_new_lesson?
@@ -21,7 +24,9 @@ class SchoolClass < ApplicationRecord
     question = lesson.most_recent_question
 
     latest_timestamp = question&.created_at || lesson&.created_at
-    comparison_timestamp = Rails.application.config.clickr.suggest_new_lesson_after_minutes.minutes.ago
+    comparison_timestamp =
+      Rails.application.config.clickr.suggest_new_lesson_after_minutes.minutes
+        .ago
 
     latest_timestamp < comparison_timestamp
   end
@@ -32,15 +37,13 @@ class SchoolClass < ApplicationRecord
 
   def update_seats(seats)
     # TODO exception handling
-    transaction do
-      seats.each(&(method :update_seat))
-    end
+    transaction { seats.each(&(method :update_seat)) }
   end
 
   def update_seat(student_id:, seat_row:, seat_col:)
     student = students.find(student_id)
     # Bypass validation (when swapping seats, one seat is briefly occupied twice)
-    student.attributes = {seat_row: seat_row, seat_col: seat_col}
+    student.attributes = { seat_row: seat_row, seat_col: seat_col }
     student.save! validate: false
   end
 end

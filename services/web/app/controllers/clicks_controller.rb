@@ -3,8 +3,8 @@ class ClicksController < ApplicationController
   skip_before_action :authenticate_user!, only: :create
   skip_before_action :verify_authenticity_token, only: :create
 
-  before_action :set_click, only: [:show, :edit, :update, :destroy]
-  before_action :set_click_with_includes, only: [:show]
+  before_action :set_click, only: %i[show edit update destroy]
+  before_action :set_click_with_includes, only: %i[show]
 
   # GET /clicks
   # GET /clicks.json
@@ -14,8 +14,7 @@ class ClicksController < ApplicationController
 
   # GET /clicks/1
   # GET /clicks/1.json
-  def show
-  end
+  def show; end
 
   # GET /clicks/new
   def new
@@ -23,8 +22,7 @@ class ClicksController < ApplicationController
   end
 
   # GET /clicks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /clicks
   # POST /clicks.json
@@ -33,20 +31,60 @@ class ClicksController < ApplicationController
 
     respond_to do |format|
       if @click.save
-        m = @student_device_mapping = update_oldest_incomplete_student_device_mapping! @click
-        r = @question_response = create_question_response! @click if !@student_device_mapping
-        SchoolClassChannel.broadcast_to(@student_device_mapping.school_class, type: SchoolClassChannel::MAPPING) if @student_device_mapping
-        SchoolClassChannel.broadcast_to(@question_response.school_class, type: SchoolClassChannel::RESPONSE) if @question_response
+        m =
+          @student_device_mapping =
+            update_oldest_incomplete_student_device_mapping! @click
+        if !@student_device_mapping
+          r = @question_response = create_question_response! @click
+        end
+        if @student_device_mapping
+          SchoolClassChannel.broadcast_to(
+            @student_device_mapping.school_class,
+            type: SchoolClassChannel::MAPPING
+          )
+        end
+        if @question_response
+          SchoolClassChannel.broadcast_to(
+            @question_response.school_class,
+            type: SchoolClassChannel::RESPONSE
+          )
+        end
 
-        format.html { redirect_to @click, notice: [
-          t('.notice'),
-          (t('.mapping_notice', device_id: c.device_id, student_name: m.student&.name, class_name: m.school_class&.name) if @student_device_mapping),
-          (t('.response_notice', student_name: r.student&.name, question_name: r.question&.name, class_name: r.school_class&.name, lesson_name: r.lesson&.name) if @question_response),
-        ].compact.join('<br/>') }
+        format.html do
+          redirect_to @click,
+                      notice:
+                        [
+                          t('.notice'),
+                          (
+                            if @student_device_mapping
+                              t(
+                                '.mapping_notice',
+                                device_id: c.device_id,
+                                student_name: m.student&.name,
+                                class_name: m.school_class&.name
+                              )
+                            end
+                          ),
+                          (
+                            if @question_response
+                              t(
+                                '.response_notice',
+                                student_name: r.student&.name,
+                                question_name: r.question&.name,
+                                class_name: r.school_class&.name,
+                                lesson_name: r.lesson&.name
+                              )
+                            end
+                          )
+                        ].compact
+                          .join('<br/>')
+        end
         format.json { render :show, status: :created, location: @click }
       else
         format.html { render :new }
-        format.json { render json: @click.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @click.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -60,7 +98,9 @@ class ClicksController < ApplicationController
         format.json { render :show, status: :ok, location: @click }
       else
         format.html { render :edit }
-        format.json { render json: @click.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @click.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -95,28 +135,35 @@ class ClicksController < ApplicationController
   def update_oldest_incomplete_student_device_mapping!(click)
     return nil if StudentDeviceMapping.exists?(device_id: click.device_id)
     mapping = StudentDeviceMapping.oldest_incomplete or return nil
-    mapping.update!(
-      device_type: click.device_type,
-      device_id: click.device_id,
-    )
+    mapping.update!(device_type: click.device_type, device_id: click.device_id)
     return mapping
   end
 
   def create_question_response!(click)
-    mapping = StudentDeviceMapping.includes(:school_class).find_by(device_id: click.device_id) or return nil
+    mapping =
+      StudentDeviceMapping.includes(:school_class).find_by(
+        device_id: click.device_id
+      ) or
+      return nil
 
     school_class = mapping.school_class
     lesson = school_class.most_recent_lesson
     question = lesson&.most_recent_question or return nil
     return nil unless question.response_allowed
-    return nil if QuestionResponse.exists?(student_id: mapping.student_id, question: question)
+    if QuestionResponse.exists?(
+         student_id: mapping.student_id, question: question
+       )
+      return nil
+    end
 
-    return click.create_question_response!(
-      student_id: mapping.student_id,
-      question: question,
-      lesson: lesson,
-      school_class: school_class,
-      score: question.score || 1,
+    return(
+      click.create_question_response!(
+        student_id: mapping.student_id,
+        question: question,
+        lesson: lesson,
+        school_class: school_class,
+        score: question.score || 1
+      )
     )
   end
 end

@@ -1,0 +1,15 @@
+{
+  "name": "clickr",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ftes/clickr-rails.git",
+  "author": "Fredrik Teschke <f@ftes.de>",
+  "private": true,
+  "workspaces": [
+    "services/*"
+  ],
+  "scripts": {
+    "lint": "yarn workspaces run lint",
+    "format": "yarn workspaces run format"
+  }
+}

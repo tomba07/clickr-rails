@@ -7,6 +7,6 @@ class CreateClicks < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :clicks, :created_at, order: {created_at: :desc}
+    add_index :clicks, :created_at, order: { created_at: :desc }
   end
 end

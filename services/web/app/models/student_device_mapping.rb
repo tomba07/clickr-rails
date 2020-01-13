@@ -5,7 +5,7 @@ class StudentDeviceMapping < ApplicationRecord
   belongs_to :student
   belongs_to :school_class
 
-  validates :device_id, uniqueness: {scope: :school_class, allow_nil: true}
+  validates :device_id, uniqueness: { scope: :school_class, allow_nil: true }
   # TODO validates student.school_class = school_class
 
   before_validation :set_incomplete!

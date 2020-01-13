@@ -7,13 +7,14 @@ class QuestionResponse < ApplicationRecord
   belongs_to :school_class
 
   validates :score, presence: true
-  validates :click, uniqueness: {allow_nil: true}
-  validates :student, uniqueness: {scope: :question}, if: :question
+  validates :click, uniqueness: { allow_nil: true }
+  validates :student, uniqueness: { scope: :question }, if: :question
   # TODO validates student.school_class = school_class
   # TODO validates lesson.school_class = school_class
   # TODO validates question.lesson = lesson
 
-  scope :for_most_recent_question, -> (school_class) { where(question: school_class.most_recent_question) }
+  scope :for_most_recent_question,
+        ->(school_class) { where(question: school_class.most_recent_question) }
 
   # Used to manually adjust student sum
   def is_virtual

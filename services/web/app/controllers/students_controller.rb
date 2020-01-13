@@ -1,7 +1,9 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:edit, :update, :destroy, :increment_score, :decrement_score]
-  before_action :set_student_with_includes, only: [:show]
-  before_action :set_browser_window_id, only: [:increment_score, :decrement_score]
+  before_action :set_student,
+                only: %i[edit update destroy increment_score decrement_score]
+  before_action :set_student_with_includes, only: %i[show]
+  before_action :set_browser_window_id,
+                only: %i[increment_score decrement_score]
 
   # GET /students
   # GET /students.json
@@ -11,8 +13,7 @@ class StudentsController < ApplicationController
 
   # GET /students/1
   # GET /students/1.json
-  def show
-  end
+  def show; end
 
   # GET /students/new
   def new
@@ -20,8 +21,7 @@ class StudentsController < ApplicationController
   end
 
   # GET /students/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /students
   # POST /students.json
@@ -30,18 +30,31 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        SchoolClassChannel.broadcast_to(@student.school_class, type: SchoolClassChannel::STUDENT, browser_window_id: params[:browser_window_id])
-        @student_device_mapping = StudentDeviceMapping.create!(student: @student, school_class_id: @student.school_class_id) if params[:create_incomplete_mapping]
-        notice = [
-          t('.notice'),
-          (t('.mapping_notice') if @student_device_mapping),
-        ].compact.join('<br/>')
+        SchoolClassChannel.broadcast_to(
+          @student.school_class,
+          type: SchoolClassChannel::STUDENT,
+          browser_window_id: params[:browser_window_id]
+        )
+        if params[:create_incomplete_mapping]
+          @student_device_mapping =
+            StudentDeviceMapping.create!(
+              student: @student, school_class_id: @student.school_class_id
+            )
+        end
+        notice =
+          [
+            t('.notice'),
+            (t('.mapping_notice') if @student_device_mapping)
+          ].compact
+            .join('<br/>')
 
         format.html { redirect_to @student, notice: notice }
         format.json { render :show, status: :created, location: @student }
       else
         format.html { render :new }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @student.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -55,7 +68,9 @@ class StudentsController < ApplicationController
         format.json { render :show, status: :ok, location: @student }
       else
         format.html { render :edit }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @student.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -72,28 +87,46 @@ class StudentsController < ApplicationController
 
   def increment_score
     lesson = @student.school_class.most_recent_lesson
-    question_response = @student.question_responses.create(score: 1, lesson: lesson, school_class: @student.school_class)
+    question_response =
+      @student.question_responses.create(
+        score: 1, lesson: lesson, school_class: @student.school_class
+      )
 
     respond_to do |format|
       if question_response.errors.empty?
-        SchoolClassChannel.broadcast_to(@student.school_class, type: SchoolClassChannel::RESPONSE, browser_window_id: @browser_window_id)
+        SchoolClassChannel.broadcast_to(
+          @student.school_class,
+          type: SchoolClassChannel::RESPONSE,
+          browser_window_id: @browser_window_id
+        )
         format.json { head :no_content }
       else
-        format.json { render json: question_response.errors, status: :bad_request }
+        format.json do
+          render json: question_response.errors, status: :bad_request
+        end
       end
     end
   end
 
   def decrement_score
     lesson = @student.school_class.most_recent_lesson
-    question_response = @student.question_responses.create(score: -1, lesson: lesson, school_class: @student.school_class)
+    question_response =
+      @student.question_responses.create(
+        score: -1, lesson: lesson, school_class: @student.school_class
+      )
 
     respond_to do |format|
       if question_response.errors.empty?
-        SchoolClassChannel.broadcast_to(@student.school_class, type: SchoolClassChannel::RESPONSE, browser_window_id: @browser_window_id)
+        SchoolClassChannel.broadcast_to(
+          @student.school_class,
+          type: SchoolClassChannel::RESPONSE,
+          browser_window_id: @browser_window_id
+        )
         format.json { head :no_content }
       else
-        format.json { render json: question_response.errors, status: :bad_request }
+        format.json do
+          render json: question_response.errors, status: :bad_request
+        end
       end
     end
   end
@@ -115,6 +148,11 @@ class StudentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def student_params
-    params.require(:student).permit(:school_class_id, :name, :seat_row, :seat_col)
+    params.require(:student).permit(
+      :school_class_id,
+      :name,
+      :seat_row,
+      :seat_col
+    )
   end
 end

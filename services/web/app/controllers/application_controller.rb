@@ -7,9 +7,8 @@ class ApplicationController < ActionController::Base
   private
 
   def extract_locale_from_accept_language_header
-    (request.env['HTTP_ACCEPT_LANGUAGE'] || '').scan(/^[a-z]{2}/).find do |locale|
-      I18n.available_locales.include?(locale.to_sym)
-    end
+    (request.env['HTTP_ACCEPT_LANGUAGE'] || '').scan(/^[a-z]{2}/)
+      .find { |locale| I18n.available_locales.include?(locale.to_sym) }
   end
 
   def switch_locale(&action)

@@ -1,9 +1,7 @@
 module DeviceIdPrefixer
   extend ActiveSupport::Concern
 
-  included do
-    before_validation :prefix_id_with_type!
-  end
+  included { before_validation :prefix_id_with_type! }
 
   def prefix_id_with_type!
     return if device_id.blank? || device_type.blank?

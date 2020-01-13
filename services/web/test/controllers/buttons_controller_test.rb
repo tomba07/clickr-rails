@@ -8,9 +8,8 @@ class ButtonsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
-  test "should get index" do
+  test 'should get index' do
     get buttons_url
     assert_response :success
   end
-
 end

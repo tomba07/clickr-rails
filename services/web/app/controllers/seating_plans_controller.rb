@@ -1,23 +1,24 @@
 class SeatingPlansController < ApplicationController
   layout false
 
-  before_action :set_school_class, only: [:show, :update]
-  before_action :set_seating_plan, only: [:show]
-  before_action :set_edit, only: [:show, :update]
-  before_action :set_browser_window_id, only: [:show, :update]
+  before_action :set_school_class, only: %i[show update]
+  before_action :set_seating_plan, only: %i[show]
+  before_action :set_edit, only: %i[show update]
+  before_action :set_browser_window_id, only: %i[show update]
 
-  def show
-  end
+  def show; end
 
   def update
     seating_plan = seating_plan_params.map { |s| s.to_h.symbolize_keys }
     @school_class.update_seats seating_plan
     @seating_plan = SeatingPlan.new(@school_class)
-    SchoolClassChannel.broadcast_to(@school_class, type: SchoolClassChannel::SEATING_PLAN, browser_window_id: @browser_window_id)
+    SchoolClassChannel.broadcast_to(
+      @school_class,
+      type: SchoolClassChannel::SEATING_PLAN,
+      browser_window_id: @browser_window_id
+    )
 
-    respond_to do |format|
-      format.html { render action: :show, layout: false }
-    end
+    respond_to { |format| format.html { render action: :show, layout: false } }
   end
 
   private
@@ -41,6 +42,6 @@ class SeatingPlansController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def seating_plan_params
-    params.permit(students: [:student_id, :seat_row, :seat_col]).require(:students)
+    params.permit(students: %i[student_id seat_row seat_col]).require(:students)
   end
 end

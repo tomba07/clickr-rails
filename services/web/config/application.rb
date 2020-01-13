@@ -19,6 +19,6 @@ module Clickr
     config.clickr = config_for(:clickr)
 
     # Autoload /lib folder
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
   end
 end

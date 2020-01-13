@@ -4,9 +4,12 @@ class SeatingPlan
   def initialize(school_class)
     @school_class = school_class
     students = school_class.students
-    @row_min, @row_max = students.map { |s| s.seat_row }.minmax.map { |i| i || 0 }
-    @col_min, @col_max = students.map { |s| s.seat_col }.minmax.map { |i| i || 0 }
-    @students_by_coordinates = students.reduce({}) { |tmp, s| tmp.merge({seat_hash(s.seat_row, s.seat_col) => s}) }
+    @row_min, @row_max = students.map(&:seat_row).minmax.map { |i| i || 0 }
+    @col_min, @col_max = students.map(&:seat_col).minmax.map { |i| i || 0 }
+    @students_by_coordinates =
+      students.reduce({}) do |tmp, s|
+        tmp.merge({ seat_hash(s.seat_row, s.seat_col) => s })
+      end
   end
 
   def coordinates(border: 0)
@@ -22,6 +25,6 @@ class SeatingPlan
   private
 
   def seat_hash(row, col)
-    {row: row, col: col}.freeze
+    { row: row, col: col }.freeze
   end
 end

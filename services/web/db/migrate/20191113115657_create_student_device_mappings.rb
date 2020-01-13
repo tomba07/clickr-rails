@@ -10,7 +10,11 @@ class CreateStudentDeviceMappings < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :student_device_mappings, :created_at, order: {created_at: :desc}
-    add_index :student_device_mappings, %i[school_class_id device_id], unique: true
+    add_index :student_device_mappings,
+              :created_at,
+              order: { created_at: :desc }
+    add_index :student_device_mappings,
+              %i[school_class_id device_id],
+              unique: true
   end
 end

@@ -1,4 +1,4 @@
-import {Controller} from 'stimulus'
+import { Controller } from 'stimulus'
 import Rails from '@rails/ujs'
 import websocketConsumer from '../channels/consumer'
 
@@ -27,33 +27,38 @@ export default class extends Controller {
   }
 
   connect() {
-    this.subscription = websocketConsumer.subscriptions.create({
-      channel: 'SchoolClassChannel',
-      school_class_id: this.schoolClassId
-    }, {
-      received: ({type, ...data}) => {
-        console.debug(`Received ${type} websocket frame`, data)
-
-        if (data.browser_window_id === this.browserWindowId) {
-          console.debug(`Ignoring ${type} websocket frame caused by this browser window`)
-          return
-        }
-
-        switch (type) {
-          case 'response':
-          case 'mapping':
-          case 'seating_plan':
-          case 'student':
-            this.refresh()
-            break
-          // Question and lesson changed? Entire page reload needed anyway.
-          case 'question':
-          case 'lesson':
-          default:
-            console.debug(`Ignoring ${type} websocket frame`)
-        }
+    this.subscription = websocketConsumer.subscriptions.create(
+      {
+        channel: 'SchoolClassChannel',
+        school_class_id: this.schoolClassId,
       },
-    })
+      {
+        received: ({ type, ...data }) => {
+          console.debug(`Received ${type} websocket frame`, data)
+
+          if (data.browser_window_id === this.browserWindowId) {
+            console.debug(
+              `Ignoring ${type} websocket frame caused by this browser window`
+            )
+            return
+          }
+
+          switch (type) {
+            case 'response':
+            case 'mapping':
+            case 'seating_plan':
+            case 'student':
+              this.refresh()
+              break
+            // Question and lesson changed? Entire page reload needed anyway.
+            case 'question':
+            case 'lesson':
+            default:
+              console.debug(`Ignoring ${type} websocket frame`)
+          }
+        },
+      }
+    )
   }
 
   disconnect() {
@@ -106,9 +111,13 @@ export default class extends Controller {
   }
 
   onDrop(event) {
-    const {row, col} = JSON.parse(event.dataTransfer.getData("application/drag-key"))
+    const { row, col } = JSON.parse(
+      event.dataTransfer.getData('application/drag-key')
+    )
     const targetEl = event.target.closest('[data-row][data-col]')
-    const sourceEl = this.element.querySelector(`[data-row='${row}'][data-col='${col}']`)
+    const sourceEl = this.element.querySelector(
+      `[data-row='${row}'][data-col='${col}']`
+    )
     this.swap(sourceEl, targetEl)
     event.preventDefault()
   }
@@ -146,7 +155,7 @@ export default class extends Controller {
         options.data = JSON.stringify(data)
         return true
       },
-    });
+    })
   }
 
   onDragEnd(event) {

@@ -1,0 +1,8 @@
+# ruby
+/public/
+/tmp/
+/vendor/
+/db/schema.rb
+
+# js
+/node_modules/

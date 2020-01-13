@@ -8,9 +8,8 @@ class LessonExecutionsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
-  test "should get index" do
+  test 'should get index' do
     get lesson_execution_url
     assert_response :success
   end
-
 end

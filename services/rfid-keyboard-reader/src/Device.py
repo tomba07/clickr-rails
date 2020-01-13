@@ -30,7 +30,8 @@ class Device:
             return
 
         log.info(f"Read token: {token_id}")
-        if callable(self.token_id_handler): self.token_id_handler(token_id)
+        if callable(self.token_id_handler):
+            self.token_id_handler(token_id)
 
     def handle_event(self, event):
         if event.type != evdev.ecodes.EV_KEY:
@@ -41,10 +42,10 @@ class Device:
             return  # Ignore key release events
 
         keyname = keyboard_event.keycode[4:]
-        if keyname == 'ENTER':
-            self.handle_token_id(int(event.sec), ''.join(self.accumulator))
+        if keyname == "ENTER":
+            self.handle_token_id(int(event.sec), "".join(self.accumulator))
             self.accumulator = []
-        elif len(keyname) == 1 and keyname in '1234567890':
+        elif len(keyname) == 1 and keyname in "1234567890":
             self.accumulator.append(keyname)
 
     async def async_handle_event(self):

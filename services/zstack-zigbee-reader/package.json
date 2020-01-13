@@ -1,12 +1,16 @@
 {
-  "name": "zstack-zigbee-reader",
+  "name": "@clickr/zstack-zigbee-reader",
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
-    "start": "node src/main.js"
+    "start": "node src/main.js",
+    "lint": "prettier --check **/*.js",
+    "format": "prettier --write src/**/*.js"
   },
   "private": true,
   "dependencies": {
+    "axios": "^0.19.1",
+    "prettier": "^1.19.1",
     "zigbee-herdsman": "^0.12.30"
   }
 }

@@ -1,6 +1,11 @@
 class LessonExecutionsController < ApplicationController
   def show
-    @school_class = current_user.school_class or (flash[:notice] = t('.select_school_class_notice') and redirect_to school_classes_path and return)
+    @school_class = current_user.school_class or
+      (
+        flash[:notice] = t('.select_school_class_notice') and
+          redirect_to school_classes_path and
+          return
+      )
     @seating_plan = SeatingPlan.new(@school_class)
     @edit = params[:edit_seating_plan] == 'true'
     @browser_window_id = SecureRandom.uuid

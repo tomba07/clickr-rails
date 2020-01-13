@@ -1,5 +1,5 @@
 class SchoolClassesController < ApplicationController
-  before_action :set_school_class, only: [:show, :edit, :update, :destroy]
+  before_action :set_school_class, only: %i[show edit update destroy]
 
   # GET /school_classes
   # GET /school_classes.json
@@ -9,8 +9,7 @@ class SchoolClassesController < ApplicationController
 
   # GET /school_classes/1
   # GET /school_classes/1.json
-  def show
-  end
+  def show; end
 
   # GET /school_classes/new
   def new
@@ -18,8 +17,7 @@ class SchoolClassesController < ApplicationController
   end
 
   # GET /school_classes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /school_classes
   # POST /school_classes.json
@@ -32,7 +30,9 @@ class SchoolClassesController < ApplicationController
         format.json { render :show, status: :created, location: @school_class }
       else
         format.html { render :new }
-        format.json { render json: @school_class.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @school_class.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -46,7 +46,9 @@ class SchoolClassesController < ApplicationController
         format.json { render :show, status: :ok, location: @school_class }
       else
         format.html { render :edit }
-        format.json { render json: @school_class.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @school_class.errors, status: :unprocessable_entity
+        end
       end
     end
   end

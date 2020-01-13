@@ -1,17 +1,17 @@
 class QuestionResponsesController < ApplicationController
-  before_action :set_question_response, only: [:edit, :update, :destroy]
-  before_action :set_question_response_with_includes, only: [:show]
+  before_action :set_question_response, only: %i[edit update destroy]
+  before_action :set_question_response_with_includes, only: %i[show]
 
   # GET /question_responses
   # GET /question_responses.json
   def index
-    @question_responses = QuestionResponse.includes(:student, :lesson, :question, :school_class).all
+    @question_responses =
+      QuestionResponse.includes(:student, :lesson, :question, :school_class).all
   end
 
   # GET /question_responses/1
   # GET /question_responses/1.json
-  def show
-  end
+  def show; end
 
   # GET /question_responses/new
   def new
@@ -19,8 +19,7 @@ class QuestionResponsesController < ApplicationController
   end
 
   # GET /question_responses/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /question_responses
   # POST /question_responses.json
@@ -31,10 +30,14 @@ class QuestionResponsesController < ApplicationController
     respond_to do |format|
       if @question_response.save
         format.html { redirect_to @question_response, notice: t('.notice') }
-        format.json { render :show, status: :created, location: @question_response }
+        format.json do
+          render :show, status: :created, location: @question_response
+        end
       else
         format.html { render :new }
-        format.json { render json: @question_response.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @question_response.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -48,7 +51,9 @@ class QuestionResponsesController < ApplicationController
         format.json { render :show, status: :ok, location: @question_response }
       else
         format.html { render :edit }
-        format.json { render json: @question_response.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @question_response.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -71,11 +76,19 @@ class QuestionResponsesController < ApplicationController
   end
 
   def set_question_response_with_includes
-    @question_response = QuestionResponse.includes(:student, :lesson, :question, :school_class).find(params[:id])
+    @question_response =
+      QuestionResponse.includes(:student, :lesson, :question, :school_class)
+        .find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def question_response_params
-    params.require(:question_response).permit(:click_id, :student_id, :question_id, :lesson_id, :school_class_id)
+    params.require(:question_response).permit(
+      :click_id,
+      :student_id,
+      :question_id,
+      :lesson_id,
+      :school_class_id
+    )
   end
 end

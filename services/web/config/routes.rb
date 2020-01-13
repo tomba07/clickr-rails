@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
-  resources :buttons, only: [:index]
+  resources :buttons, only: %i[index]
   resources :student_device_mappings
   resources :question_responses
   resources :clicks
-  resource :lesson_execution, only: [:show]
+  resource :lesson_execution, only: %i[show]
   resources :lessons
   resources :questions do
-    member do
-      post :stop
-    end
+    member { post :stop }
   end
   resources :students do
     member do
@@ -17,7 +15,7 @@ Rails.application.routes.draw do
     end
   end
   resources :school_classes do
-    resource :seating_plan, only: [:update, :show]
+    resource :seating_plan, only: %i[update show]
   end
   put 'users/school_class'
   devise_for :users

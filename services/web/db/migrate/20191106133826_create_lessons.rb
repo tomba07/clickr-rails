@@ -7,7 +7,7 @@ class CreateLessons < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :lessons, :created_at, order: {created_at: :desc}
+    add_index :lessons, :created_at, order: { created_at: :desc }
     add_index :lessons, %i[school_class_id name], unique: true
   end
 end

@@ -1,6 +1,6 @@
 class LessonsController < ApplicationController
-  before_action :set_lesson, only: [:edit, :update, :destroy]
-  before_action :set_lesson_with_includes, only: [:show]
+  before_action :set_lesson, only: %i[edit update destroy]
+  before_action :set_lesson_with_includes, only: %i[show]
 
   # GET /lessons
   # GET /lessons.json
@@ -10,8 +10,7 @@ class LessonsController < ApplicationController
 
   # GET /lessons/1
   # GET /lessons/1.json
-  def show
-  end
+  def show; end
 
   # GET /lessons/new
   def new
@@ -19,24 +18,36 @@ class LessonsController < ApplicationController
   end
 
   # GET /lessons/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /lessons
   # POST /lessons.json
   def create
-    @lesson = Lesson.new({school_class_id: current_user.school_class&.id, **lesson_params})
+    @lesson =
+      Lesson.new(
+        { school_class_id: current_user.school_class&.id, **lesson_params }
+      )
 
     respond_to do |format|
       if @lesson.save
-        SchoolClassChannel.broadcast_to(@lesson.school_class, type: SchoolClassChannel::LESSON, browser_window_id: params[:browser_window_id])
-        redirect_back fallback_location: lesson_path(@lesson), notice: t('.notice') and return if params[:redirect_back]
+        SchoolClassChannel.broadcast_to(
+          @lesson.school_class,
+          type: SchoolClassChannel::LESSON,
+          browser_window_id: params[:browser_window_id]
+        )
+        if params[:redirect_back]
+          redirect_back fallback_location: lesson_path(@lesson),
+                        notice: t('.notice') and
+            return
+        end
 
         format.html { redirect_to @lesson, notice: t('.notice') }
         format.json { render :show, status: :created, location: @lesson }
       else
         format.html { render :new }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @lesson.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -50,7 +61,9 @@ class LessonsController < ApplicationController
         format.json { render :show, status: :ok, location: @lesson }
       else
         format.html { render :edit }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @lesson.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -78,6 +91,9 @@ class LessonsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def lesson_params
-    params.require(:lesson).permit(:name, :school_class_id).reject { |_, v| v.blank? }.to_h.symbolize_keys
+    params.require(:lesson).permit(:name, :school_class_id).reject do |_, v|
+      v.blank?
+    end.to_h
+      .symbolize_keys
   end
 end

@@ -5,6 +5,7 @@
 
 ## Introduction
 TODO briefly explain domain model!
+TODO License
 
 ## Tech Stack
 Languages, frameworks and libraries:

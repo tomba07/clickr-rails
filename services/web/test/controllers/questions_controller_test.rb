@@ -9,21 +9,28 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     @question = create(:question)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get questions_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_question_url
     assert_response :success
   end
 
-  test "should create question" do
+  test 'should create question' do
     new_question = build(:question)
 
     assert_difference('Question.count') do
-      post questions_url, params: {question: {school_class_id: new_question.school_class_id, lesson_id: new_question.lesson_id, name: new_question.name}}
+      post questions_url,
+           params: {
+             question: {
+               school_class_id: new_question.school_class_id,
+               lesson_id: new_question.lesson_id,
+               name: new_question.name
+             }
+           }
     end
 
     assert_redirected_to question_url(Question.last)
@@ -34,37 +41,42 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     @user.update_attribute(:school_class, new_school_class)
 
     assert_difference('Lesson.count', 1) do
-      post questions_url, params: {question: {name: @question.name}}
+      post questions_url, params: { question: { name: @question.name } }
     end
 
     assert_equal new_school_class, assigns(:question).school_class
   end
 
-  test "should show question" do
+  test 'should show question' do
     get question_url(@question)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_question_url(@question)
     assert_response :success
   end
 
-  test "should update question" do
-    patch question_url(@question), params: {question: {school_class_id: @question.school_class_id, lesson_id: @question.lesson_id, name: @question.name}}
+  test 'should update question' do
+    patch question_url(@question),
+          params: {
+            question: {
+              school_class_id: @question.school_class_id,
+              lesson_id: @question.lesson_id,
+              name: @question.name
+            }
+          }
     assert_redirected_to question_url(@question)
   end
 
-  test "should stop question (response_allowed = false)" do
+  test 'should stop question (response_allowed = false)' do
     post stop_question_url(@question)
     assert_equal false, @question.reload.response_allowed
   end
 
-  test "should destroy question" do
+  test 'should destroy question' do
     skip 'dependent rows in other tables'
-    assert_difference('Question.count', -1) do
-      delete question_url(@question)
-    end
+    assert_difference('Question.count', -1) { delete question_url(@question) }
 
     assert_redirected_to questions_url
   end

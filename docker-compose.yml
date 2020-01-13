@@ -12,8 +12,8 @@ services:
   web:
     build: services/web
     # environment:
-    # Balena adds env vars automatically and env var substitution in compose file is not yet supported
-      # RAILS_MASTER_KEY: "${RAILS_MASTER_KEY}"
+    # # Balena adds env vars automatically and env var substitution in compose file is not yet supported
+    #   RAILS_MASTER_KEY: "${RAILS_MASTER_KEY}"
     volumes:
       - db:/app/db/data
     ports:
@@ -21,30 +21,30 @@ services:
     depends_on:
       - db
 
-  rfid-keyboard-reader:
-    build: services/rfid-keyboard-reader
-    privileged: true
-    depends_on:
-      - web
-    # environment:
-      # Balena adds env vars automatically and env var substitution in compose file is not yet supported
-      # CLICKR_POST_ENDPOINT: "${CLICKR_POST_ENDPOINT}"
-      # RFID_KEYBOARD_READER_USB_IDS: "${RFID_KEYBOARD_READER_USB_IDS}"
-      # RFID_KEYBOARD_READER_DEBOUNCE_SECONDS: "${RFID_KEYBOARD_READER_DEBOUNCE_SECONDS}"
+  # rfid-keyboard-reader:
+  #   build: services/rfid-keyboard-reader
+  #   privileged: true
+  #   depends_on:
+  #     - web
+  #   # environment:
+  #     # Balena adds env vars automatically and env var substitution in compose file is not yet supported
+  #     # CLICKR_POST_ENDPOINT: "${CLICKR_POST_ENDPOINT}"
+  #     # RFID_KEYBOARD_READER_USB_IDS: "${RFID_KEYBOARD_READER_USB_IDS}"
+  #     # RFID_KEYBOARD_READER_DEBOUNCE_SECONDS: "${RFID_KEYBOARD_READER_DEBOUNCE_SECONDS}"
 
   zstack-zigbee-reader:
     build: services/zstack-zigbee-reader
     privileged: true
     depends_on:
       - web
+    volumes:
+      - zstack_zigbee_data:/app/data
     # environment:
-      # Balena adds env vars automatically and env var substitution in compose file is not yet supported
-      # CLICKR_POST_ENDPOINT: "${CLICKR_POST_ENDPOINT}"
-      # ZSTACK_ZIGBEE_DEVICE: "${ZSTACK_ZIGBEE_DEVICE}"
-      # ZSTACK_ZIGBEE_PERMIT_JOIN: "${ZSTACK_ZIGBEE_PERMIT_JOIN}"
+    #   # Balena adds env vars automatically and env var substitution in compose file is not yet supported
+    #   CLICKR_POST_ENDPOINT: "${CLICKR_POST_ENDPOINT}"
+    #   ZSTACK_ZIGBEE_DEVICE: "${ZSTACK_ZIGBEE_DEVICE}"
+    #   ZSTACK_ZIGBEE_PERMIT_JOIN: "${ZSTACK_ZIGBEE_PERMIT_JOIN}"
 
 volumes:
   db:
-  zigbee2mqtt_data:
-  mosquitto_data:
-  mosquitto_log:
+  zstack_zigbee_data:
