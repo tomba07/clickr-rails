@@ -28,8 +28,6 @@ jobs:
   fast_finish: true
   allow_failures:
     - stage: deploy
-    - stage: test
-      arch: arm64
 
   include:
     # Test services/web
@@ -76,9 +74,6 @@ jobs:
         - bundle exec rails test
         - ./cc-test-reporter format-coverage --add-prefix services/web/
         - ./cc-test-reporter upload-coverage
-      # Won't perform tests on ARM for now
-      #- <<: *test-web
-      #  arch: arm64
 
     # Build services/web docker images
     - &build-docker-image
@@ -95,48 +90,23 @@ jobs:
         # Pull, build and push `build` stage seperately so that it is cached
         - docker pull ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build || true
         - docker pull ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH || true
-        # travis_wait 60 because ARM docker build can take a long time
-        - travis_wait 60 docker build --target build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
-        - travis_wait 60 docker build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
+        - docker build --target build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
+        - docker build -t ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH --cache-from ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH-build .
       deploy:
         on:
           branch: master
         provider: script
         script: bash ../../bin/docker-push ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH
-    - <<: *build-docker-image
-      name: Build services/web docker image and push if branch=master (arm64)
-      env: SERVICE=web
-      arch: arm64
-      before_install:
-        # TODO Use balena base images
-        - ./bin/docker-template arm64v8/alpine:3.10 arm64v8/python:3-alpine arm64v8/node:12-alpine
-        - cd services/$SERVICE
 
     # Build services/rfid-keyboard-reader docker images
     - <<: *build-docker-image
       name: Build services/rfid-keyboard-reader docker image and push if branch=master (amd64)
       env: SERVICE=rfid-keyboard-reader
-    - <<: *build-docker-image
-      name: Build services/rfid-keyboard-reader docker image and push if branch=master (arm64)
-      env: SERVICE=rfid-keyboard-reader
-      arch: arm64
-      before_install:
-        # TODO Use balena base images
-        - ./bin/docker-template arm64v8/alpine:3.10 arm64v8/python:3-alpine arm64v8/node:12-alpine
-        - cd services/$SERVICE
 
     # Build services/zstack-zigbee-reader docker images
     - <<: *build-docker-image
       name: Build services/zstack-zigbee-reader docker image and push if branch=master (amd64)
       env: SERVICE=zstack-zigbee-reader
-    - <<: *build-docker-image
-      name: Build services/zstack-zigbee-reader docker image and push if branch=master (arm64)
-      env: SERVICE=zstack-zigbee-reader
-      arch: arm64
-      before_install:
-        # TODO Use balena base images
-        - ./bin/docker-template arm64v8/alpine:3.10 arm64v8/python:3-alpine arm64v8/node:12-alpine
-        - cd services/$SERVICE
 
     # Build and deploy using balena cloud
     # https://github.com/balena-io-playground/balena-travis-test
