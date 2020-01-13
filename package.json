@@ -5,11 +5,12 @@
   "repository": "git@github.com:ftes/clickr-rails.git",
   "author": "Fredrik Teschke <f@ftes.de>",
   "private": true,
-  "workspaces": [
-    "services/*"
-  ],
   "scripts": {
-    "lint": "yarn workspaces run lint",
-    "format": "yarn workspaces run format"
+    "lint": "lerna run lint",
+    "format": "lerna run format"
+  },
+  "//": "Use lerna instead of yarn workspaces due to rails webpacker issue (check file integrity and scss relative imports)",
+  "devDependencies": {
+    "lerna": "^3.20.2"
   }
 }
