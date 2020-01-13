@@ -18,11 +18,11 @@
     margin-top: auto;
 
     .button {
-      flex-grow: 0.2
+      flex-grow: 0.2;
     }
   }
 
-  [draggable=true] {
+  [draggable='true'] {
     cursor: move; /* fallback if grab is not supported */
     cursor: grab;
   }

@@ -1,12 +1,26 @@
 @import 'bulma/bulma';
 
 // Fix vertical alignment in tables
-.table td, .table th {
+.table td,
+.table th {
   vertical-align: middle;
 }
 
 // Add spacing helpers https://gist.github.com/jacurtis/30da4bf9a6c9b9b5cc0aebac512ca7c9
-$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100); // Adjust this to include the pixel amounts you need.
+$spaceamounts: (
+  5,
+  10,
+  15,
+  20,
+  25,
+  30,
+  35,
+  40,
+  45,
+  50,
+  75,
+  100
+); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right); // Leave this variable alone
 
 @each $space in $spaceamounts {

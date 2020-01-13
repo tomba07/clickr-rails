@@ -17,7 +17,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "lint": "prettier --check **/*.{rb,js}",
-    "format": "prettier --write **/*.{rb,js}"
+    "lint": "prettier --check **/*.{rb,js,scss}",
+    "format": "prettier --write **/*.{rb,js,scss}"
   }
 }
