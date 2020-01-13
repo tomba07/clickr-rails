@@ -1,0 +1,12 @@
+{
+  "name": "zstack-zigbee-reader",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "private": true,
+  "dependencies": {
+    "zigbee-herdsman": "^0.12.30"
+  }
+}
