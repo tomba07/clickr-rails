@@ -31,8 +31,7 @@ jobs:
 
   include:
     # Test services/web
-    - &test-web
-      name: Test services/web (amd64)
+    - name: Test services/web (amd64)
       arch: amd64
       language: ruby
       rvm: 2.5.7
@@ -74,6 +73,10 @@ jobs:
         - bundle exec rails test
         - ./cc-test-reporter format-coverage --add-prefix services/web/
         - ./cc-test-reporter upload-coverage
+    # Test services/zstack-zigbee-reader
+    - name: Test services/zstack-zigbee-reader (amd64)
+      arch: amd64
+      language: node_js
 
     # Build services/web docker images
     - &build-docker-image
