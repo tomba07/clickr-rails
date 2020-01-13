@@ -43,15 +43,20 @@ So, effectively, the first student that is not yet mapped is now mapped to that 
 ## Technical overview
 ```
 $ tree -L 2 --filelimit 10 --dirsfirst
-.
 ├── bin [11 entries exceeds filelimit, not opening dir]
 ├── build
-│   └── balena-cli
+│   └── balena-cli
+├── node_modules [966 entries exceeds filelimit, not opening dir]
+├── packages
 ├── services
-│   ├── rfid-keyboard-reader
-│   └── web
+│   ├── rfid-keyboard-reader
+│   ├── web
+│   └── zstack-zigbee-reader
 ├── docker-compose.yml
-└── README.md
+├── lerna.json
+├── package.json
+├── README.md
+└── yarn.lock
 ```
 
 - `bin` contains development scripts
@@ -75,9 +80,6 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 
 ## Balena cloud configuration
 Initialized via `bin/setup-environment-variables`.
-- `RAILS_MASTER_KEY`: decryption key for secrets
-- `RFID_KEYBOARD_READER_USB_IDS`: comma-separated list USB IDs `<vendor>:<product>` for RFID readers acting as keyboards (e.g. `16c0:27db`)
-- `RFID_KEYBOARD_READER_DEBOUNCE_SECONDS`: number of seconds to wait before RFID token is read again (debounce)
 
 ## TODO
 - `web`: [balena update locking](https://www.balena.io/docs/learn/deploy/release-strategy/update-locking/) and trigger from within the app (do not update during lesson)
@@ -88,11 +90,16 @@ Initialized via `bin/setup-environment-variables`.
 - `zstack-zigbee-reader`: add unit tests
 - `web`: Missing websocket events (sometimes no live update after click)
 - `web, zstack-zigbee-reader`: Battery indicators in lesson execution view
+- `env vars`: Uniform naming scheme
 
 ## Configuration
 App environment variables:
+- `RAILS_MASTER_KEY`: decryption key for secrets
 - `CLICKR_SUGGEST_NEW_LESSON_AFTER_MINUTES`: default `120`
 - `CLICKR_SHOW_VIRTUAL_BUTTONS_LINK`: default `false` (in `RAILS_ENV=development` default `true`)
+- `RFID_KEYBOARD_READER_USB_IDS`: comma-separated list USB IDs `<vendor>:<product>` for RFID readers acting as keyboards (e.g. `16c0:27db`)
+- `RFID_KEYBOARD_READER_DEBOUNCE_SECONDS`: number of seconds to wait before RFID token is read again (debounce)
+TODO Add other env vars
 
 ## Heroku setup
 One-time database setup:
