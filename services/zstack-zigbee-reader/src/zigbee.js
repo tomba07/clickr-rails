@@ -63,7 +63,7 @@ class Zigbee extends events.EventEmitter {
       this.herdsman = new ZigbeeHerdsman.Controller(this.herdsmanSettings)
       await this.herdsman.start()
     } catch (error) {
-      console.error(`Error while starting zigbee-herdsman`)
+      console.error(`Error while starting zigbee-herdsman`, error)
       throw error
     }
 

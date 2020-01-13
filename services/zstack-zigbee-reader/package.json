@@ -5,12 +5,16 @@
   "scripts": {
     "start": "node src/main.js",
     "lint": "prettier --check **/*.js",
-    "format": "prettier --write src/**/*.js"
+    "format": "prettier --write src/**/*.js",
+    "test": "jest src/.*/.*\\.test\\.js"
   },
   "private": true,
   "dependencies": {
     "axios": "^0.19.1",
     "prettier": "^1.19.1",
     "zigbee-herdsman": "^0.12.30"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
   }
 }
