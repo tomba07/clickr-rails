@@ -55,7 +55,7 @@ RUN rm -rf node_modules tmp/cache vendor/assets lib/assets spec
 #############
 # Run stage #
 #############
-FROM balenalib/%%BALENA_ARCH%%-alpine:latest-run
+FROM balenalib/%%BALENA_ARCH%%-alpine:3.10-run
 LABEL maintainer="f@ftes.de"
 
 WORKDIR /app
