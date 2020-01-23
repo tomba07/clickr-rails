@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "repository": "git@github.com:ftes/clickr-rails.git",
   "author": "Fredrik Teschke <f@ftes.de>",
+  "scripts": {
+    "login": "balena login",
+    "configure": "balena local configure /dev/sda --config-wifi-ssid --config-wifi-key"
+  },
   "dependencies": {
     "balena-cli": "^11.20.2"
   },
