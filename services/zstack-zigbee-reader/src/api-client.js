@@ -6,6 +6,7 @@ class ApiClient {
   }
 
   async postClick(deviceId) {
+    console.info(`Posting click for ${deviceId}`)
     try {
       await axios.post(this.postUrl, {
         device_type: 'zigbee',

@@ -1,0 +1,116 @@
+{
+  "type": "commandTradfriArrowSingle",
+  "device": {
+    "ID": 3,
+    "_type": "EndDevice",
+    "ieeeAddr": "0xccccccfffe343176",
+    "_networkAddress": 39420,
+    "_manufacturerID": 4476,
+    "_endpoints": [
+      {
+        "ID": 1,
+        "profileID": 49246,
+        "deviceID": 2096,
+        "inputClusters": [
+          0,
+          1,
+          3,
+          9,
+          2821,
+          4096
+        ],
+        "outputClusters": [
+          3,
+          4,
+          5,
+          6,
+          8,
+          25,
+          4096
+        ],
+        "deviceNetworkAddress": 39420,
+        "deviceIeeeAddress": "0xccccccfffe343176",
+        "clusters": {
+          "genBasic": {
+            "attributes": {
+              "modelId": "TRADFRI remote control",
+              "manufacturerName": "IKEA of Sweden",
+              "powerSource": 3,
+              "zclVersion": 1,
+              "appVersion": 32,
+              "stackVersion": 87,
+              "hwVersion": 1,
+              "dateCode": "20190211",
+              "swBuildId": "1.2.223"
+            }
+          }
+        },
+        "_binds": []
+      }
+    ],
+    "_manufacturerName": "IKEA of Sweden",
+    "_powerSource": "Battery",
+    "_modelID": "TRADFRI remote control",
+    "_applicationVersion": 32,
+    "_stackVersion": 87,
+    "_zclVersion": 1,
+    "_hardwareVersion": 1,
+    "_dateCode": "20190211",
+    "_softwareBuildID": "1.2.223",
+    "_interviewCompleted": true,
+    "_interviewing": false,
+    "meta": {},
+    "_lastSeen": 1579346983424
+  },
+  "endpoint": {
+    "ID": 1,
+    "profileID": 49246,
+    "deviceID": 2096,
+    "inputClusters": [
+      0,
+      1,
+      3,
+      9,
+      2821,
+      4096
+    ],
+    "outputClusters": [
+      3,
+      4,
+      5,
+      6,
+      8,
+      25,
+      4096
+    ],
+    "deviceNetworkAddress": 39420,
+    "deviceIeeeAddress": "0xccccccfffe343176",
+    "clusters": {
+      "genBasic": {
+        "attributes": {
+          "modelId": "TRADFRI remote control",
+          "manufacturerName": "IKEA of Sweden",
+          "powerSource": 3,
+          "zclVersion": 1,
+          "appVersion": 32,
+          "stackVersion": 87,
+          "hwVersion": 1,
+          "dateCode": "20190211",
+          "swBuildId": "1.2.223"
+        }
+      }
+    },
+    "_binds": []
+  },
+  "data": {
+    "value": 257,
+    "value2": 13
+  },
+  "linkquality": 99,
+  "groupID": 34974,
+  "cluster": "genScenes",
+  "meta": {
+    "zclTransactionSequenceNumber": 68,
+    "manufacturerCode": 4476
+  }
+}

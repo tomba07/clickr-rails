@@ -1,6 +1,7 @@
 const ZigbeeHerdsman = require('zigbee-herdsman')
 const events = require('events')
 const utils = require('./utils')
+const devices = require('./devices')
 
 const data = {
   joinPath: p => `${__dirname}/../data/${p}`,
@@ -14,11 +15,12 @@ class Zigbee extends events.EventEmitter {
   constructor({ devicePath = '/dev/ttyACM0', permitJoin = true }) {
     super()
 
+    this.devices = devices.map(Device => new Device())
     this.permitJoin = permitJoin
     this.herdsmanSettings = {
       network: {
         // TODO Generate random PID and EPID and extract to env var
-        panID: 0x1a62,
+        panID: 0x1a63,
         extendedPanID: [0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd],
         channelList: [11],
         // TODO Extract network key to env var
@@ -71,12 +73,15 @@ class Zigbee extends events.EventEmitter {
       'adapterDisconnected',
       this.onZigbeeAdapterDisconnected.bind(this)
     )
-    this.herdsman.on('message', this.onMessageParseBattery.bind(this))
-    this.herdsman.on('message', this.onMessageParseClick.bind(this))
 
-    console.warn(
-      'Allowing devices to join network (disable after setup phase is complete)'
-    )
+    this.registerDevices()
+    this.herdsman.on('message', msg => console.debug('New message from', msg.device.ieeeAddr, msg.data))
+
+    if (this.permitJoin) {
+      console.warn(
+        'Allowing devices to join network (disable after setup phase is complete)'
+      )
+    }
     // TODO Disable permit join based on env var
     await this.herdsman.permitJoin(this.permitJoin)
     await this.herdsman.setLED(true)
@@ -95,40 +100,14 @@ class Zigbee extends events.EventEmitter {
     console.info('zigbee-herdsman stopped')
   }
 
-  parseDeviceId(msg) {
-    return msg.device && msg.device.ieeeAddr
-  }
-
-  // https://github.com/Koenkk/zigbee-herdsman-converters/blob/307e995/converters/fromZigbee.js#L556-L576
-  onMessageParseBattery(msg) {
-    let voltage = null
-    const { data = {} } = msg
-
-    if (data['65281']) {
-      voltage = data['65281']['1']
-    } else if (data['65282']) {
-      voltage = data['65282']['1'].elmVal
-    }
-
-    if (voltage) {
-      this.emit('battery', {
-        deviceId: this.parseDeviceId(msg),
-        battery: parseFloat(utils.toPercentageCR2032(voltage)),
-        voltage: voltage,
-      })
-    }
-  }
-
-  onMessageParseClick(msg) {
-    const { data = {} } = msg
-    const singlePress = data.onOff === 0
-    const multiplePress = '32768' in data
-
-    if (singlePress || multiplePress) {
-      this.emit('click', {
-        deviceId: this.parseDeviceId(msg),
-      })
-    }
+  registerDevices() {
+    console.log(`Registering ${this.devices.length} device listeners`)
+    this.devices.forEach(device => {
+      this.herdsman.on('message', device.onMessage.bind(device))
+      // Forward events
+      device.on('click', msg => this.emit('click', msg))
+      device.on('battery', msg => this.emit('battery', msg))
+    })
   }
 }
 
