@@ -14,5 +14,5 @@
     = render 'layouts/flash'
 
     %section.section{ class: yield(:main_css_class) }
-      .container
+      .container{ class: yield(:container_css_class) }
         = yield
