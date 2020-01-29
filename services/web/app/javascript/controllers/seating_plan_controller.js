@@ -126,6 +126,10 @@ export default class extends Controller {
     this.refresh()
   }
 
+  onStudentDeleted(event) {
+    this.refresh()
+  }
+
   onScoreAdjusted(event) {
     this.refresh()
   }

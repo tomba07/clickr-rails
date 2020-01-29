@@ -8,11 +8,17 @@
     .card-content{ class: [('has-background-success' if student.responded_to_most_recent_question)].compact.join(' ') }
       %p.title.has-text-centered= student.name
     %footer.card-footer
-      -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
-      = link_to '-', decrement_score_student_path(student, browser_window_id: browser_window_id), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter button is-white', title: t('common.decrement'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }
-      %p.card-footer-item.is-size-4.has-text-weight-bold.has-cursor-help{title: t('.lesson_sum')}= student.question_response_sum_for_most_recent_lesson
-      %p.card-footer-item.is-size-4.has-text-grey.has-cursor-help{title: t('.overall_sum')}= student.question_response_sum
       - nth_incomplete_mapping = student.nth_incomplete_mapping
-      - unless nth_incomplete_mapping.nil?
-        %p.card-footer-item.has-text-danger.has-cursor-help{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)} ##{nth_incomplete_mapping + 1}
-      = link_to '+', increment_score_student_path(student, browser_window_id: browser_window_id), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter button is-white', title: t('common.increment'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }
+      - if edit
+        - unless nth_incomplete_mapping.nil?
+          %p.card-footer-item.has-text-danger.has-cursor-help{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)} ##{nth_incomplete_mapping + 1}
+        = link_to student_path(student), method: :delete, remote: true, class: 'card-footer-item has-text-danger', title: t('seating_plans.seat_student.delete'), data: { type: :json, action: 'ajax:success->seating-plan#onStudentDeleted' } do
+          %i.fa.fa-trash
+      - else
+        -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
+        = link_to '-', decrement_score_student_path(student, browser_window_id: browser_window_id), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('common.decrement'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }
+        %p.card-footer-item.is-size-4.has-text-weight-bold.has-cursor-help{title: t('.lesson_sum')}= student.question_response_sum_for_most_recent_lesson
+        %p.card-footer-item.is-size-4.has-text-grey.has-cursor-help{title: t('.overall_sum')}= student.question_response_sum
+        - unless nth_incomplete_mapping.nil?
+          %p.card-footer-item.has-text-danger.has-cursor-help{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)} ##{nth_incomplete_mapping + 1}
+        = link_to '+', increment_score_student_path(student, browser_window_id: browser_window_id), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('common.increment'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }

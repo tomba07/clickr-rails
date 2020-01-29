@@ -168,3 +168,6 @@ de:
         question_responses: "Antworten"
       select_a_class: "Klasse auswählen"
       buttons: "Knöpfe"
+  seating_plans:
+    seat_student:
+      delete: "Löschen"

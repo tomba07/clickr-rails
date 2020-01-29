@@ -76,4 +76,16 @@ class StudentTest < ActiveSupport::TestCase
 
     assert_equal false, @student.responded_to_most_recent_question
   end
+
+  test 'delete destroys dependent objects' do
+    lesson = Lesson.create!(school_class: @school_class, name: 'Lesson')
+    question = Question.create!(school_class: @school_class, lesson: lesson, name: 'Question')
+    question_response = QuestionResponse.create!(question: question, student: @student, lesson: lesson, school_class: @school_class)
+    mapping = StudentDeviceMapping.create!(student: @student, device_type: 'rfid', device_id: '1', school_class: @school_class)
+
+    @student.destroy!
+
+    assert_equal false, QuestionResponse.exists?(question_response.id)
+    assert_equal false, StudentDeviceMapping.exists?(mapping.id)
+  end
 end

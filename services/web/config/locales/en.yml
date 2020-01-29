@@ -111,10 +111,11 @@ en:
     new:
       title: "New school class"
   seating_plans:
-    seating_plan:
+    seat_student:
       lesson_sum: "Sum for this lesson"
       overall_sum: "Overall sum"
       nth_incomplete_mapping: "The %{n}th next unmapped device that is clicked will be mapped to this student."
+      delete: "Delete"
   student_device_mappings:
     create:
       notice: "Student device mapping was created."
