@@ -6,7 +6,13 @@
                         style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
   .card
     .card-content{ class: [('has-background-success' if student.responded_to_most_recent_question)].compact.join(' ') }
-      %p.title.has-text-centered= student.name
+      - if edit
+        = form_with model: student, class: 'has-text-centered', data: { type: :json, action: 'ajax:complete->seating-plan#onStudentUpdated' } do |f|
+          = f.text_field :name
+          = hidden_field_tag :browser_window_id, browser_window_id
+          = f.submit t('common.save')
+      - else
+        %p.title.has-text-centered= student.name
     %footer.card-footer
       - nth_incomplete_mapping = student.nth_incomplete_mapping
       - if edit

@@ -64,6 +64,11 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
+        SchoolClassChannel.broadcast_to(
+          @student.school_class,
+          type: SchoolClassChannel::STUDENT,
+          browser_window_id: params[:browser_window_id]
+        )
         format.html { redirect_to @student, notice: t('.notice') }
         format.json { render :show, status: :ok, location: @student }
       else
