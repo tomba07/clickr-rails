@@ -6,7 +6,7 @@ class StudentDeviceMappingsController < ApplicationController
   # GET /student_device_mappings.json
   def index
     @student_device_mappings =
-      StudentDeviceMapping.includes(:student, :school_class).all
+      StudentDeviceMapping.includes(:student, :school_class).newest_first
   end
 
   # GET /student_device_mappings/1

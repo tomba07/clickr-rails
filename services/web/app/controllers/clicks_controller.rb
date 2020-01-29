@@ -9,7 +9,7 @@ class ClicksController < ApplicationController
   # GET /clicks
   # GET /clicks.json
   def index
-    @clicks = Click.all
+    @clicks = Click.newest_first
   end
 
   # GET /clicks/1

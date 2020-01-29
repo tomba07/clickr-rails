@@ -5,6 +5,8 @@ class StudentDeviceMapping < ApplicationRecord
   belongs_to :student
   belongs_to :school_class
 
+  scope :newest_first, ->() { order(created_at: :desc) }
+
   validates :device_id, uniqueness: { scope: :school_class, allow_nil: true }
   # TODO validates student.school_class = school_class
 

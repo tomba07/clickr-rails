@@ -4,7 +4,7 @@ class SchoolClassesController < ApplicationController
   # GET /school_classes
   # GET /school_classes.json
   def index
-    @school_classes = SchoolClass.all
+    @school_classes = SchoolClass.newest_first
   end
 
   # GET /school_classes/1

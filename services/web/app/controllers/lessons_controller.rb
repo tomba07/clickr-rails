@@ -5,7 +5,7 @@ class LessonsController < ApplicationController
   # GET /lessons
   # GET /lessons.json
   def index
-    @lessons = Lesson.includes(:school_class).all
+    @lessons = Lesson.includes(:school_class).newest_first
   end
 
   # GET /lessons/1

@@ -6,7 +6,7 @@ class QuestionResponsesController < ApplicationController
   # GET /question_responses.json
   def index
     @question_responses =
-      QuestionResponse.includes(:student, :lesson, :question, :school_class).all
+      QuestionResponse.includes(:student, :lesson, :question, :school_class).newest_first
   end
 
   # GET /question_responses/1

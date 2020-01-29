@@ -5,6 +5,8 @@ class SchoolClass < ApplicationRecord
   has_many :questions
   has_many :question_responses
 
+  scope :newest_first, ->() { order(created_at: :desc) }
+
   validates :name, presence: true, uniqueness: true
 
   def most_recent_lesson
