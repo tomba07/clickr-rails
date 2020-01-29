@@ -1,5 +1,7 @@
 %h1.title= t('.title')
 
+= link_to t('common.new'), new_school_class_path, class: 'button is-primary'
+
 %table.table.is-striped.is-hoverable
   %thead
     %tr
@@ -16,6 +18,3 @@
             = link_to t('common.edit'), edit_school_class_path(school_class), class: 'button'
             = link_to t('common.select'), users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'button'
             = link_to t('common.destroy'), school_class, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
-
-
-= link_to t('common.new'), new_school_class_path, class: 'button is-primary'

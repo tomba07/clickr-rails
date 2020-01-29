@@ -1,5 +1,7 @@
 %h1.title= t('.title')
 
+= link_to t('common.new'), new_question_path, class: 'button is-primary'
+
 %table.table.is-striped.is-hoverable
   %thead
     %tr
@@ -19,6 +21,3 @@
             = link_to t('common.show'), question_path(question), class: 'button'
             = link_to t('common.edit'), edit_question_path(question), class: 'button'
             = link_to t('common.destroy'), question, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'
-
-
-= link_to t('common.new'), new_question_path, class: 'button is-primary'
