@@ -4,8 +4,15 @@ class SchoolClass < ApplicationRecord
   has_many :lessons, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :question_responses, dependent: :destroy
+  has_many :student_device_mappings, dependent: :destroy
 
   scope :newest_first, -> { order(created_at: :desc) }
+  scope :with_mapping_for,
+        lambda { |device_id|
+          joins(:student_device_mappings).where(
+            student_device_mappings: { device_id: device_id }
+          )
+        }
 
   validates :name, presence: true, uniqueness: true
 

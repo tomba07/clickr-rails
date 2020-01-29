@@ -15,8 +15,9 @@ class StudentDeviceMapping < ApplicationRecord
   scope :incomplete, -> { where(incomplete: true) }
 
   # Can't be a scope, as it returns only a single record
-  def self.oldest_incomplete
-    incomplete.first
+  def self.oldest_incomplete(device_id)
+    incomplete.where.not(school_class: SchoolClass.with_mapping_for(device_id))
+      .first
   end
 
   def nth_incomplete

@@ -4,7 +4,7 @@ de:
     create:
       notice: "Click wurde erstellt."
       mapping_notice: "Gerät %{device_id} wurde dem Schüler %{student_name} zugeordnet (Klasse %{class_name})"
-      response_notice: "Click wurde als Antwort von Schüler %{student_name} auf die Frage %{question_name} gewertet (Klasse %{class_name}, Stunde %{lesson_name})."
+      response_notice: "Click wurde als Antwort für #{count} Fragen gewertet."
     update:
       notice: "Click wurde geändert."
     destroy:

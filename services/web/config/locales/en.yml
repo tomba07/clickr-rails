@@ -34,7 +34,7 @@ en:
     create:
       notice: "Click was created."
       mapping_notice: "Device %{device_id} was mapped to student %{student_name} (class %{class_name})."
-      response_notice: "Click was counted as a response by student %{student_name} to question %{question_name} (class %{class_name}, lesson %{lesson_name})."
+      response_notice: "Click was counted as a response for %{count} questions."
     update:
       notice: "Click was updated."
     destroy:

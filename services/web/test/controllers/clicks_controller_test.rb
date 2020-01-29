@@ -48,13 +48,40 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
         device_id: '123'
       )
 
-      assert_difference 'Click.count', 1 do
-        assert_difference 'QuestionResponse.count', 1 do
-          post clicks_url,
-               as: format,
-               params: { click: { device_type: 'rfid', device_id: '123' } }
-        end
+      assert_difference %w[Click.count QuestionResponse.count], 1 do
+        post clicks_url,
+             as: format,
+             params: { click: { device_type: 'rfid', device_id: '123' } }
       end
+    end
+  end
+
+  test 'should create question response in second class (device mapped twice)' do
+    school_class_one = create(:school_class)
+    student_one = create(:student, school_class: school_class_one)
+    create(
+      :student_device_mapping,
+      school_class: school_class_one,
+      student: student_one,
+      device_type: 'rfid',
+      device_id: '123'
+    )
+
+    school_class_two = create(:school_class)
+    lesson_two = create(:lesson, school_class: school_class_two)
+    student_two = create(:student, school_class: school_class_two)
+    create(
+      :student_device_mapping,
+      school_class: school_class_two,
+      student: student_two,
+      device_type: 'rfid',
+      device_id: '123'
+    )
+    create(:question, school_class: school_class_two, lesson: lesson_two)
+
+    assert_difference %w[Click.count QuestionResponse.count], 1 do
+      post clicks_url,
+           params: { click: { device_type: 'rfid', device_id: '123' } }
     end
   end
 
@@ -103,6 +130,40 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'should create click and update incomplete mapping and create question response' do
+    school_class_one = create(:school_class)
+    student_one = create(:student, school_class: school_class_one)
+    incomplete_mapping =
+      create(
+        :student_device_mapping,
+        student: student_one,
+        device_type: nil,
+        device_id: nil,
+        school_class: school_class_one
+      )
+
+    school_class_two = create(:school_class)
+    lesson_two = create(:lesson, school_class: school_class_two)
+    student_two = create(:student, school_class: school_class_two)
+    create(
+      :student_device_mapping,
+      school_class: school_class_two,
+      student: student_two,
+      device_type: 'rfid',
+      device_id: '123'
+    )
+    create(:question, school_class: school_class_two, lesson: lesson_two)
+
+    assert_difference %w[Click.count QuestionResponse.count], 1 do
+      post clicks_url,
+           params: { click: { device_type: 'rfid', device_id: '123' } }
+    end
+
+    incomplete_mapping.reload
+    assert_equal 'rfid', incomplete_mapping.device_type
+    assert_equal 'rfid:123', incomplete_mapping.device_id
+  end
+
   %i[html json].each do |format|
     test "should create click and update incomplete mapping (#{format})" do
       student = create(:student)
@@ -142,6 +203,37 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     incomplete_mapping.reload
     assert_equal 'rfid', incomplete_mapping.device_type
     assert_equal 'rfid:123', incomplete_mapping.device_id
+  end
+
+  test 'must skip an incomplete mapping that would lead to a double mapping of a device in one class' do
+    school_class = create(:school_class)
+    student_one = create(:student, school_class: school_class)
+    incomplete_mapping =
+      create(
+        :student_device_mapping,
+        # TODO Use 'incomplete' trait
+        student: student_one,
+        device_type: nil,
+        device_id: nil,
+        school_class: school_class
+      )
+
+    student_two = create(:student, school_class: school_class)
+    create(
+      :student_device_mapping,
+      school_class: school_class,
+      student: student_two,
+      device_type: 'rfid',
+      device_id: '123'
+    )
+
+    assert_difference 'Click.count', 1 do
+      post clicks_url,
+           params: { click: { device_type: 'rfid', device_id: '123' } }
+    end
+
+    incomplete_mapping.reload
+    assert_equal true, incomplete_mapping.incomplete?
   end
 
   test 'should create click and leave ID unchanged if it is already prefixed with type' do
