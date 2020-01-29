@@ -54,4 +54,24 @@ class SchoolClassTest < ActiveSupport::TestCase
     assert_equal [2, 2], [s1.seat_row, s1.seat_col]
     assert_equal [1, 1], [s2.seat_row, s2.seat_col]
   end
+
+  test 'clone_with_students_and_device_mappings duplicates class with associations' do
+    old_student = @subject.students.create!(name: 'Max', seat_row: 1, seat_col: 1)
+    old_mapping = old_student.student_device_mappings.create!(device_type: 'rfid', device_id: '1', school_class: @subject)
+
+    new_subject = @subject.clone_with_students_and_device_mappings
+    assert_equal true, new_subject.persisted?
+
+    assert_equal 1, new_subject.students.size
+    new_student = new_subject.students[0]
+    assert_equal true, new_student.persisted?
+    assert_equal 'Max', new_student.name
+    assert_not_equal old_student.id, new_student.id
+
+    assert_equal 1, new_student.student_device_mappings.size
+    new_mapping = new_student.student_device_mappings[0]
+    assert_equal true, new_mapping.persisted?
+    assert_not_equal old_mapping.id, new_mapping.id
+    assert_equal new_subject, new_mapping.school_class
+  end
 end

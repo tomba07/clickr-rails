@@ -30,6 +30,18 @@ class SchoolClassesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to school_class_url(SchoolClass.last)
   end
 
+  test 'should create school_class by cloning an existing class' do
+    old_school_class = create(:school_class)
+    old_student = create(:student, school_class: old_school_class)
+    create(:student_device_mapping, school_class: old_school_class, student: old_student)
+    new_school_class = build(:school_class)
+
+    assert_difference(['SchoolClass.count', 'Student.count', 'StudentDeviceMapping.count'], 1) do
+      post school_classes_url,
+           params: { school_class: { name: new_school_class.name }, clone_school_class: { id: old_school_class.id } }
+    end
+  end
+
   test 'should show school_class' do
     get school_class_url(@school_class)
     assert_response :success

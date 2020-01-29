@@ -55,6 +55,8 @@
             %a.navbar-link
               = current_user&.school_class&.name || t('.select_a_class')
             .navbar-dropdown
+              = link_to new_school_class_path(redirect_to: :lesson_execution), class: 'navbar-item', title: t('layouts.header.create_new_class') do
+                %i.fa.fa-plus-circle
               - SchoolClass.all.each do |school_class|
                 = link_to school_class.name, users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'navbar-item'
           .navbar-item

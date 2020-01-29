@@ -46,4 +46,25 @@ class SchoolClass < ApplicationRecord
     student.attributes = { seat_row: seat_row, seat_col: seat_col }
     student.save! validate: false
   end
+
+  def clone_with_students_and_device_mappings(new_name: I18n.t('school_classes.cloned_name', name: name))
+    new_school_class = self.dup
+    new_school_class.name = new_name
+    new_school_class.save!
+
+    self.students.includes(:student_device_mappings).each do |student|
+      new_student = student.dup
+      new_student.school_class = new_school_class
+      new_student.save!
+
+      student.student_device_mappings.each do |mapping|
+        new_mapping = mapping.dup
+        new_mapping.school_class = new_school_class
+        new_mapping.student = new_student
+        new_mapping.save!
+      end
+    end
+
+    new_school_class
+  end
 end

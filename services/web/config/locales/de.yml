@@ -80,6 +80,10 @@ de:
       title: "Schulklassen"
     new:
       title: "Neue Schulklasse"
+    cloned_name: "%{name} (kopiert)"
+    form:
+      clone_label: "Klasse mit Schülern und Gerätezuordnungen kopieren (optional)"
+      clone_prompt: "Optional eine Klasse zum Kopieren auswählen"
   student_device_mappings:
     create:
       notice: "Schülergerätezuordnung wurde erstellt."
@@ -168,6 +172,7 @@ de:
         question_responses: "Antworten"
       select_a_class: "Klasse auswählen"
       buttons: "Knöpfe"
+      create_new_class: "Neue Klasse erstellen"
   seating_plans:
     seat_student:
       delete: "Löschen"

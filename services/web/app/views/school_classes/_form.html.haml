@@ -1,7 +1,16 @@
+- create ||= create
+
 = form_with model: @school_class, local: true do |f|
   = render "layouts/error_messages", f: f
 
   = f.text_field_with_label :name, autofocus: true
+
+  - if create
+    .field
+      %label.label{ for: :clone_school_class_id }= t('.clone_label')
+      .control
+        .select
+          = collection_select :clone_school_class, :id, SchoolClass.all, :id, :name, { no_field: true, prompt: t('school_classes.form.clone_prompt') }, class: 'input'
 
   .buttons
     = f.submit_primary t('common.save')

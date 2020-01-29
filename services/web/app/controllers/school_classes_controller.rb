@@ -13,6 +13,7 @@ class SchoolClassesController < ApplicationController
 
   # GET /school_classes/new
   def new
+    session[:redirect_to] = params[:redirect_to]
     @school_class = SchoolClass.new
   end
 
@@ -22,11 +23,22 @@ class SchoolClassesController < ApplicationController
   # POST /school_classes
   # POST /school_classes.json
   def create
-    @school_class = SchoolClass.new(school_class_params)
+    clone_school_class = SchoolClass.find_by_id(params.dig(:clone_school_class, :id))
+
+    if clone_school_class
+      @school_class = clone_school_class.clone_with_students_and_device_mappings(new_name: school_class_params[:name])
+    else
+      @school_class = SchoolClass.new(school_class_params)
+    end
 
     respond_to do |format|
       if @school_class.save
-        format.html { redirect_to @school_class, notice: t('.notice') }
+        current_user&.update_attribute(:school_class_id, @school_class.id)
+
+        format.html {
+          redirect_url = session.delete(:redirect_to) == 'lesson_execution' ? lesson_execution_path : @school_class
+          redirect_to redirect_url, notice: t('.notice')
+        }
         format.json { render :show, status: :created, location: @school_class }
       else
         format.html { render :new }

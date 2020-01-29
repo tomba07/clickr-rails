@@ -110,6 +110,10 @@ en:
       title: "School classes"
     new:
       title: "New school class"
+    cloned_name: "%{name} (copied)"
+    form:
+      clone_label: "Copy class with students and device mappings (optional)"
+      clone_prompt: "Optionally select a class to copy"
   seating_plans:
     seat_student:
       lesson_sum: "Sum for this lesson"
@@ -204,3 +208,4 @@ en:
         question_responses: "Responses"
       select_a_class: "Select a class"
       buttons: "Buttons"
+      create_new_class: "Create new class"
