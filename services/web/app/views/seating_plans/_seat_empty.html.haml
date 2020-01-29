@@ -1,0 +1,15 @@
+.seat--empty{ data: { row: row, col: col },
+                    onmousedown: 'setTimeout(() => this.querySelector("input[type=text]").focus(), 0)',
+                    style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
+  - if edit
+    .card
+      .card-content
+        .create-student
+          = form_with model: Student.new, class: 'has-text-centered', data: { type: :json, action: 'ajax:success->seating-plan#onStudentCreated' } do |f|
+            = f.text_field :name
+            = f.hidden_field :school_class_id, value: school_class.id
+            = f.hidden_field :seat_row, value: row
+            = f.hidden_field :seat_col, value: col
+            = hidden_field_tag :create_incomplete_mapping, true
+            = hidden_field_tag :browser_window_id, browser_window_id
+            = f.submit t('common.create')
