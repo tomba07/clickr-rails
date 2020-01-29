@@ -101,6 +101,7 @@ class Zigbee extends events.EventEmitter {
   }
 
   registerDevices() {
+    // TODO Log which device listeners are registered
     console.log(`Registering ${this.devices.length} device listeners`)
     this.devices.forEach(device => {
       this.herdsman.on('message', device.onMessage.bind(device))
