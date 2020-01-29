@@ -124,7 +124,7 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'should not update incomplete mapping if the device ID is already mapped' do
+  test 'should update incomplete mapping even if the device ID is already mapped' do
     student = create(:student)
     complete_mapping =
       create(:student_device_mapping, device_type: 'rfid', device_id: '123')
@@ -140,7 +140,8 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     end
 
     incomplete_mapping.reload
-    assert_equal true, incomplete_mapping.incomplete?
+    assert_equal 'rfid', incomplete_mapping.device_type
+    assert_equal 'rfid:123', incomplete_mapping.device_id
   end
 
   test 'should create click and leave ID unchanged if it is already prefixed with type' do

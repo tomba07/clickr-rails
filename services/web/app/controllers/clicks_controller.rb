@@ -31,6 +31,7 @@ class ClicksController < ApplicationController
 
     respond_to do |format|
       if @click.save
+        Rails.logger.info "Click registered: #{@click.device_id}"
         m =
           @student_device_mapping =
             update_oldest_incomplete_student_device_mapping! @click
@@ -133,8 +134,8 @@ class ClicksController < ApplicationController
   end
 
   def update_oldest_incomplete_student_device_mapping!(click)
-    return nil if StudentDeviceMapping.exists?(device_id: click.device_id)
-    mapping = StudentDeviceMapping.oldest_incomplete or return nil
+    mapping = StudentDeviceMapping.oldest_incomplete or (Rails.logger.debug "Cannot create mapping - no incomplete one found." and return nil)
+    Rails.logger.info "Updating incomplete mapping #{mapping.inspect}"
     mapping.update!(device_type: click.device_type, device_id: click.device_id)
     return mapping
   end
@@ -144,18 +145,20 @@ class ClicksController < ApplicationController
       StudentDeviceMapping.includes(:school_class).find_by(
         device_id: click.device_id
       ) or
-      return nil
+      (Rails.logger.debug "Cannot create question response - no mapping exists." and return nil)
 
     school_class = mapping.school_class
     lesson = school_class.most_recent_lesson
-    question = lesson&.most_recent_question or return nil
-    return nil unless question.response_allowed
+    question = lesson&.most_recent_question or (Rails.logger.debug "Cannot create question response - no most recent question." and return nil)
+    (Rails.logger.debug "Cannot create question response - question response not allowed." and return nil) unless question.response_allowed
+
     if QuestionResponse.exists?(
          student_id: mapping.student_id, question: question
        )
-      return nil
+      Rails.logger.debug "Cannot create question response - question response already exists." and return nil
     end
 
+    Rails.logger.info "Creating question response for question #{question.inspect}"
     return(
       click.create_question_response!(
         student_id: mapping.student_id,
