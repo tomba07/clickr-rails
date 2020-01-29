@@ -68,7 +68,6 @@ class SchoolClassesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy school_class' do
-    skip 'dependent rows in other tables'
     assert_difference('SchoolClass.count', -1) do
       delete school_class_url(@school_class)
     end

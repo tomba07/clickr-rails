@@ -205,7 +205,6 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy click' do
-    skip 'dependent rows in other tables'
     assert_difference('Click.count', -1) { delete click_url(@click) }
 
     assert_redirected_to clicks_url

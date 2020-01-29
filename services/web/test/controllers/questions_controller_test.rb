@@ -75,7 +75,6 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy question' do
-    skip 'dependent rows in other tables'
     assert_difference('Question.count', -1) { delete question_url(@question) }
 
     assert_redirected_to questions_url

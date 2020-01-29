@@ -82,7 +82,6 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy student' do
-    skip 'dependent rows in other tables'
     assert_difference('Student.count', -1) { delete student_url(@student) }
 
     assert_redirected_to students_url
