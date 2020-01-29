@@ -1,8 +1,8 @@
 class Lesson < ApplicationRecord
   strip_attributes
   belongs_to :school_class
-  has_many :questions
-  has_many :question_responses
+  has_many :questions, dependent: :destroy
+  has_many :question_responses, dependent: :destroy
 
   scope :newest_first, ->() { order(created_at: :desc) }
 

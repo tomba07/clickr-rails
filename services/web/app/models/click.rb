@@ -2,7 +2,7 @@ class Click < ApplicationRecord
   include DeviceIdPrefixer
 
   strip_attributes
-  has_one :question_response
+  has_one :question_response, dependent: :destroy
 
   scope :newest_first, ->() { order(created_at: :desc) }
 

@@ -74,4 +74,24 @@ class SchoolClassTest < ActiveSupport::TestCase
     assert_not_equal old_mapping.id, new_mapping.id
     assert_equal new_subject, new_mapping.school_class
   end
+
+  test 'destroy also destroys als associated records' do
+    student = create(:student, school_class: @subject)
+    mapping = create(:student_device_mapping, school_class: @subject, student: student, device_type: 'rfid', device_id: '1')
+    lesson = create(:lesson, school_class: @subject)
+    question = create(:question, school_class: @subject, lesson: lesson)
+    click = create(:click)
+    response = create(:question_response, student: student, lesson: lesson, question: question, school_class: @subject, click: click)
+    response_without_question = create(:question_response, student: student, lesson: lesson, school_class: @subject)
+
+    @subject.destroy
+
+    assert_equal false, Student.exists?(student.id)
+    assert_equal false, StudentDeviceMapping.exists?(mapping.id)
+    assert_equal false, Lesson.exists?(lesson.id)
+    assert_equal false, Question.exists?(question.id)
+    assert_equal true, Click.exists?(click.id)
+    assert_equal false, QuestionResponse.exists?(response.id)
+    assert_equal false, QuestionResponse.exists?(response_without_question.id)
+  end
 end

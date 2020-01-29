@@ -1,9 +1,9 @@
 class SchoolClass < ApplicationRecord
   strip_attributes
-  has_many :students
-  has_many :lessons
-  has_many :questions
-  has_many :question_responses
+  has_many :students, dependent: :destroy
+  has_many :lessons, dependent: :destroy
+  has_many :questions, dependent: :destroy
+  has_many :question_responses, dependent: :destroy
 
   scope :newest_first, ->() { order(created_at: :desc) }
 
