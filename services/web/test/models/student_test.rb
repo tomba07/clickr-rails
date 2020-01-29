@@ -79,9 +79,24 @@ class StudentTest < ActiveSupport::TestCase
 
   test 'delete destroys dependent objects' do
     lesson = Lesson.create!(school_class: @school_class, name: 'Lesson')
-    question = Question.create!(school_class: @school_class, lesson: lesson, name: 'Question')
-    question_response = QuestionResponse.create!(question: question, student: @student, lesson: lesson, school_class: @school_class)
-    mapping = StudentDeviceMapping.create!(student: @student, device_type: 'rfid', device_id: '1', school_class: @school_class)
+    question =
+      Question.create!(
+        school_class: @school_class, lesson: lesson, name: 'Question'
+      )
+    question_response =
+      QuestionResponse.create!(
+        question: question,
+        student: @student,
+        lesson: lesson,
+        school_class: @school_class
+      )
+    mapping =
+      StudentDeviceMapping.create!(
+        student: @student,
+        device_type: 'rfid',
+        device_id: '1',
+        school_class: @school_class
+      )
 
     @student.destroy!
 

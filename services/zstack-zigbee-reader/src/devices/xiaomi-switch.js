@@ -20,7 +20,7 @@ class XiaomiSwitch extends Device {
       })
     }
   }
-  
+
   onMessageParseClick(msg) {
     const { data = {} } = msg
     const singlePress = data.onOff === 0

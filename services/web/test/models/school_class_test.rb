@@ -56,8 +56,12 @@ class SchoolClassTest < ActiveSupport::TestCase
   end
 
   test 'clone_with_students_and_device_mappings duplicates class with associations' do
-    old_student = @subject.students.create!(name: 'Max', seat_row: 1, seat_col: 1)
-    old_mapping = old_student.student_device_mappings.create!(device_type: 'rfid', device_id: '1', school_class: @subject)
+    old_student =
+      @subject.students.create!(name: 'Max', seat_row: 1, seat_col: 1)
+    old_mapping =
+      old_student.student_device_mappings.create!(
+        device_type: 'rfid', device_id: '1', school_class: @subject
+      )
 
     new_subject = @subject.clone_with_students_and_device_mappings
     assert_equal true, new_subject.persisted?
@@ -77,12 +81,31 @@ class SchoolClassTest < ActiveSupport::TestCase
 
   test 'destroy also destroys als associated records' do
     student = create(:student, school_class: @subject)
-    mapping = create(:student_device_mapping, school_class: @subject, student: student, device_type: 'rfid', device_id: '1')
+    mapping =
+      create(
+        :student_device_mapping,
+        school_class: @subject,
+        student: student,
+        device_type: 'rfid',
+        device_id: '1'
+      )
     lesson = create(:lesson, school_class: @subject)
     question = create(:question, school_class: @subject, lesson: lesson)
     click = create(:click)
-    response = create(:question_response, student: student, lesson: lesson, question: question, school_class: @subject, click: click)
-    response_without_question = create(:question_response, student: student, lesson: lesson, school_class: @subject)
+    response =
+      create(
+        :question_response,
+        student: student,
+        lesson: lesson,
+        question: question,
+        school_class: @subject,
+        click: click
+      )
+    response_without_question =
+      create(
+        :question_response,
+        student: student, lesson: lesson, school_class: @subject
+      )
 
     @subject.destroy
 

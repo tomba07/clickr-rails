@@ -6,7 +6,7 @@ class QuestionResponse < ApplicationRecord
   belongs_to :lesson
   belongs_to :school_class
 
-  scope :newest_first, ->() { order(created_at: :desc) }
+  scope :newest_first, -> { order(created_at: :desc) }
 
   validates :score, presence: true
   validates :click, uniqueness: { allow_nil: true }

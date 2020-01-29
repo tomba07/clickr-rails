@@ -8,13 +8,13 @@ class IkeaDimmer extends Device {
 
     if (leftClick) {
       this.emit('click', {
-        deviceId: `${this.parseDeviceId(message)}/left`
+        deviceId: `${this.parseDeviceId(message)}/left`,
       })
     }
 
     if (rightClick) {
       this.emit('click', {
-        deviceId: `${this.parseDeviceId(message)}/right`
+        deviceId: `${this.parseDeviceId(message)}/right`,
       })
     }
   }

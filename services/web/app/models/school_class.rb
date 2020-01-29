@@ -5,7 +5,7 @@ class SchoolClass < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :question_responses, dependent: :destroy
 
-  scope :newest_first, ->() { order(created_at: :desc) }
+  scope :newest_first, -> { order(created_at: :desc) }
 
   validates :name, presence: true, uniqueness: true
 
@@ -49,7 +49,9 @@ class SchoolClass < ApplicationRecord
     student.save! validate: false
   end
 
-  def clone_with_students_and_device_mappings(new_name: I18n.t('school_classes.cloned_name', name: name))
+  def clone_with_students_and_device_mappings(
+    new_name: I18n.t('school_classes.cloned_name', name: name)
+  )
     new_school_class = self.dup
     new_school_class.name = new_name
     new_school_class.save!
