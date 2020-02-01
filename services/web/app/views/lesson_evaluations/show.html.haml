@@ -1,0 +1,24 @@
+- content_for :container_css_class, 'is-fluid'
+- min = 1
+- max = @evaluation.max_question_response_sum
+- benchmark = @lesson.benchmark
+
+%div{ data: { controller: 'lesson-evaluation', 'lesson-evaluation-endpoint': update_benchmark_lesson_evaluate_path(@lesson) }}
+  .panel
+    .panel-heading
+      %h3.title.is-size-4 #{t('.title', lesson_name: @lesson&.name)} (#{@school_class&.name})
+      .field
+        .select
+          .control
+            = collection_select :lesson, :id, @school_class.lessons.newest_first, :id, :name, {}, onchange: "Turbolinks.visit('/lessons/' + this.value + '/evaluate')"
+    .panel-body
+      .field
+        %label.label= t('lesson_evaluations.show.benchmark_label')
+        .control
+          = min
+          -# TODO Load n from user settings
+          = range_field_tag :benchmark, benchmark, min: min, max: max, autocomplete: 'off', data: { action: 'change->lesson-evaluation#onBenchmarkChanged input->lesson-evaluation#onBenchmarkDragged' }
+          = max
+          #benchmark.tag.is-info.is-large{ data: { target: 'lesson-evaluation.benchmarkLabel' } }= benchmark
+
+  = render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, context: 'lesson_evaluation', lesson: @lesson

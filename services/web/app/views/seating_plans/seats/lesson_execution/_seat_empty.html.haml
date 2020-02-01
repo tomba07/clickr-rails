@@ -1,6 +1,7 @@
 .seat--empty{ data: { row: row, col: col },
                     onmousedown: 'setTimeout(() => this.querySelector("input[type=text]").focus(), 0)',
                     style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
+  -# TODO Separate view/edit lesson_execution into two contexts
   - if edit
     .card
       .card-content

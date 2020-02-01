@@ -1,12 +1,17 @@
+- edit ||= false
+- browser_window_id ||= nil
 - border = edit ? 1 : 0
 - row_offset_to_base_1 = seating_plan.row_min - 1 - border
 - col_offset_to_base_1 = seating_plan.col_min - 1 - border
+- context ||= 'lesson_execution'
+- lesson ||= lesson
+- lesson_id = lesson&.try(:id)
 
 -# https://johnbeatty.co/2018/03/09/stimulus-js-tutorial-how-do-i-drag-and-drop-items-in-a-list/
 .seating-plan-controller{ data: { controller: 'seating-plan',
                        'seating-plan-row-offset': row_offset_to_base_1,
                        'seating-plan-col-offset': col_offset_to_base_1,
-                       'seating-plan-endpoint': school_class_seating_plan_path(school_class, edit_seating_plan: edit, browser_window_id: browser_window_id),
+                       'seating-plan-endpoint': school_class_seating_plan_path(school_class, edit_seating_plan: edit, browser_window_id: browser_window_id, context: context, lesson_id: lesson_id),
                        'seating-plan-school-class-id': seating_plan.school_class.id,
                        'seating-plan-browser-window-id': browser_window_id,
                        action: 'dragstart->seating-plan#onDragStart dragover->seating-plan#onDragOver dragenter->seating-plan#onDragEnter drop->seating-plan#onDrop dragend->seating-plan#onDragEnd',
@@ -15,6 +20,6 @@
     - seating_plan.coordinates(border: border).each do |row, col|
       - student = seating_plan.student(row: row, col: col)
       - if student
-        = render 'seating_plans/seat_student', edit: edit, student: student, row: row, col: col, row_offset_to_base_1: row_offset_to_base_1, col_offset_to_base_1: col_offset_to_base_1, browser_window_id: browser_window_id
+        = render "seating_plans/seats/#{context}/seat_student", edit: edit, student: student, row: row, col: col, row_offset_to_base_1: row_offset_to_base_1, col_offset_to_base_1: col_offset_to_base_1, browser_window_id: browser_window_id
       - else
-        = render 'seating_plans/seat_empty', edit: edit, school_class: school_class, row: row, col: col, row_offset_to_base_1: row_offset_to_base_1, col_offset_to_base_1: col_offset_to_base_1, browser_window_id: browser_window_id
+        = render "seating_plans/seats/#{context}/seat_empty", edit: edit, school_class: school_class, row: row, col: col, row_offset_to_base_1: row_offset_to_base_1, col_offset_to_base_1: col_offset_to_base_1, browser_window_id: browser_window_id

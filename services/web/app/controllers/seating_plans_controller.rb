@@ -2,11 +2,15 @@ class SeatingPlansController < ApplicationController
   layout false
 
   before_action :set_school_class, only: %i[show update]
+  before_action :set_lesson, only: :show
   before_action :set_seating_plan, only: %i[show]
   before_action :set_edit, only: %i[show update]
   before_action :set_browser_window_id, only: %i[show update]
 
-  def show; end
+  # Partial rendering, injected into "give lesson" by JS controller
+  def show
+   @context = params[:context]
+  end
 
   def update
     seating_plan = seating_plan_params.map { |s| s.to_h.symbolize_keys }
@@ -26,6 +30,10 @@ class SeatingPlansController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_school_class
     @school_class = SchoolClass.find(params[:school_class_id])
+  end
+
+  def set_lesson
+    @lesson = Lesson.find_by(id: params[:lesson_id])
   end
 
   def set_seating_plan

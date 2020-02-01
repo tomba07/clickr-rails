@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   resources :question_responses
   resources :clicks
   resource :lesson_execution, only: %i[show]
-  resources :lessons
+  resources :lessons do
+    resource :evaluate, only: %i[show], controller: :lesson_evaluations do
+      put :update_benchmark, path: :benchmark
+    end
+  end
   resources :questions do
     member { post :stop }
   end

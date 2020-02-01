@@ -159,6 +159,11 @@ en:
       question_title: "Question: %{question}"
       ask_question_submit: "Ask question"
       stop_question_submit: "Stop question"
+      evaluate_lesson: "Evaluate lesson"
+  lesson_evaluations:
+    show:
+      title: "Evaluation %{lesson_name}"
+      benchmark_label: "100% benchmark for number of question responses"
   users:
     school_class:
       notice: "Your selected school class has been updated."

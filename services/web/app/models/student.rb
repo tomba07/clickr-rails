@@ -23,8 +23,17 @@ class Student < ApplicationRecord
   end
 
   def question_response_sum_for_most_recent_lesson
-    lesson = school_class.most_recent_lesson or return 0
+    question_response_sum_for lesson: school_class.most_recent_lesson or return 0
+  end
+
+  def question_response_sum_for(lesson:)
     question_responses.where(lesson: lesson).sum(:score)
+  end
+
+  def question_response_percentage_for(lesson:)
+    # TODO Weighted percentage of geometric and linear progression (customize via formula)
+    percentage = question_response_sum_for(lesson: lesson).to_f / lesson.benchmark
+    [1.0, percentage].min
   end
 
   def nth_incomplete_mapping

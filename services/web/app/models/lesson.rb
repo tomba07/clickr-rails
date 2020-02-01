@@ -7,6 +7,7 @@ class Lesson < ApplicationRecord
   scope :newest_first, -> { order(created_at: :desc) }
 
   validates :name, presence: true, uniqueness: { scope: :school_class }
+  validates :benchmark, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
   def most_recent_question
     questions.last

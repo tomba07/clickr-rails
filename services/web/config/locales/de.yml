@@ -123,6 +123,11 @@ de:
       question_title: "Frage: %{question}"
       ask_question_submit: "Frage stellen"
       stop_question_submit: "Frage beenden"
+      evaluate_lesson: "Stunde auswerten"
+  lesson_evaluations:
+    show:
+      title: "Auswertung %{lesson_name}"
+      benchmark_label: "100% Niveau für die Anzahl beantworteter Fragen"
   users:
     school_class:
       notice: "Deine ausgewählte Schulklasse wurde geändert."
