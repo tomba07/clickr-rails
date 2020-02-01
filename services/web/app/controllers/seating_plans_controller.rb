@@ -11,7 +11,7 @@ class SeatingPlansController < ApplicationController
   def update
     seating_plan = seating_plan_params.map { |s| s.to_h.symbolize_keys }
     @school_class.update_seats seating_plan
-    @seating_plan = SeatingPlan.new(@school_class)
+    @seating_plan = Clickr::SeatingPlan.new(@school_class)
     SchoolClassChannel.broadcast_to(
       @school_class,
       type: SchoolClassChannel::SEATING_PLAN,
@@ -29,7 +29,7 @@ class SeatingPlansController < ApplicationController
   end
 
   def set_seating_plan
-    @seating_plan = SeatingPlan.new(@school_class)
+    @seating_plan = Clickr::SeatingPlan.new(@school_class)
   end
 
   def set_edit

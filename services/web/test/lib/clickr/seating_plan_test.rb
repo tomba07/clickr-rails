@@ -9,7 +9,7 @@ class SeatingPlanTest < ActiveSupport::TestCase
       end
     school_class = create(:school_class)
     school_class.students = @students
-    @subject = SeatingPlan.new(school_class)
+    @subject = Clickr::SeatingPlan.new(school_class)
   end
 
   test 'coordinates without border are correct' do
