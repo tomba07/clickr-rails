@@ -27,52 +27,29 @@ class ClicksController < ApplicationController
   # POST /clicks
   # POST /clicks.json
   def create
-    c = @click = Click.new(click_params)
+    @click = Click.new(click_params)
 
     respond_to do |format|
       if @click.save
         Rails.logger.info "Click registered: #{@click.device_id}"
-        m =
-          @student_device_mapping =
-            update_oldest_incomplete_student_device_mapping! @click
-        r = @question_responses = create_question_responses! @click
+        @mapping =
+          Clickr::Task::UpdateOldestIncompleteMapping.call(@click).result
+        @responses = Clickr::Task::CreateQuestionResponses.call(@click).result
 
-        if @student_device_mapping
+        if @mapping
           SchoolClassChannel.broadcast_to(
-            @student_device_mapping.school_class,
+            @mapping.school_class,
             type: SchoolClassChannel::MAPPING
           )
         end
-        @question_responses.each do |r|
+        @responses.each do |response|
           SchoolClassChannel.broadcast_to(
-            r.school_class,
+            response.school_class,
             type: SchoolClassChannel::RESPONSE
           )
         end
 
-        format.html do
-          redirect_to @click,
-                      notice:
-                        [
-                          t('.notice'),
-                          (
-                            if @student_device_mapping
-                              t(
-                                '.mapping_notice',
-                                device_id: c.device_id,
-                                student_name: m.student&.name,
-                                class_name: m.school_class&.name
-                              )
-                            end
-                          ),
-                          (
-                            if @question_responses.size > 0
-                              t('.responses_notice', count: r.size)
-                            end
-                          )
-                        ].compact
-                          .join('<br/>')
-        end
+        format.html { redirect_to @click, notice: t('.notice') }
         format.json { render :show, status: :created, location: @click }
       else
         format.html { render :new }
@@ -124,69 +101,5 @@ class ClicksController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def click_params
     params.require(:click).permit(:device_id, :device_type).to_h.symbolize_keys
-  end
-
-  def update_oldest_incomplete_student_device_mapping!(click)
-    mapping = StudentDeviceMapping.oldest_incomplete(click.device_id) or
-      (
-        Rails
-          .logger.debug 'Cannot create mapping - no incomplete one found.' and
-          return nil
-      )
-    Rails.logger.info "Updating incomplete mapping #{mapping.inspect}"
-    mapping.update!(device_type: click.device_type, device_id: click.device_id)
-    return mapping
-  end
-
-  def create_question_response!(click, mapping)
-    school_class = mapping.school_class
-    lesson = school_class.most_recent_lesson
-    question = lesson&.most_recent_question or
-      (
-        Rails
-          .logger.debug 'Cannot create question response - no most recent question.' and
-          return nil
-      )
-    unless question.response_allowed
-      (
-        Rails
-          .logger.debug 'Cannot create question response - question response not allowed.' and
-          return nil
-      )
-    end
-
-    if QuestionResponse.exists?(
-         student_id: mapping.student_id, question: question
-       )
-      Rails
-        .logger.debug 'Cannot create question response - question response already exists.' and
-        return nil
-    end
-
-    Rails.logger.info "Creating question response for question #{
-                        question.inspect
-                      }"
-    click.create_question_response!(
-      student_id: mapping.student_id,
-      question: question,
-      lesson: lesson,
-      school_class: school_class,
-      score: question.score || 1
-    )
-  end
-
-  def create_question_responses!(click)
-    mappings =
-      StudentDeviceMapping.includes(:school_class).where(
-        device_id: click.device_id
-      )
-
-    Rails.logger.debug "Trying to create question response for #{
-                         mappings.size
-                       } mappings"
-
-    responses =
-      mappings.map { |mapping| create_question_response!(click, mapping) }
-    responses.compact
   end
 end

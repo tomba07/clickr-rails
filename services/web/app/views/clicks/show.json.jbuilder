@@ -1,12 +1,11 @@
 json.partial! "clicks/click", click: @click
-if @question_response
-  json.question_response do
-    json.partial! "question_responses/question_response", question_response: @question_response, url: false
-  end
+
+json.question_responses do
+  json.partial! "question_responses/question_response", collection: @responses, url: false, as: :question_response
 end
 
-if @student_device_mapping
+if @mapping
   json.student_device_mapping do
-    json.partial! "student_device_mappings/student_device_mapping", student_device_mapping: @student_device_mapping, url: false
+    json.partial! "student_device_mappings/student_device_mapping", student_device_mapping: @mapping, url: false
   end
 end

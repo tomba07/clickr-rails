@@ -3,8 +3,6 @@ de:
   clicks:
     create:
       notice: "Click wurde erstellt."
-      mapping_notice: "Gerät %{device_id} wurde dem Schüler %{student_name} zugeordnet (Klasse %{class_name})"
-      response_notice: "Click wurde als Antwort für #{count} Fragen gewertet."
     update:
       notice: "Click wurde geändert."
     destroy:
