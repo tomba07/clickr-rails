@@ -42,7 +42,7 @@ class SchoolClassesController < ApplicationController
         format.html do
           redirect_url =
             if session.delete(:redirect_to) == 'lesson_execution'
-              lesson_execution_path
+              root_path
             else
               @school_class
             end

@@ -9,7 +9,7 @@ class LessonExecutionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get lesson_execution_url
+    get root_path
     assert_response :success
   end
 end

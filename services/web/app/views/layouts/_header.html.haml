@@ -9,7 +9,7 @@
     .navbar-menu
       - if user_signed_in?
         .navbar-start
-          = link_to lesson_execution_path, class: "navbar-item #{'is-active' if controller_name == 'lesson_executions'}" do
+          = link_to root_path, class: "navbar-item #{'is-active' if controller_name == 'lesson_executions'}" do
             .icon
               = icon('fas', 'play')
             %div= t('.give_lesson')

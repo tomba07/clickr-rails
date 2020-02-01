@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :student_device_mappings
   resources :question_responses
   resources :clicks
-  resource :lesson_execution, only: %i[show]
   resources :lessons do
     resource :evaluate, only: %i[show], controller: :lesson_evaluations do
       put :update_benchmark, path: :benchmark
