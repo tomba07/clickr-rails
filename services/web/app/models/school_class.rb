@@ -5,6 +5,7 @@ class SchoolClass < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :question_responses, dependent: :destroy
   has_many :student_device_mappings, dependent: :destroy
+  has_many :user, dependent: :nullify
 
   scope :newest_first, -> { order(created_at: :desc) }
   scope :with_mapping_for,

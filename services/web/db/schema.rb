@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_01_162453) do
+ActiveRecord::Schema.define(version: 2020_02_03_085349) do
 
   create_table "clicks", force: :cascade do |t|
     t.string "device_id", null: false
