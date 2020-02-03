@@ -1,5 +1,5 @@
 class LessonEvaluationsController < ApplicationController
-  before_action :set_lesson, only: [:show, :update_benchmark]
+  before_action :set_lesson, only: %i[show update_benchmark]
 
   def show
     @school_class = @lesson.school_class

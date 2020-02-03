@@ -6,7 +6,10 @@ class LessonEvaluationTest < ActiveSupport::TestCase
     @students = create_list(:student, 3, school_class: school_class)
     lesson = create(:lesson, school_class: school_class)
     question = create(:question, school_class: school_class, lesson: lesson)
-    create(:question_response, student: @students[0], question: question, lesson: lesson)
+    create(
+      :question_response,
+      student: @students[0], question: question, lesson: lesson
+    )
     @subject = Clickr::LessonEvaluation.new(lesson)
   end
 
@@ -23,6 +26,9 @@ class LessonEvaluationTest < ActiveSupport::TestCase
   end
 
   test 'nth highest response count is 0 if N exceeds student count' do
-    assert_equal 0, @subject.nth_highest_question_response_sum(n: @students.size + 1)
+    assert_equal 0,
+                 @subject.nth_highest_question_response_sum(
+                   n: @students.size + 1
+                 )
   end
 end

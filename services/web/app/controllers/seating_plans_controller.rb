@@ -9,7 +9,7 @@ class SeatingPlansController < ApplicationController
 
   # Partial rendering, injected into "give lesson" by JS controller
   def show
-   @context = params[:context]
+    @context = params[:context]
   end
 
   def update

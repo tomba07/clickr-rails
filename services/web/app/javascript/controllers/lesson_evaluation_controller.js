@@ -1,4 +1,4 @@
-import {Controller} from 'stimulus'
+import { Controller } from 'stimulus'
 import Rails from '@rails/ujs'
 
 export default class extends Controller {
@@ -6,7 +6,10 @@ export default class extends Controller {
 
   get seatingPlanController() {
     const seatingPlan = document.querySelector('.seating-plan-controller')
-    return this.application.getControllerForElementAndIdentifier(seatingPlan, "seating-plan");
+    return this.application.getControllerForElementAndIdentifier(
+      seatingPlan,
+      'seating-plan'
+    )
   }
 
   set benchmark(value) {
@@ -26,7 +29,7 @@ export default class extends Controller {
     this.benchmark = event.target.valueAsNumber
 
     const data = {
-      benchmark: this.benchmark
+      benchmark: this.benchmark,
     }
 
     Rails.ajax({

@@ -9,13 +9,12 @@ class LessonEvaluationsControllerTest < ActionDispatch::IntegrationTest
     @lesson = create(:lesson)
   end
 
-  test "should get show" do
+  test 'should get show' do
     get lesson_evaluate_path(@lesson.id)
     assert_response :success
   end
 
-  test "should update benchmark" do
+  test 'should update benchmark' do
     #TODO Implement
   end
-
 end
