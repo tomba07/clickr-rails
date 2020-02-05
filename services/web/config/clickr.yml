@@ -1,6 +1,7 @@
 defaults: &defaults
   suggest_new_lesson_after_minutes: <%= ENV.fetch('CLICKR_SUGGEST_NEW_LESSON_AFTER_MINUTES', '120').to_i %>
   show_virtual_buttons_link_in_navbar: <%= ENV.fetch('CLICKR_SHOW_VIRTUAL_BUTTONS_LINK', 'false') == 'true' %>
+  benchmark_buffer_on_top_of_max_sum: <%= ENV.fetch('CLICKR_BENCHMARK_BUFFER', '5').to_i %>
 
 development:
   <<: *defaults

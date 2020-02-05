@@ -97,6 +97,7 @@ App environment variables:
 - `RAILS_MASTER_KEY`: decryption key for secrets
 - `CLICKR_SUGGEST_NEW_LESSON_AFTER_MINUTES`: default `120`
 - `CLICKR_SHOW_VIRTUAL_BUTTONS_LINK`: default `false` (in `RAILS_ENV=development` default `true`)
+- `CLICKR_BENCHMARK_BUFFER`: how high you can set the lesson benchmark compared to the best student, default `5`
 - `RFID_KEYBOARD_READER_USB_IDS`: comma-separated list USB IDs `<vendor>:<product>` for RFID readers acting as keyboards (e.g. `16c0:27db`)
 - `RFID_KEYBOARD_READER_DEBOUNCE_SECONDS`: number of seconds to wait before RFID token is read again (debounce)
 TODO Add other env vars
