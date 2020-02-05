@@ -3,6 +3,8 @@
 /tmp/
 /vendor/
 /db/schema.rb
+/spec/tmp
 
 # js
 /node_modules/
+/coverage/

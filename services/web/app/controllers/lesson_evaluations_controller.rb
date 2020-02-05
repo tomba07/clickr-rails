@@ -5,7 +5,9 @@ class LessonEvaluationsController < ApplicationController
     @school_class = @lesson.school_class
     @seating_plan = Clickr::SeatingPlan.new(@school_class)
     @evaluation = Clickr::LessonEvaluation.new(@lesson)
-    @benchmark_max = @evaluation.max_question_response_sum + Rails.application.config.clickr.benchmark_buffer_on_top_of_max_sum
+    @benchmark_max =
+      @evaluation.max_question_response_sum &
+        +Rails.application.config.clickr.benchmark_buffer_on_top_of_max_sum
   end
 
   def update_benchmark
