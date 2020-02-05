@@ -15,6 +15,8 @@ class LessonEvaluationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update benchmark' do
-    #TODO Implement
+    put update_benchmark_lesson_evaluate_path(@lesson.id),
+        params: { benchmark: 3 }
+    assert_equal 3, @lesson.reload.benchmark
   end
 end
