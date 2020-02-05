@@ -15,7 +15,6 @@
         %label.label= t('lesson_evaluations.show.benchmark_label')
         .control
           = benchmark_min
-          -# TODO Load n from user settings
           = range_field_tag :benchmark, benchmark, min: benchmark_min, max: @benchmark_max, autocomplete: 'off', data: { action: 'change->lesson-evaluation#onBenchmarkChanged input->lesson-evaluation#onBenchmarkDragged' }
           = @benchmark_max
           #benchmark.tag.is-info.is-large{ data: { target: 'lesson-evaluation.benchmarkLabel' } }= benchmark

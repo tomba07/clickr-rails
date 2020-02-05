@@ -82,6 +82,18 @@ de:
     form:
       clone_label: "Klasse mit Schülern und Gerätezuordnungen kopieren (optional)"
       clone_prompt: "Optional eine Klasse zum Kopieren auswählen"
+  seating_plans:
+    seats:
+      lesson_execution:
+        seat_student:
+          lesson_sum: "Summe für Stunde"
+          overall_sum: "Summe insgesamt"
+          nth_incomplete_mapping: "Das %{n} nächste nicht zugeordnete Gerät das gedrückt wird, wird diesem Schüler zugeordnet."
+          delete: "Löschen"
+      lesson_evaluation:
+        seat_student:
+          lesson_percent: "Ergebnis für Stunde"
+          overall_grade: "Note insgesamt: %{explanation}"
   student_device_mappings:
     create:
       notice: "Schülergerätezuordnung wurde erstellt."
@@ -176,6 +188,3 @@ de:
       select_a_class: "Klasse auswählen"
       buttons: "Knöpfe"
       create_new_class: "Neue Klasse erstellen"
-  seating_plans:
-    seat_student:
-      delete: "Löschen"

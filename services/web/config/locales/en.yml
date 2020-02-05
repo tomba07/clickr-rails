@@ -113,11 +113,17 @@ en:
       clone_label: "Copy class with students and device mappings (optional)"
       clone_prompt: "Optionally select a class to copy"
   seating_plans:
-    seat_student:
-      lesson_sum: "Sum for this lesson"
-      overall_sum: "Overall sum"
-      nth_incomplete_mapping: "The %{n}th next unmapped device that is clicked will be mapped to this student."
-      delete: "Delete"
+    seats:
+      lesson_execution:
+        seat_student:
+          lesson_sum: "Sum for this lesson"
+          overall_sum: "Overall sum"
+          nth_incomplete_mapping: "The %{n}th next unmapped device that is clicked will be mapped to this student."
+          delete: "Delete"
+      lesson_evaluation:
+        seat_student:
+          lesson_percent: "Lesson score"
+          overall_grade: "Overall grade: %{explanation}"
   student_device_mappings:
     create:
       notice: "Student device mapping was created."
