@@ -1,3 +1,4 @@
+# TODO Refactor: Split to lesson evaluation and lesson execution
 class SeatingPlansController < ApplicationController
   layout false
 
