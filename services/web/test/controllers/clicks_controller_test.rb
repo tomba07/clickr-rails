@@ -7,6 +7,9 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     @user = create(:user)
     sign_in @user
     @click = create(:click)
+    @school_class = create(:school_class)
+    @lesson = create(:lesson, school_class: @school_class)
+    CurrentSchoolClass.set @school_class
   end
 
   test 'should get index' do
@@ -36,13 +39,11 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
 
   %i[html json].each do |format|
     test "should create click and question response (#{format})" do
-      school_class = create(:school_class)
-      lesson = create(:lesson, school_class: school_class)
-      create(:question, school_class: school_class, lesson: lesson)
-      student = create(:student, school_class: school_class)
+      create(:question, school_class: @school_class, lesson: @lesson)
+      student = create(:student, school_class: @school_class)
       create(
         :student_device_mapping,
-        school_class: school_class,
+        school_class: @school_class,
         student: student,
         device_type: 'rfid',
         device_id: '123'
@@ -56,43 +57,12 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'should create question response in second class (device mapped twice)' do
-    school_class_one = create(:school_class)
-    student_one = create(:student, school_class: school_class_one)
-    create(
-      :student_device_mapping,
-      school_class: school_class_one,
-      student: student_one,
-      device_type: 'rfid',
-      device_id: '123'
-    )
-
-    school_class_two = create(:school_class)
-    lesson_two = create(:lesson, school_class: school_class_two)
-    student_two = create(:student, school_class: school_class_two)
-    create(
-      :student_device_mapping,
-      school_class: school_class_two,
-      student: student_two,
-      device_type: 'rfid',
-      device_id: '123'
-    )
-    create(:question, school_class: school_class_two, lesson: lesson_two)
-
-    assert_difference %w[Click.count QuestionResponse.count], 1 do
-      post clicks_url,
-           params: { click: { device_type: 'rfid', device_id: '123' } }
-    end
-  end
-
   test 'should not create question response for second click' do
-    school_class = create(:school_class)
-    lesson = create(:lesson, school_class: school_class)
-    create(:question, school_class: school_class, lesson: lesson)
-    student = create(:student, school_class: school_class)
+    create(:question, school_class: @school_class, lesson: @lesson)
+    student = create(:student, school_class: @school_class)
     create(
       :student_device_mapping,
-      school_class: school_class,
+      school_class: @school_class,
       student: student,
       device_type: 'rfid',
       device_id: '123'
@@ -107,16 +77,14 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not create question response if question does allow response' do
-    school_class = create(:school_class)
-    lesson = create(:lesson, school_class: school_class)
     create(
       :question,
-      school_class: school_class, lesson: lesson, response_allowed: false
+      school_class: @school_class, lesson: @lesson, response_allowed: false
     )
-    student = create(:student, school_class: school_class)
+    student = create(:student, school_class: @school_class)
     create(
       :student_device_mapping,
-      school_class: school_class,
+      school_class: @school_class,
       student: student,
       device_type: 'rfid',
       device_id: '123'
@@ -130,33 +98,22 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'should create click and update incomplete mapping and create question response' do
-    school_class_one = create(:school_class)
-    student_one = create(:student, school_class: school_class_one)
+  test 'should create click update incomplete mapping but not create question response' do
+    student = create(:student, school_class: @school_class)
     incomplete_mapping =
       create(
         :student_device_mapping,
-        student: student_one,
+        student: student,
         device_type: nil,
         device_id: nil,
-        school_class: school_class_one
+        school_class: @school_class
       )
 
-    school_class_two = create(:school_class)
-    lesson_two = create(:lesson, school_class: school_class_two)
-    student_two = create(:student, school_class: school_class_two)
-    create(
-      :student_device_mapping,
-      school_class: school_class_two,
-      student: student_two,
-      device_type: 'rfid',
-      device_id: '123'
-    )
-    create(:question, school_class: school_class_two, lesson: lesson_two)
-
-    assert_difference %w[Click.count QuestionResponse.count], 1 do
-      post clicks_url,
-           params: { click: { device_type: 'rfid', device_id: '123' } }
+    assert_difference 'Click.count', 1 do
+      assert_difference 'QuestionResponse.count', 0 do
+        post clicks_url,
+             params: { click: { device_type: 'rfid', device_id: '123' } }
+      end
     end
 
     incomplete_mapping.reload
@@ -166,11 +123,14 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
 
   %i[html json].each do |format|
     test "should create click and update incomplete mapping (#{format})" do
-      student = create(:student)
+      student = create(:student, school_class: @school_class)
       incomplete_mapping =
         create(
           :student_device_mapping,
-          student: student, device_type: nil, device_id: nil
+          school_class: @school_class,
+          student: student,
+          device_type: nil,
+          device_id: nil
         )
 
       assert_difference 'Click.count', 1 do
@@ -185,14 +145,17 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'should update incomplete mapping even if the device ID is already mapped' do
-    student = create(:student)
+  test 'should update incomplete mapping even if the device ID is already mapped (in another class)' do
+    student = create(:student, school_class: @school_class)
     complete_mapping =
       create(:student_device_mapping, device_type: 'rfid', device_id: '123')
     incomplete_mapping =
       create(
         :student_device_mapping,
-        student: student, device_type: nil, device_id: nil
+        school_class: @school_class,
+        student: student,
+        device_type: nil,
+        device_id: nil
       )
 
     assert_difference 'Click.count', 1 do
@@ -206,8 +169,7 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'must skip an incomplete mapping that would lead to a double mapping of a device in one class' do
-    school_class = create(:school_class)
-    student_one = create(:student, school_class: school_class)
+    student_one = create(:student, school_class: @school_class)
     incomplete_mapping =
       create(
         :student_device_mapping,
@@ -215,13 +177,13 @@ class ClicksControllerTest < ActionDispatch::IntegrationTest
         student: student_one,
         device_type: nil,
         device_id: nil,
-        school_class: school_class
+        school_class: @school_class
       )
 
-    student_two = create(:student, school_class: school_class)
+    student_two = create(:student, school_class: @school_class)
     create(
       :student_device_mapping,
-      school_class: school_class,
+      school_class: @school_class,
       student: student_two,
       device_type: 'rfid',
       device_id: '123'

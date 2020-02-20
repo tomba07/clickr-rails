@@ -25,7 +25,7 @@ class LessonsController < ApplicationController
   def create
     @lesson =
       Lesson.new(
-        { school_class_id: current_user.school_class&.id, **lesson_params }
+        { school_class_id: CurrentSchoolClass.get&.id, **lesson_params }
       )
 
     respond_to do |format|

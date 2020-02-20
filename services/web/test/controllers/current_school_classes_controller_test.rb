@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UsersControllerTest < ActionDispatch::IntegrationTest
+class CurrentSchoolClassesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
@@ -10,10 +10,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should change school class and redirect to previous page' do
     school_class = create(:school_class)
-    put users_school_class_url,
-        params: { school_class_id: school_class.id },
+    put current_school_classes_url,
+        params: { current_school_class: { school_class_id: school_class.id } },
         headers: { HTTP_REFERER: 'http://clickr.ftes.de' }
     assert_redirected_to 'http://clickr.ftes.de'
-    assert_equal @user.reload.school_class, school_class
+    assert_equal CurrentSchoolClass.get, school_class
   end
 end

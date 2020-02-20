@@ -118,10 +118,10 @@ class SchoolClassTest < ActiveSupport::TestCase
     assert_equal false, QuestionResponse.exists?(response_without_question.id)
   end
 
-  test 'destroy is allowed if class is currently selected by a user' do
-    user = create(:user, school_class: @subject)
+  test 'destroy is allowed if class is currently selected' do
+    CurrentSchoolClass.set(@subject)
     @subject.destroy
     assert_equal false, SchoolClass.exists?(@subject.id)
-    assert_nil user.reload.school_class
+    assert_nil CurrentSchoolClass.get
   end
 end

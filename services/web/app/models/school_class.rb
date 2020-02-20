@@ -5,15 +5,9 @@ class SchoolClass < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :question_responses, dependent: :destroy
   has_many :student_device_mappings, dependent: :destroy
-  has_many :user, dependent: :nullify
+  has_one :current_school_class, dependent: :destroy
 
   scope :newest_first, -> { order(created_at: :desc) }
-  scope :with_mapping_for,
-        lambda { |device_id|
-          joins(:student_device_mappings).where(
-            student_device_mappings: { device_id: device_id }
-          )
-        }
 
   validates :name, presence: true, uniqueness: true
 
@@ -28,6 +22,11 @@ class SchoolClass < ApplicationRecord
       )
   end
 
+  def has_mapping_for(device_id)
+    student_device_mappings.where(device_id: device_id).exists?
+  end
+
+  # TODO Extract into task
   def suggest_creating_new_lesson?
     lesson = most_recent_lesson or return true
 
@@ -57,6 +56,7 @@ class SchoolClass < ApplicationRecord
     student.save! validate: false
   end
 
+  # TODO Extract into task
   def clone_with_students_and_device_mappings(
     new_name: I18n.t('school_classes.cloned_name', name: name)
   )

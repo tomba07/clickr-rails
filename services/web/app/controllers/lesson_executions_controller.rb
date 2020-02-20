@@ -1,6 +1,6 @@
 class LessonExecutionsController < ApplicationController
   def show
-    @school_class = current_user.school_class or
+    @school_class = CurrentSchoolClass.get or
       (
         flash[:notice] = t('.select_school_class_notice') and
           redirect_to school_classes_path and

@@ -16,5 +16,5 @@
           .buttons
             = link_to t('common.show'), school_class_path(school_class), class: 'button'
             = link_to t('common.edit'), edit_school_class_path(school_class), class: 'button'
-            = link_to t('common.select'), users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'button'
+            = link_to t('common.select'), current_school_classes_path(current_school_class: { school_class_id: school_class.id }), method: :put, remote: true, class: 'button'
             = link_to t('common.destroy'), school_class, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'

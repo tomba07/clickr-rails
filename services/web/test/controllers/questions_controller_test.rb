@@ -38,7 +38,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create question using user's class and most recent lesson (newly created)" do
     new_school_class = create(:school_class)
-    @user.update_attribute(:school_class, new_school_class)
+    CurrentSchoolClass.set new_school_class
 
     assert_difference('Lesson.count', 1) do
       post questions_url, params: { question: { name: @question.name } }

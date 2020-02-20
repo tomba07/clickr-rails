@@ -1,36 +1,35 @@
-class Clickr::Task::CreateQuestionResponses
+class Clickr::Task::CreateQuestionResponse
   attr_reader :result
 
-  def self.call(click)
-    handler = self.new(click)
+  def self.call(click, school_class = CurrentSchoolClass.get)
+    handler = self.new(click, school_class)
     handler.call
     handler
   end
 
-  def initialize(click)
+  def initialize(click, school_class)
     @click = click
+    @school_class = school_class
   end
 
   def call
-    mappings =
-      StudentDeviceMapping.includes(:school_class).where(
-        device_id: @click.device_id
-      )
+    return @result = nil if (!@school_class || !@click)
 
-    Rails.logger.debug "Trying to create question response for #{
-                         mappings.size
-                       } mappings"
+    mapping =
+      @school_class.student_device_mappings.where(device_id: @click.device_id)
+        .first
 
-    responses =
-      mappings.map { |mapping| create_question_response!(@click, mapping) }
-    return @result = responses.compact
+    Rails.logger.debug "Trying to create question response for mapping #{
+                         mapping.inspect
+                       }"
+
+    return @result = create_question_response!(@click, mapping)
   end
 
   private
 
   def create_question_response!(click, mapping)
-    school_class = mapping.school_class
-    lesson = school_class.most_recent_lesson
+    lesson = @school_class.most_recent_lesson
     question = lesson&.most_recent_question
 
     if !question&.response_allowed
@@ -58,7 +57,7 @@ class Clickr::Task::CreateQuestionResponses
       student_id: mapping.student_id,
       question: question,
       lesson: lesson,
-      school_class: school_class,
+      school_class: @school_class,
       score: question.score || 1
     )
   end

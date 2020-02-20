@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :school_classes do
     resource :seating_plan, only: %i[update show]
   end
-  put 'users/school_class'
+  resource :current_school_classes, only: %i[update]
   devise_for :users
 
   root 'lesson_executions#show'

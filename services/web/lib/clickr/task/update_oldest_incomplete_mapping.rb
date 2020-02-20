@@ -1,18 +1,22 @@
 class Clickr::Task::UpdateOldestIncompleteMapping
   attr_reader :result
 
-  def self.call(click)
-    handler = self.new(click)
+  def self.call(click, school_class = CurrentSchoolClass.get)
+    handler = self.new(click, school_class)
     handler.call
     handler
   end
 
-  def initialize(click)
+  def initialize(click, school_class)
     @click = click
+    @school_class = school_class
   end
 
   def call
-    mapping = StudentDeviceMapping.oldest_incomplete(@click.device_id)
+    return @result = nil if (!@school_class || !@click)
+
+    mapping =
+      StudentDeviceMapping.oldest_incomplete(@click.device_id, @school_class)
 
     if !mapping
       Rails.logger.debug 'Cannot create mapping - no incomplete one found.'

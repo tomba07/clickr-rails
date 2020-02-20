@@ -34,7 +34,12 @@ class ClicksController < ApplicationController
         Rails.logger.info "Click registered: #{@click.device_id}"
         @mapping =
           Clickr::Task::UpdateOldestIncompleteMapping.call(@click).result
-        @responses = Clickr::Task::CreateQuestionResponses.call(@click).result
+        @response =
+          if @mapping
+            nil
+          else
+            Clickr::Task::CreateQuestionResponse.call(@click).result
+          end
 
         if @mapping
           SchoolClassChannel.broadcast_to(
@@ -42,9 +47,9 @@ class ClicksController < ApplicationController
             type: SchoolClassChannel::MAPPING
           )
         end
-        @responses.each do |response|
+        if @response
           SchoolClassChannel.broadcast_to(
-            response.school_class,
+            @response.school_class,
             type: SchoolClassChannel::RESPONSE
           )
         end

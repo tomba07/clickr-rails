@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_03_085349) do
+ActiveRecord::Schema.define(version: 2020_02_20_074829) do
 
   create_table "clicks", force: :cascade do |t|
     t.string "device_id", null: false
@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(version: 2020_02_03_085349) do
     t.index ["created_at"], name: "index_clicks_on_created_at", order: :desc
     t.index ["device_id"], name: "index_clicks_on_device_id"
     t.index ["device_type"], name: "index_clicks_on_device_type"
+  end
+
+  create_table "current_school_classes", force: :cascade do |t|
+    t.integer "school_class_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id"], name: "index_current_school_classes_on_school_class_id"
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -108,12 +115,11 @@ ActiveRecord::Schema.define(version: 2020_02_03_085349) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "school_class_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["school_class_id"], name: "index_users_on_school_class_id"
   end
 
+  add_foreign_key "current_school_classes", "school_classes"
   add_foreign_key "lessons", "school_classes"
   add_foreign_key "question_responses", "clicks"
   add_foreign_key "question_responses", "lessons"
@@ -125,5 +131,4 @@ ActiveRecord::Schema.define(version: 2020_02_03_085349) do
   add_foreign_key "student_device_mappings", "school_classes"
   add_foreign_key "student_device_mappings", "students"
   add_foreign_key "students", "school_classes"
-  add_foreign_key "users", "school_classes"
 end

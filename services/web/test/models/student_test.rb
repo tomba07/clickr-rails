@@ -25,6 +25,7 @@ class StudentTest < ActiveSupport::TestCase
   end
 
   test 'nth_incomplete_mapping selects oldest incomplete mapping' do
+    CurrentSchoolClass.set @school_class
     @student.student_device_mappings.create!(school_class: @school_class)
     @student.student_device_mappings.create!(school_class: @school_class)
 

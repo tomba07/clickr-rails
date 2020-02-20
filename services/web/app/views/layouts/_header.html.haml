@@ -4,8 +4,8 @@
       %a{href: root_path}
         %h4.navbar-item.title.is-4.is-marginless.has-text-white
           = Clickr
-          - if current_user&.school_class&.name
-            \- #{current_user.school_class.name}
+          - if CurrentSchoolClass.get&.name
+            \- #{CurrentSchoolClass.get.name}
     .navbar-menu
       - if user_signed_in?
         .navbar-start
@@ -53,12 +53,12 @@
               %div= t('.buttons')
           .navbar-item.has-dropdown.is-hoverable.is-right
             %a.navbar-link
-              = current_user&.school_class&.name || t('.select_a_class')
+              = CurrentSchoolClass.get&.name || t('.select_a_class')
             .navbar-dropdown
               = link_to new_school_class_path(redirect_to: :lesson_execution), class: 'navbar-item', title: t('layouts.header.create_new_class') do
                 %i.fa.fa-plus-circle
               - SchoolClass.all.each do |school_class|
-                = link_to school_class.name, users_school_class_path(school_class_id: school_class.id), method: :put, remote: true, class: 'navbar-item'
+                = link_to school_class.name, current_school_classes_path(current_school_class: { school_class_id: school_class.id }), method: :put, remote: true, class: 'navbar-item'
           .navbar-item
             = link_to t('common.log_out'), destroy_user_session_path, method: :delete, class: 'button is-light'
         - else

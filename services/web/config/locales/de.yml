@@ -140,8 +140,8 @@ de:
     show:
       title: "Auswertung %{lesson_name}"
       benchmark_label: "100% Niveau für die Anzahl beantworteter Fragen"
-  users:
-    school_class:
+  current_school_classes:
+    update:
       notice: "Deine ausgewählte Schulklasse wurde geändert."
   common:
     back: "Zurück"

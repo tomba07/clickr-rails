@@ -53,9 +53,9 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to 'http://clickr.ftes.de'
   end
 
-  test "should create lesson using user's class" do
+  test 'should create lesson using current school class' do
     new_school_class = create(:school_class)
-    @user.update_attribute(:school_class, new_school_class)
+    CurrentSchoolClass.set new_school_class
     new_lesson = build(:lesson, school_class: nil)
 
     assert_difference('Lesson.count', 1) do

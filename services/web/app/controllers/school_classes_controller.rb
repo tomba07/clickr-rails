@@ -37,7 +37,7 @@ class SchoolClassesController < ApplicationController
 
     respond_to do |format|
       if @school_class.save
-        current_user&.update_attribute(:school_class_id, @school_class.id)
+        CurrentSchoolClass.set @school_class
 
         format.html do
           redirect_url =
