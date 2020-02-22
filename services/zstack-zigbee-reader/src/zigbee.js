@@ -74,6 +74,16 @@ class Zigbee extends events.EventEmitter {
       this.onZigbeeAdapterDisconnected.bind(this)
     )
 
+    this.herdsman.on(
+      'deviceJoined',
+      msg => console.debug('Device joined', msg.device.ieeeAddr)
+    )
+
+    this.herdsman.on(
+      'deviceLeave',
+      msg => console.debug('Device left', msg.ieeeAddr)
+    )
+
     this.registerDevices()
     this.herdsman.on('message', msg => console.debug('New message from', msg.device.ieeeAddr, msg.data))
 
