@@ -29,6 +29,11 @@ class Clickr::Task::CreateQuestionResponse
   private
 
   def create_question_response!(click, mapping)
+    if !mapping
+      Rails.logger.debug 'Cannot create question response - no mapping found.'
+      return nil
+    end
+
     lesson = @school_class.most_recent_lesson
     question = lesson&.most_recent_question
 
