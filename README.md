@@ -17,7 +17,8 @@ Languages, frameworks and libraries:
     - bulma (styling)
     - fontawesome (icons)
 - input adapters:
-    - python
+    - javascript (NodeJS)
+    - zigbee-herdsman (zigbee driver library)
 
 Build/CI/Deployment:
 - docker and docker-compose
@@ -49,7 +50,6 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 ├── node_modules [966 entries exceeds filelimit, not opening dir]
 ├── packages
 ├── services
-│   ├── rfid-keyboard-reader
 │   ├── web
 │   └── zstack-zigbee-reader
 ├── docker-compose.yml
@@ -84,8 +84,6 @@ Initialized via `bin/setup-environment-variables`.
 ## TODO
 - `web`: [balena update locking](https://www.balena.io/docs/learn/deploy/release-strategy/update-locking/) and trigger from within the app (do not update during lesson)
 - new adapters (e.g. raw I/O)
-- `rfid-keyboard-reader`: support selecting by device.name (`HXGCoLtd Keyboard`)
-- `rfid-keyboard-reader`: add unit tests
 - `web`: check that created_at indexes are used (order by desc)
 - `zstack-zigbee-reader`: add unit tests
 - `web`: Missing websocket events (sometimes no live update after click)
@@ -99,8 +97,6 @@ App environment variables:
 - `CLICKR_SHOW_VIRTUAL_BUTTONS_LINK`: default `false` (in `RAILS_ENV=development` default `true`)
 - `CLICKR_BENCHMARK_BUFFER`: how high you can set the lesson benchmark compared to the best student, default `5`
 - `CLICKR_INITIAL_STUDENT_RESPONSE_PERCENTAGE`: influences the grade, practically a virtual first lesson, default `77`
-- `RFID_KEYBOARD_READER_USB_IDS`: comma-separated list USB IDs `<vendor>:<product>` for RFID readers acting as keyboards (e.g. `16c0:27db`)
-- `RFID_KEYBOARD_READER_DEBOUNCE_SECONDS`: number of seconds to wait before RFID token is read again (debounce)
 TODO Add other env vars
 
 ## Heroku setup

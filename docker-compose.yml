@@ -21,17 +21,6 @@ services:
     depends_on:
       - db
 
-  # rfid-keyboard-reader:
-  #   build: services/rfid-keyboard-reader
-  #   privileged: true
-  #   depends_on:
-  #     - web
-  #   # environment:
-  #     # Balena adds env vars automatically and env var substitution in compose file is not yet supported
-  #     # CLICKR_POST_ENDPOINT: "${CLICKR_POST_ENDPOINT}"
-  #     # RFID_KEYBOARD_READER_USB_IDS: "${RFID_KEYBOARD_READER_USB_IDS}"
-  #     # RFID_KEYBOARD_READER_DEBOUNCE_SECONDS: "${RFID_KEYBOARD_READER_DEBOUNCE_SECONDS}"
-
   zstack-zigbee-reader:
     build: services/zstack-zigbee-reader
     privileged: true

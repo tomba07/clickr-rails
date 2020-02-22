@@ -12,7 +12,3 @@ update_configs:
   - package_manager: "javascript"
     directory: "/services/web"
     update_schedule: "live"
-
-  - package_manager: "python"
-    directory: "/services/rfid-keyboard-reader"
-    update_schedule: "live"

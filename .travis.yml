@@ -13,7 +13,7 @@ os: linux
 # Don't use top-level `arch` field. Different languages cannot be added to the build matrix but must be specified
 # via jobs.include anyway.
 
-# TODO python test and combine code coverage before reporting https://docs.travis-ci.com/user/build-stages/share-files-s3/
+# TODO Combine code coverage (rails + js) before reporting https://docs.travis-ci.com/user/build-stages/share-files-s3/
 
 stages:
   - test
@@ -95,11 +95,6 @@ jobs:
           branch: master
         provider: script
         script: bash ../../bin/docker-push ftes/clickr-rails-$SERVICE-$TRAVIS_CPU_ARCH
-
-    # Build services/rfid-keyboard-reader docker images
-    - <<: *build-docker-image
-      name: Build services/rfid-keyboard-reader docker image and push if branch=master (amd64)
-      env: SERVICE=rfid-keyboard-reader
 
     # Build services/zstack-zigbee-reader docker images
     - <<: *build-docker-image

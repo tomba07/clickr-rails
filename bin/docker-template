@@ -1,16 +1,14 @@
 #!/bin/bash
-# Usage: ./bin/docker-template [<alpine-image>] [<python-image>]
+# Usage: ./bin/docker-template [<alpine-image>] [<node-image>]
 # Translate Dockerfile.template to Dockerfile for local development
 
 # Pin ruby 2.5.7 in alpine 3.10
 ALPINE="${1:-alpine:3.10}"
-PYTHON="${2:-python:3-alpine}"
-NODE="${3:-node:12-alpine}"
+NODE="${2:-node:12-alpine}"
 
 find services -name Dockerfile.template | while read template; do
     dockerfile="`dirname $template`/Dockerfile"
     cat $template | sed -e "s~balenalib/.*alpine:[^ ]*~$ALPINE~g" \
-      -e "s~balenalib/.*alpine-python:[^ ]*~$PYTHON~g" \
       -e "s~balenalib/.*alpine-node:[^ ]*~$NODE~g" \
       > $dockerfile
 done
