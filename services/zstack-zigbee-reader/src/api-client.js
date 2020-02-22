@@ -13,7 +13,7 @@ class ApiClient {
         device_id: deviceId,
       })
     } catch (e) {
-      console.error('Failed to post click', e)
+      console.error('Failed to post click', e.name, e.message)
     }
   }
 }
