@@ -1,7 +1,7 @@
 const ZigbeeHerdsman = require('zigbee-herdsman')
 const events = require('events')
-const utils = require('./utils')
 const devices = require('./devices')
+const parseHexString = require('./utils/parse-hex-string')
 
 const data = {
   joinPath: p => `${__dirname}/../data/${p}`,
@@ -12,36 +12,23 @@ const data = {
  * Emits events: click, battery
  */
 class Zigbee extends events.EventEmitter {
-  constructor({ devicePath = '/dev/ttyACM0', permitJoin = true }) {
+  constructor({
+    devicePath = '/dev/ttyACM0',
+    permitJoin = true,
+    panID = 0x0561,
+    extendedPanID = parseHexString('0x62c089def29a0295', 2),
+    networkKey = parseHexString('0x44a6a5fbe41d8844ac7f0778a261f9c5', 2),
+  }) {
     super()
 
     this.devices = devices.map(Device => new Device())
     this.permitJoin = permitJoin
     this.herdsmanSettings = {
       network: {
-        // TODO Generate random PID and EPID and extract to env var
-        panID: 0x1a63,
-        extendedPanID: [0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd],
+        panID,
+        extendedPanID,
         channelList: [11],
-        // TODO Extract network key to env var
-        networkKey: [
-          118,
-          116,
-          39,
-          62,
-          118,
-          218,
-          10,
-          73,
-          97,
-          190,
-          103,
-          196,
-          154,
-          246,
-          135,
-          114,
-        ],
+        networkKey,
       },
       databasePath: data.joinPath('database.db'),
       databaseBackupPath: data.joinPath('database.db.backup'),
@@ -74,18 +61,18 @@ class Zigbee extends events.EventEmitter {
       this.onZigbeeAdapterDisconnected.bind(this)
     )
 
-    this.herdsman.on(
-      'deviceJoined',
-      msg => console.debug('Device joined', msg.device.ieeeAddr)
+    this.herdsman.on('deviceJoined', msg =>
+      console.debug('Device joined', msg.device.ieeeAddr)
     )
 
-    this.herdsman.on(
-      'deviceLeave',
-      msg => console.debug('Device left', msg.ieeeAddr)
+    this.herdsman.on('deviceLeave', msg =>
+      console.debug('Device left', msg.ieeeAddr)
     )
 
     this.registerDevices()
-    this.herdsman.on('message', msg => console.debug('New message from', msg.device.ieeeAddr, msg.data))
+    this.herdsman.on('message', msg =>
+      console.debug('New message from', msg.device.ieeeAddr, msg.data)
+    )
 
     if (this.permitJoin) {
       console.warn(

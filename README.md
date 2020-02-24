@@ -98,6 +98,11 @@ App environment variables:
 - `CLICKR_BENCHMARK_BUFFER`: how high you can set the lesson benchmark compared to the best student, default `5`
 - `CLICKR_INITIAL_STUDENT_RESPONSE_PERCENTAGE`: influences the grade, practically a virtual first lesson, default `77`
 TODO Add other env vars
+- `ZSTACK_ZIGBEE_DEVICE`: default `/dev/ttyACM0`
+- `ZSTACK_ZIGBEE_PERMIT_JOIN`: default `true`
+- `ZSTACK_ZIGBEE_PAN_ID`: default `0x1a63`
+- `ZSTACK_ZIGBEE_EXTENDED_PAN_ID`: default `0x62c089def29a0295`
+- `ZSTACK_ZIGBEE_NETWORK_KEY`: default `0x44a6a5fbe41d8844ac7f0778a261f9c5`
 
 ## Heroku setup
 One-time database setup:
