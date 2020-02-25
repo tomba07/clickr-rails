@@ -25,6 +25,7 @@ const zigbee = new Zigbee({
     2
   ),
   networkKey: parseOptionalHexString(process.env.ZSTACK_ZIGBEE_NETWORK_KEY, 2),
+  channel: _try(() => Number.parseInt(process.env.ZSTACK_ZIGBEE_CHANNEL)),
 })
 const apiClient = new ApiClient({
   postUrl: process.env.CLICKR_POST_ENDPOINT || 'http://localhost:3000/clicks',

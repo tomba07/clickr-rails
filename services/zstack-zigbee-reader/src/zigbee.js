@@ -18,6 +18,7 @@ class Zigbee extends events.EventEmitter {
     panID = 0x0561,
     extendedPanID = parseHexString('0x62c089def29a0295', 2),
     networkKey = parseHexString('0x44a6a5fbe41d8844ac7f0778a261f9c5', 2),
+    channel = 11,
   }) {
     super()
 
@@ -27,7 +28,7 @@ class Zigbee extends events.EventEmitter {
       network: {
         panID,
         extendedPanID,
-        channelList: [11],
+        channelList: [channel],
         networkKey,
       },
       databasePath: data.joinPath('database.db'),

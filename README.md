@@ -103,6 +103,7 @@ TODO Add other env vars
 - `ZSTACK_ZIGBEE_PAN_ID`: default `0x1a63`
 - `ZSTACK_ZIGBEE_EXTENDED_PAN_ID`: default `0x62c089def29a0295`
 - `ZSTACK_ZIGBEE_NETWORK_KEY`: default `0x44a6a5fbe41d8844ac7f0778a261f9c5`
+- `ZSTACK_ZIGBEE_CHANNEL`: default `11` (Note: use a ZLL channel: 11, 15, 20, or 25 to avoid Problems)
 
 ## Heroku setup
 One-time database setup:
