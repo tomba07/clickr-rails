@@ -28,12 +28,36 @@ class StudentGradeTest < ActiveSupport::TestCase
     assert_equal '2-', subject.grade
   end
 
-  test '#grade returns 5 ((77% + 0%) / 2 = 38.5%) for 1 lesson with 0% responses' do
+  test '#grade returns 2- (77%) for student without any lessons, ignoring responses by other students' do
+    lesson = create(:lesson, school_class: @school_class, benchmark: 1)
+    question = create(:question, lesson: lesson, school_class: @school_class)
+    other_student = create(:student, school_class: @school_class)
+    create(
+      :question_response,
+      question: question,
+      lesson: lesson,
+      school_class: @school_class,
+      student: other_student
+    )
+
+    subject = Clickr::StudentGrade.new(@student)
+    assert_equal '2-', subject.grade
+  end
+
+  test '#grade returns 2- (77%) for 1 lesson with 0% responses (it is ignored because student did not participate and is considered excused)' do
     lesson = create(:lesson, school_class: @school_class, benchmark: 1)
     create(:question, lesson: lesson, school_class: @school_class)
 
     subject = Clickr::StudentGrade.new(@student)
-    assert_equal '5', subject.grade
+    assert_equal '2-', subject.grade
+  end
+
+  test '#explanation does not contain lessons with 0% responses (it is ignored because student did not participate and is considered excused)' do
+    lesson = create(:lesson, school_class: @school_class, benchmark: 1)
+    create(:question, lesson: lesson, school_class: @school_class)
+
+    subject = Clickr::StudentGrade.new(@student)
+    assert_equal '(77%) / 1 = 77%', subject.explanation
   end
 
   test '#grade returns 2+ ((77% + 100%) / 2 = 88.5%) for 1 lesson with 100% responses' do

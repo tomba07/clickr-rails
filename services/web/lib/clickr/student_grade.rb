@@ -32,11 +32,14 @@ class Clickr::StudentGrade
 
   def initialize(student)
     lessons = student.school_class.lessons
+    lessons_with_participation = lessons.with_participation_of student: student
 
     initial_percentage =
       Rails.application.config.clickr.initial_student_response_percentage
     lesson_percentages =
-      lessons.map { |l| student.question_response_percentage_for lesson: l }
+      lessons_with_participation.map do |l|
+        student.question_response_percentage_for lesson: l
+      end
     percentages = [initial_percentage, *lesson_percentages]
     average_percentage = percentages.sum / percentages.size
 
