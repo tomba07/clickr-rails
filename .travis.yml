@@ -114,7 +114,7 @@ jobs:
         - ssh-add ./id_rsa
         - cat build/balena-cli/git.balena-cloud.com.ssh-keyscan >> ~/.ssh/known_hosts
         - git remote add balena $BALENA_REMOTE
-        - git push balena master
+        - git push --force balena master
 
     # Deploy services/web to heroku
     - name: Deploy services/web to heroku
