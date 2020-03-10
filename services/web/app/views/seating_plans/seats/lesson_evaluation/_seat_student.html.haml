@@ -4,7 +4,7 @@
 .seat--student{ style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
   .card
     .card-content
-      %p.title.has-text-centered= student.name
+      %p.title.is-4.has-text-centered= student.name
     %footer.card-footer
       %p.card-footer-item.is-size-4.has-text-weight-bold.has-cursor-help{title: t('.lesson_percent')}= number_to_percentage(100.0 * student.question_response_percentage_for(lesson: @lesson), precision: 0)
       %p.card-footer-item.is-size-4.has-text-grey.has-cursor-help{title: t('seating_plans.seats.lesson_evaluation.seat_student.overall_grade', explanation: grade.explanation)}= grade.grade

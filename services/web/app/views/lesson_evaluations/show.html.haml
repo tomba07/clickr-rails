@@ -11,7 +11,7 @@
         .select
           .control
             = collection_select :lesson, :id, @school_class.lessons.newest_first, :id, :name, {}, onchange: "Turbolinks.visit('/lessons/' + this.value + '/evaluate')"
-    .panel-body
+    .panel-block
       .field
         %label.label= t('lesson_evaluations.show.benchmark_label')
         .control

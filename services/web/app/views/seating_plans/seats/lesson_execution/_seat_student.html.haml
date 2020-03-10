@@ -12,7 +12,7 @@
           = hidden_field_tag :browser_window_id, browser_window_id
           = f.submit t('common.save')
       - else
-        %p.title.has-text-centered= student.name
+        %p.title.is-4.has-text-centered= student.name
     %footer.card-footer
       - nth_incomplete_mapping = student.nth_incomplete_mapping
       - if edit

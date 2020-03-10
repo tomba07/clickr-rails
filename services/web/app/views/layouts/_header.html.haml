@@ -1,11 +1,15 @@
+- current_school_class = CurrentSchoolClass.get
+
 %header.header
   %nav.navbar.is-fixed-top.is-dark{'aria-label': 'main navigation', role: 'navigation'}
     .navbar-brand
       %a{href: root_path}
         %h4.navbar-item.title.is-4.is-marginless.has-text-white
           = Clickr
-          - if CurrentSchoolClass.get&.name
-            \- #{CurrentSchoolClass.get.name}
+          - if current_school_class
+            \- #{current_school_class.name}
+            - if current_school_class.most_recent_lesson
+              (#{current_school_class.most_recent_lesson&.name})
     .navbar-menu
       - if user_signed_in?
         .navbar-start
@@ -44,6 +48,7 @@
                 .icon
                   = icon('fas', 'reply')
                 %div= t('.admin.question_responses')
+          = yield(:navbar_links)
       .navbar-end
         - if user_signed_in?
           - if Rails.application.config.clickr.show_virtual_buttons_link_in_navbar
@@ -53,7 +58,7 @@
               %div= t('.buttons')
           .navbar-item.has-dropdown.is-hoverable.is-right
             %a.navbar-link
-              = CurrentSchoolClass.get&.name || t('.select_a_class')
+              = current_school_class&.name || t('.select_a_class')
             .navbar-dropdown
               = link_to new_school_class_path(redirect_to: :lesson_execution), class: 'navbar-item', title: t('layouts.header.create_new_class') do
                 %i.fa.fa-plus-circle
