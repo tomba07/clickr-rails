@@ -2,7 +2,7 @@ import { Controller } from 'stimulus'
 import Rails from '@rails/ujs'
 
 export default class extends Controller {
-  static targets = ['benchmarkLabel']
+  static targets = ['benchmarkLabel', 'averageLabel']
 
   get seatingPlanController() {
     const seatingPlan = document.querySelector('.seating-plan-controller')
@@ -21,8 +21,24 @@ export default class extends Controller {
     return this._benchmark
   }
 
+  set average(value) {
+    this.averageLabelTarget.innerHTML = value
+  }
+
   get endpoint() {
     return this.data.get('endpoint')
+  }
+
+  refresh() {
+    this.seatingPlanController.refresh()
+
+    Rails.ajax({
+      type: 'GET',
+      url: window.location.pathname,
+      success: ({ average_percentage }) => {
+        this.average = average_percentage
+      },
+    })
   }
 
   onBenchmarkChanged(event) {
@@ -35,7 +51,7 @@ export default class extends Controller {
     Rails.ajax({
       type: 'PUT',
       url: this.endpoint,
-      success: () => this.seatingPlanController.refresh(),
+      success: () => this.refresh(),
       beforeSend(xhr, options) {
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
         // Workaround: add options.data late to avoid Content-Type header to already being set in stone

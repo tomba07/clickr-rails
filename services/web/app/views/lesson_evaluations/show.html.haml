@@ -16,8 +16,9 @@
         %label.label= t('lesson_evaluations.show.benchmark_label')
         .control
           = benchmark_min
-          = range_field_tag :benchmark, benchmark, min: benchmark_min, max: benchmark_max, autocomplete: 'off', data: { action: 'change->lesson-evaluation#onBenchmarkChanged input->lesson-evaluation#onBenchmarkDragged' }
+          = range_field_tag :benchmark, benchmark, min: benchmark_min, max: benchmark_max, step: 0.01, autocomplete: 'off', data: { action: 'change->lesson-evaluation#onBenchmarkChanged input->lesson-evaluation#onBenchmarkDragged' }
           = benchmark_max
           #benchmark.tag.is-info.is-large{ data: { target: 'lesson-evaluation.benchmarkLabel' } }= benchmark
+          #average.tag.is-success.is-large{ data: { target: 'lesson-evaluation.averageLabel' }, title: t('.average_percentage_hint') }= number_to_percentage(100.0 * @evaluation.average_percentage, precision: 0)
 
   = render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, context: 'lesson_evaluation', lesson: @lesson

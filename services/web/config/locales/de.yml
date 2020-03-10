@@ -140,6 +140,7 @@ de:
     show:
       title: "Auswertung %{lesson_name}"
       benchmark_label: "100% Niveau für die Anzahl beantworteter Fragen"
+      average_percentage_hint: "Durchschnittliche Rückmeldung in Prozent für diese Stunde für alle Schüler die teilgenommen haben"
   current_school_classes:
     update:
       notice: "Deine ausgewählte Schulklasse wurde geändert."

@@ -7,6 +7,13 @@ class Student < ApplicationRecord
   has_many :student_device_mappings, dependent: :destroy
 
   scope :newest_first, -> { order(created_at: :desc) }
+  scope :that_participated_in,
+        lambda { |lesson:|
+          joins(:question_responses).where(
+            question_responses: { lesson: lesson }
+          )
+            .distinct
+        }
 
   validates :name, presence: true, uniqueness: { scope: :school_class }
   validates :seat_row,

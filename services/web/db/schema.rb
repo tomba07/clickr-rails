@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_20_074829) do
+ActiveRecord::Schema.define(version: 2020_03_10_151953) do
 
   create_table "clicks", force: :cascade do |t|
     t.string "device_id", null: false
@@ -34,8 +34,8 @@ ActiveRecord::Schema.define(version: 2020_02_20_074829) do
     t.integer "school_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "benchmark", default: 1, null: false
-    t.index ["created_at"], name: "index_lessons_on_created_at", order: :desc
+    t.float "benchmark", default: 1.0, null: false
+    t.index ["created_at"], name: "index_lessons_on_created_at"
     t.index ["school_class_id", "name"], name: "index_lessons_on_school_class_id_and_name", unique: true
     t.index ["school_class_id"], name: "index_lessons_on_school_class_id"
   end
