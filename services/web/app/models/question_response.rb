@@ -15,9 +15,6 @@ class QuestionResponse < ApplicationRecord
   # TODO validates lesson.school_class = school_class
   # TODO validates question.lesson = lesson
 
-  scope :for_most_recent_question,
-        ->(school_class) { where(question: school_class.most_recent_question) }
-
   # Used to manually adjust student sum
   def is_virtual
     click.nil? && question.nil?

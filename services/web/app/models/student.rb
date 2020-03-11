@@ -50,6 +50,9 @@ class Student < ApplicationRecord
   end
 
   def responded_to_most_recent_question
-    question_responses.for_most_recent_question(school_class).exists?
+    most_recent_question = school_class.most_recent_question
+    return false if !most_recent_question
+
+    question_responses.where(question: most_recent_question).exists?
   end
 end

@@ -81,6 +81,28 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_url(@student)
   end
 
+  test 'should adjust score for most recent lesson' do
+    lesson = @student.school_class.most_recent_lesson_or_create
+
+    assert_difference '@student.question_response_sum_for lesson: lesson', 2 do
+      post adjust_score_student_url(@student, amount: 2), as: :json
+    end
+  end
+
+  test 'should adjust score for a specific lesson' do
+    old_lesson = @student.school_class.most_recent_lesson_or_create
+    @student.school_class.lessons << create(:lesson)
+
+    assert_difference '@student.question_response_sum_for lesson: old_lesson',
+                      -1 do
+      post adjust_score_student_url(
+             @student,
+             lesson_id: old_lesson.id, amount: -1
+           ),
+           as: :json
+    end
+  end
+
   test 'should destroy student' do
     assert_difference('Student.count', -1) { delete student_url(@student) }
 

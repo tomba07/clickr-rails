@@ -154,6 +154,11 @@ en:
     seat_col: "Seat col"
     new:
       title: "New student"
+    adjust_score:
+      error: "Failed to adjust score"
+      success: "Adjusted score"
+    lessons:
+      response_sum: "Score"
   lesson_executions:
     show:
       select_school_class_notice: "Select a class."
@@ -190,6 +195,7 @@ en:
     create: "Create"
     increment: "Increment"
     decrement: "Decrement"
+    date: "Date"
   devices:
     device: "Device"
     device_type: "Device type"

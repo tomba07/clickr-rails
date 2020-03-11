@@ -124,6 +124,11 @@ de:
     seat_col: "Sitzspalte"
     new:
       title: "Neuer Schüler"
+    adjust_score:
+      error: "Punkte konnten nicht angepasst werden"
+      success: "Punkte angepasst"
+    lessons:
+      response_sum: "Punkte"
   lesson_executions:
     show:
       select_school_class_notice: "Wähle eine Klasse aus."
@@ -160,6 +165,7 @@ de:
     create: "Hinzufügen"
     increment: "Hochzählen"
     decrement: "Runterzählen"
+    date: "Datum"
   devices:
     device: "Gerät"
     device_type: "Gerätetyp"

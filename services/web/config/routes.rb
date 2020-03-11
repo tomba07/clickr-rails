@@ -12,10 +12,7 @@ Rails.application.routes.draw do
     member { post :stop }
   end
   resources :students do
-    member do
-      post :decrement_score
-      post :increment_score
-    end
+    member { post :adjust_score }
   end
   resources :school_classes do
     resource :seating_plan, only: %i[update show]

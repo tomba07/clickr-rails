@@ -12,7 +12,8 @@
           = hidden_field_tag :browser_window_id, browser_window_id
           = f.submit t('common.save')
       - else
-        %p.title.is-4.has-text-centered= student.name
+        = link_to edit_student_path(student) do
+          %p.title.is-4.has-text-centered= student.name
     %footer.card-footer
       - nth_incomplete_mapping = student.nth_incomplete_mapping
       - if edit
@@ -22,9 +23,9 @@
           %i.fa.fa-trash
       - else
         -# TODO Performance: Sum for all students using single group query https://api.rubyonrails.org/classes/ActiveRecord/Calculations.html
-        = link_to '-', decrement_score_student_path(student, browser_window_id: browser_window_id), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('common.decrement'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }
+        = link_to '-', adjust_score_student_path(student, browser_window_id: browser_window_id, amount: -1), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('common.decrement'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }
         %p.card-footer-item.is-size-4.has-text-weight-bold.has-cursor-help{title: t('.lesson_sum')}= student.question_response_sum_for_most_recent_lesson
         %p.card-footer-item.is-size-4.has-text-grey.has-cursor-help{title: t('.overall_sum')}= student.question_response_sum
         - unless nth_incomplete_mapping.nil?
           %p.card-footer-item.has-text-danger.has-cursor-help{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)} ##{nth_incomplete_mapping + 1}
-        = link_to '+', increment_score_student_path(student, browser_window_id: browser_window_id), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('common.increment'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }
+        = link_to '+', adjust_score_student_path(student, browser_window_id: browser_window_id, amount: 1), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('common.increment'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }

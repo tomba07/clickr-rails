@@ -1,9 +1,7 @@
 class StudentsController < ApplicationController
-  before_action :set_student,
-                only: %i[edit update destroy increment_score decrement_score]
+  before_action :set_student, only: %i[edit update destroy adjust_score]
   before_action :set_student_with_includes, only: %i[show]
-  before_action :set_browser_window_id,
-                only: %i[increment_score decrement_score]
+  before_action :set_browser_window_id, only: :adjust_score
 
   # GET /students
   # GET /students.json
@@ -90,34 +88,19 @@ class StudentsController < ApplicationController
     end
   end
 
-  def increment_score
-    lesson = @student.school_class.most_recent_lesson
-    question_response =
-      @student.question_responses.create(
-        score: 1, lesson: lesson, school_class: @student.school_class
-      )
-
-    respond_to do |format|
-      if question_response.errors.empty?
-        SchoolClassChannel.broadcast_to(
-          @student.school_class,
-          type: SchoolClassChannel::RESPONSE,
-          browser_window_id: @browser_window_id
-        )
-        format.json { head :no_content }
+  def adjust_score
+    lesson_id = params[:lesson_id]
+    lesson =
+      if lesson_id
+        Lesson.find(lesson_id)
       else
-        format.json do
-          render json: question_response.errors, status: :bad_request
-        end
+        @student.school_class.most_recent_lesson
       end
-    end
-  end
+    amount = params[:amount]
 
-  def decrement_score
-    lesson = @student.school_class.most_recent_lesson
     question_response =
       @student.question_responses.create(
-        score: -1, lesson: lesson, school_class: @student.school_class
+        score: amount, lesson: lesson, school_class: @student.school_class
       )
 
     respond_to do |format|
@@ -127,8 +110,14 @@ class StudentsController < ApplicationController
           type: SchoolClassChannel::RESPONSE,
           browser_window_id: @browser_window_id
         )
+        format.js do
+          redirect_to edit_student_path(@student), notice: t('.success')
+        end
         format.json { head :no_content }
       else
+        format.js do
+          redirect_to edit_student_path(@student), alert: t('.error')
+        end
         format.json do
           render json: question_response.errors, status: :bad_request
         end
