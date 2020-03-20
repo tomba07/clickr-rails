@@ -122,8 +122,8 @@ en:
           delete: "Delete"
       lesson_evaluation:
         seat_student:
-          lesson_percent: "Lesson score"
-          overall_grade: "Overall grade: %{explanation}"
+          lesson_grade: "Lesson grade"
+          overall_percent: "Overall score: %{explanation}"
   student_device_mappings:
     create:
       notice: "Student device mapping was created."

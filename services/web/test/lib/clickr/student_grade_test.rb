@@ -6,26 +6,11 @@ class StudentGradeTest < ActiveSupport::TestCase
     @student = create(:student, school_class: @school_class)
   end
 
-  [
-    [100, '1+'],
-    [98, '1+'],
-    [97, '1'],
-    [95, '1'],
-    [92, '1-'],
-    [78, '2-'],
-    [37, '5'],
-    [25, '6'],
-    [0, '6']
-  ].each do |percent, grade|
-    test "GRADING_TABLE maps #{percent}% to #{grade}" do
-      assert_equal '1+', Clickr::StudentGrade::GRADING_TABLE[100]
-    end
-  end
-
   test '#grade returns 2- (77%) for student without any lessons' do
     subject = Clickr::StudentGrade.new(@student)
 
     assert_equal '2-', subject.grade
+    assert_equal 0.77, subject.percentage
   end
 
   test '#grade returns 2- (77%) for 1 lesson with with score -1 (student is considered absent)' do
@@ -38,14 +23,16 @@ class StudentGradeTest < ActiveSupport::TestCase
 
     subject = Clickr::StudentGrade.new(@student)
     assert_equal '2-', subject.grade
+    assert_equal 0.77, subject.percentage
   end
 
-  test '#grade returns 5 ((77% + 0%) / 2 = 39%) for 1 lesson with with score 0 (student is NOT considered absent)' do
+  test '#grade returns 5 ((77% + 0%) / 2 = 38.5%) for 1 lesson with with score 0 (student is NOT considered absent)' do
     lesson = create(:lesson, school_class: @school_class, benchmark: 1)
     create(:question, lesson: lesson, school_class: @school_class)
 
     subject = Clickr::StudentGrade.new(@student)
     assert_equal '5', subject.grade
+    assert_equal 0.385, subject.percentage
   end
 
   test '#explanation does not contain lessons in which student was absent' do
@@ -73,6 +60,7 @@ class StudentGradeTest < ActiveSupport::TestCase
 
     subject = Clickr::StudentGrade.new(@student)
     assert_equal '2+', subject.grade
+    assert_equal 0.885, subject.percentage
   end
 
   test '#grade returns 3- ((77% + 50%) / 2 = 63.5%) for 1 lesson with 50% responses' do
@@ -88,6 +76,7 @@ class StudentGradeTest < ActiveSupport::TestCase
 
     subject = Clickr::StudentGrade.new(@student)
     assert_equal '3-', subject.grade
+    assert_equal 0.635, subject.percentage
   end
 
   test '#grade returns 1- ((77% + 100% + 100%) / 3 = 92.3%) for 2 lessons with 100% responses with correct explanation' do

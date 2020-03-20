@@ -92,8 +92,8 @@ de:
           delete: "Löschen"
       lesson_evaluation:
         seat_student:
-          lesson_percent: "Ergebnis für Stunde"
-          overall_grade: "Note insgesamt: %{explanation}"
+          lesson_grade: "Note für Stunde"
+          overall_percent: "Ergebnis insgesamt: %{explanation}"
   student_device_mappings:
     create:
       notice: "Schülergerätezuordnung wurde erstellt."
