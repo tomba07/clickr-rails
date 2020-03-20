@@ -97,7 +97,9 @@ App environment variables:
 - `CLICKR_SHOW_VIRTUAL_BUTTONS_LINK`: default `false` (in `RAILS_ENV=development` default `true`)
 - `CLICKR_BENCHMARK_BUFFER`: how high you can set the lesson benchmark compared to the best student, default `5`
 - `CLICKR_INITIAL_STUDENT_RESPONSE_PERCENTAGE`: influences the grade, practically a virtual first lesson, default `77`
-TODO Add other env vars
+- `CLICKR_STUDENT_ABSENT_IF_LESSON_SUM_LESS_THAN_OR_EQUAL_TO`: threshold when to consider student absent
+  - absent students are ignored in the class lesson average
+  - lessons in which the student was absent are ignored in his average grade
 - `ZSTACK_ZIGBEE_DEVICE`: default `/dev/ttyACM0`
 - `ZSTACK_ZIGBEE_PERMIT_JOIN`: default `true`
 - `ZSTACK_ZIGBEE_PAN_ID`: default `0x1a63`

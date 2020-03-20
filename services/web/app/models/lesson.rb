@@ -7,10 +7,13 @@ class Lesson < ApplicationRecord
   scope :newest_first, -> { order(created_at: :desc) }
   scope :with_participation_of,
         lambda { |student:|
-          joins(:question_responses).where(
-            question_responses: { student: student }
-          )
-            .distinct
+          threshold =
+            Rails.application.config.clickr
+              .student_absent_if_lesson_sum_less_than_or_equal_to
+          # TODO Performance: group by having SUM() >
+          where(school_class: student.school_class).select { |l|
+            student.question_response_sum_for(lesson: l) > threshold
+          }
         }
 
   validates :name, presence: true, uniqueness: { scope: :school_class }

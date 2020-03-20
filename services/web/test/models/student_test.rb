@@ -104,4 +104,26 @@ class StudentTest < ActiveSupport::TestCase
     assert_equal false, QuestionResponse.exists?(question_response.id)
     assert_equal false, StudentDeviceMapping.exists?(mapping.id)
   end
+
+  test 'that_participated_in returns only students with score above threshold' do
+    student_with_score_2 = @student
+    student_with_score_0 = create(:student, school_class: @school_class)
+    student_with_score_minus_1 = create(:student, school_class: @school_class)
+    lesson = create(:lesson, school_class: @school_class)
+    create_list(
+      :question_response,
+      2,
+      lesson: lesson, school_class: @school_class, student: student_with_score_2
+    )
+    create(
+      :question_response,
+      score: -1,
+      lesson: lesson,
+      school_class: @school_class,
+      student: student_with_score_minus_1
+    )
+
+    assert_equal [student_with_score_2, student_with_score_0],
+                 Student.that_participated_in(lesson: lesson)
+  end
 end
