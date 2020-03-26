@@ -66,6 +66,7 @@ jobs:
       script:
         - ./cc-test-reporter before-build
         - bundle exec rails test
+        - bundle exec rails spec
         - ./cc-test-reporter format-coverage --add-prefix services/web/
         - ./cc-test-reporter upload-coverage
     # Test services/zstack-zigbee-reader
