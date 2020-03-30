@@ -25,14 +25,6 @@ services:
 
 jobs:
   include:
-
-    # Test services/zstack-zigbee-reader
-    - name: Test services/zstack-zigbee-reader
-      language: node_js
-      # TODO Generate, merge and upload test coverage
-      before_script:
-        - npm run lint
-
     # Test services/web
     - name: Test services/web
       language: ruby
@@ -75,9 +67,13 @@ jobs:
         - bundle exec rails spec
         - ./cc-test-reporter format-coverage --add-prefix services/web/
         - ./cc-test-reporter upload-coverage
+
     # Test services/zstack-zigbee-reader
     - name: Test services/zstack-zigbee-reader
       language: node_js
+      # TODO Generate, merge and upload test coverage
+      before_script:
+        - npm run lint
 
     # Build services/web docker images
     - &build-docker-image
