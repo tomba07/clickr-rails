@@ -93,7 +93,6 @@ class LessonsController < ApplicationController
   def lesson_params
     params.require(:lesson).permit(:name, :school_class_id).reject do |_, v|
       v.blank?
-    end.to_h
-      .symbolize_keys
+    end.to_h.symbolize_keys
   end
 end

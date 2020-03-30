@@ -122,7 +122,9 @@ RSpec.describe Student do
       create_list(
         :question_response,
         2,
-        lesson: lesson, school_class: school_class, student: student_with_score_2
+        lesson: lesson,
+        school_class: school_class,
+        student: student_with_score_2
       )
       create(
         :question_response,
@@ -132,7 +134,10 @@ RSpec.describe Student do
         student: student_with_score_minus_1
       )
 
-      expect(Student.that_participated_in(lesson: lesson)).to eq [student_with_score_2, student_with_score_0]
+      expect(Student.that_participated_in(lesson: lesson)).to eq [
+           student_with_score_2,
+           student_with_score_0
+         ]
     end
   end
 end

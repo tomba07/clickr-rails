@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe SchoolClass do
   subject { create(:school_class) }
-  let(:long_ago) {
-      Rails.application.config.clickr.suggest_new_lesson_after_minutes.minutes
-        .ago -
-        1.minute
-  }
+  let(:long_ago) do
+    Rails.application.config.clickr.suggest_new_lesson_after_minutes.minutes
+      .ago -
+      1.minute
+  end
 
   describe 'suggest_creating_new_lesson' do
     it 'is false if no lesson existed' do
@@ -44,13 +44,13 @@ RSpec.describe SchoolClass do
     it 'updates all students in transaction (swap places)' do
       s1, s2 =
         subject.students.create! [
-                                    { name: '1', seat_row: 1, seat_col: 1 },
-                                    { name: '4', seat_row: 2, seat_col: 2 }
-                                  ]
+                                   { name: '1', seat_row: 1, seat_col: 1 },
+                                   { name: '4', seat_row: 2, seat_col: 2 }
+                                 ]
       subject.update_seats [
-                              { student_id: s1.id, seat_row: 2, seat_col: 2 },
-                              { student_id: s2.id, seat_row: 1, seat_col: 1 }
-                            ]
+                             { student_id: s1.id, seat_row: 2, seat_col: 2 },
+                             { student_id: s2.id, seat_row: 1, seat_col: 1 }
+                           ]
       s1.reload
       s2.reload
       expect([s1.seat_row, s1.seat_col]).to eq [2, 2]

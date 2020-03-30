@@ -43,8 +43,7 @@ class StudentsController < ApplicationController
           [
             t('.notice'),
             (t('.mapping_notice') if @student_device_mapping)
-          ].compact
-            .join('<br/>')
+          ].compact.join('<br/>')
 
         format.html { redirect_to @student, notice: notice }
         format.json { render :show, status: :created, location: @student }

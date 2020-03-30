@@ -4,12 +4,17 @@ RSpec.describe Clickr::LessonEvaluation do
   let!(:school_class) { create(:school_class) }
   let!(:students) { create_list(:student, 3, school_class: school_class) }
   let!(:lesson) { create(:lesson, school_class: school_class) }
-  let!(:question) { create(:question, school_class: school_class, lesson: lesson) }
-  let!(:responses) { [1, -1, -1].each_with_index do |score, i|
-    create(:question_response,
-      student: students[i], question: question, lesson: lesson, score: score
-    )
-  end }
+  let!(:question) do
+    create(:question, school_class: school_class, lesson: lesson)
+  end
+  let!(:responses) do
+    [1, -1, -1].each_with_index do |score, i|
+      create(
+        :question_response,
+        student: students[i], question: question, lesson: lesson, score: score
+      )
+    end
+  end
   subject { Clickr::LessonEvaluation.new(lesson) }
 
   describe 'max_question_response_sum' do
@@ -31,9 +36,9 @@ RSpec.describe Clickr::LessonEvaluation do
     end
 
     it 'is 1 if N exceeds student count' do
-      expect(subject.nth_highest_question_response_sum(
-                     n: students.size + 1
-                   )).to eq 1
+      expect(
+        subject.nth_highest_question_response_sum(n: students.size + 1)
+      ).to eq 1
     end
   end
 

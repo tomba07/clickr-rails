@@ -139,8 +139,6 @@ class QuestionsController < ApplicationController
       :lesson_id,
       :name,
       :score
-    )
-      .reject { |_, v| v.blank? }.to_h
-      .symbolize_keys
+    ).reject { |_, v| v.blank? }.to_h.symbolize_keys
   end
 end

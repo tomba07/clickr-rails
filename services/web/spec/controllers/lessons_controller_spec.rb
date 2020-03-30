@@ -56,7 +56,7 @@ RSpec.describe LessonsController do
   it 'updates lesson' do
     patch :update,
           params: {
-      id: lesson.id,
+            id: lesson.id,
             lesson: {
               school_class_id: lesson.school_class_id, name: lesson.name
             }
@@ -66,7 +66,9 @@ RSpec.describe LessonsController do
 
   it 'destroys lesson' do
     lesson # force lazy create
-    expect { delete :destroy, params: { id: lesson.id } }.to change { Lesson.count }.by -1
+    expect { delete :destroy, params: { id: lesson.id } }.to change {
+      Lesson.count
+    }.by -1
 
     expect(response).to redirect_to lessons_url
   end

@@ -22,7 +22,10 @@ RSpec.describe Lesson do
         student: student
       )
 
-      expect(Lesson.with_participation_of(student: student)).to eq [lesson_with_score_1, lesson_with_score_0]
+      expect(Lesson.with_participation_of(student: student)).to eq [
+           lesson_with_score_1,
+           lesson_with_score_0
+         ]
     end
   end
 end
