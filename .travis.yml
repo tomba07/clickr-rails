@@ -57,10 +57,10 @@ jobs:
         # https://github.com/sass/sassc-ruby/issues/146#issuecomment-541749126
         - bundle config --local build.sassc --disable-march-tune-native
         - bundler install --jobs 4 --without development production --deployment
-        - yarn install --production --frozen-lockfile
+        - yarn install --frozen-lockfile
       before_script:
         - bundle exec rails db:migrate
-        - npm run lint
+        - yarn lint
       script:
         - ./cc-test-reporter before-build
         - bundle exec rails test
@@ -71,9 +71,11 @@ jobs:
     # Test services/zstack-zigbee-reader
     - name: Test services/zstack-zigbee-reader
       language: node_js
-      # TODO Generate, merge and upload test coverage
+      before_install:
+        - cd services/zstack-zigbee-reader
       before_script:
         - npm run lint
+      # TODO Generate, merge and upload test coverage
 
     # Build services/web docker images
     - &build-docker-image
