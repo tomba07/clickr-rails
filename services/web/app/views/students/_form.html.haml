@@ -1,11 +1,9 @@
 = form_with model: @student, local: true do |f|
   = render "layouts/error_messages", f: f
-
   = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name, {}, autofocus: true
   = f.text_field_with_label :name
   = f.text_field_with_label :seat_row
   = f.text_field_with_label :seat_col
-
   .buttons
     = f.submit_primary t('common.save')
     = yield

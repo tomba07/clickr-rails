@@ -5,13 +5,13 @@
       %th= t('common.date')
       %th= t('.response_sum')
       %th
-
   %tbody
     - @student.school_class&.lessons.newest_first.each do |lesson|
       %tr
         %td= lesson.name
         %td= I18n.l lesson.created_at, format: :short
-        %td #{@student.question_response_sum_for lesson: lesson} (#{number_to_percentage(100.0 * @student.question_response_percentage_for(lesson: lesson), precision: 0)})
+        %td
+          = "#{@student.question_response_sum_for lesson: lesson} (#{number_to_percentage(100.0 * @student.question_response_percentage_for(lesson: lesson), precision: 0)})"
         %td
           .buttons
             = link_to '-', adjust_score_student_path(@student, lesson_id: lesson.id, amount: -1), method: :post, class: 'button', title: t('common.decrement'), remote: true, data: { 'turbolinks-scroll': true }

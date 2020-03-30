@@ -1,14 +1,11 @@
 %h1.title= t('.title')
-
 = link_to t('common.new'), new_lesson_path, class: 'button is-primary'
-
 %table.table.is-striped.is-hoverable
   %thead
     %tr
       %th= t('common.name')
       %th= t('school_classes.title')
       %th
-
   %tbody
     - @lessons.each do |lesson|
       %tr

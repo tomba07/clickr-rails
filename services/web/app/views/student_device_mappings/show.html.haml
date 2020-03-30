@@ -1,16 +1,15 @@
 %p
-  %b #{t('students.title')}:
+  %b= "#{t('students.title')}:"
   = @student_device_mapping.student&.name
 %p
-  %b #{t('school_classes.title')}:
+  %b= "#{t('school_classes.title')}:"
   = @student_device_mapping.school_class&.name
 %p
-  %b #{t('devices.device')}:
+  %b= "#{t('devices.device')}:"
   = @student_device_mapping.device_id
 %p
-  %b #{t('devices.device_type')}:
+  %b= "#{t('devices.device_type')}:"
   = @student_device_mapping.device_type
-
 .buttons
   = link_to t('common.edit'), edit_student_device_mapping_path(@student_device_mapping), class: 'button is-primary'
   = link_to t('common.back'), student_device_mappings_path, class: 'button'

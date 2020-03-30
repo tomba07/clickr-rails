@@ -1,7 +1,5 @@
 %h1.title= t('.title')
-
 = link_to t('common.new'), new_question_response_path, class: 'button is-primary'
-
 %table.table.is-striped.is-hoverable
   %thead
     %tr
@@ -11,7 +9,6 @@
       %th= t('lessons.title')
       %th= t('school_classes.title')
       %th
-
   %tbody
     - @question_responses.each do |question_response|
       %tr

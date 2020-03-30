@@ -1,16 +1,15 @@
 %p
-  %b #{t('school_classes.title')}:
+  %b= "#{t('school_classes.title')}:"
   = @question.school_class&.name
 %p
-  %b #{t('common.name')}:
+  %b= "#{t('common.name')}:"
   = @question.name
 %p
-  %b #{t('lessons.title')}:
+  %b= "#{t('lessons.title')}:"
   = @question.lesson&.name
 %p
-  %b #{t('questions.score')}:
+  %b= "#{t('questions.score')}:"
   = @question.score
-
 .buttons
   = link_to t('common.edit'), edit_question_path(@question), class: 'button is-primary'
   = link_to t('common.back'), questions_path, class: 'button'

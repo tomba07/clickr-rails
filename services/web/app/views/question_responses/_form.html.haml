@@ -1,12 +1,10 @@
 = form_with model: @question_response, local: true do |f|
   = render "layouts/error_messages", f: f
-
   = f.collection_select_with_label :click_id, Click.all, :id, :name, {}, autofocus: true
   = f.collection_select_with_label :student_id, Student.all, :id, :name
   = f.collection_select_with_label :question_id, Question.all, :id, :name
   = f.collection_select_with_label :lesson_id, Lesson.all, :id, :name
   = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name
-
   .buttons
     = f.submit_primary t('common.save')
     = yield

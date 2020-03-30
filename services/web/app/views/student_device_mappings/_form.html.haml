@@ -1,11 +1,9 @@
 = form_with model: @student_device_mapping, local: true do |f|
   = render "layouts/error_messages", f: f
-
   = f.collection_select_with_label :student_id, Student.all, :id, :name, {}, autofocus: true
   = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name, {}, autofocus: true
   = f.text_field_with_label :device_id
   = f.text_field_with_label :device_type
-
   .buttons
     = f.submit_primary t('common.save')
     = yield

@@ -1,12 +1,10 @@
 %h2.title= t('common.log_in')
 = form_with model: resource, as: resource_name, url: session_path(resource_name), local: true do |f|
   = render "layouts/error_messages", f: f
-
   = f.text_field_with_label :email, autofocus: true, autocomplete: 'email'
   = f.password_field_with_label :password, autocomplete: 'current-password'
   - if devise_mapping.rememberable?
     = f.check_box_with_label :remember_me, as: :boolean
-
   .buttons
     = f.submit_primary t('common.log_in')
     = render 'devise/shared/links'

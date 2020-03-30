@@ -8,11 +8,9 @@
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-
   %body
     = render 'layouts/header'
     = render 'layouts/flash'
-
     %section.section{ class: yield(:main_css_class) }
       .container{ class: yield(:container_css_class) }
         = yield

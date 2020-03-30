@@ -1,9 +1,7 @@
 = form_with model: @click, local: true do |f|
   = render "layouts/error_messages", f: f
-
   = f.text_field_with_label :device_id, autofocus: true
   = f.text_field_with_label :device_type
-
   .buttons
     = f.submit_primary t('common.save')
     = yield

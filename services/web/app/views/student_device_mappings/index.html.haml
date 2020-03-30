@@ -1,7 +1,5 @@
 %h1.title= t('.title')
-
 = link_to t('common.new'), new_student_device_mapping_path, class: 'button is-primary'
-
 %table.table.is-striped.is-hoverable
   %thead
     %tr
@@ -10,7 +8,6 @@
       %th= t('devices.device')
       %th= t('devices.device_type')
       %th
-
   %tbody
     - @student_device_mappings.each do |student_device_mapping|
       %tr

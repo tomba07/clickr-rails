@@ -1,16 +1,15 @@
 %p
-  %b #{t('devices.device')}:
+  %b= "#{t('devices.device')}:"
   = @click.device_id
 %p
-  %b #{t('devices.device_type')}:
+  %b= "#{t('devices.device_type')}:"
   = @click.device_type
 - if @click.question_response
-  %hr
+  %hr/
   %p
-    %b #{t('question_responses.title')}:
-  %p #{t('students.title')}: #{@click.question_response.student&.name}
-  %p #{t('question_responses.score')}: #{@click.question_response.score}
-
+    %b= "#{t('question_responses.title')}:"
+  %p= "#{t('students.title')}: #{@click.question_response.student&.name}"
+  %p= "#{t('question_responses.score')}: #{@click.question_response.score}"
 .buttons
   = link_to t('common.edit'), edit_click_path(@click), class: 'button is-primary'
   = link_to t('common.back'), clicks_path, class: 'button'

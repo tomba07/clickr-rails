@@ -1,6 +1,8 @@
 - if notice or alert
   .flash--fixed
     - if notice
-      .flash__content.navbar-item.has-background-info.has-text-white= notice.html_safe
+      .flash__content.navbar-item.has-background-info.has-text-white
+        = notice.html_safe
     - if alert
-      .flash__content.navbar-item.has-background-danger.has-text-white= alert.html_safe
+      .flash__content.navbar-item.has-background-danger.has-text-white
+        = alert.html_safe

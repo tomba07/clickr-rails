@@ -1,7 +1,5 @@
 %h1.title= t('.title')
-
 = link_to t('common.new'), new_question_path, class: 'button is-primary'
-
 %table.table.is-striped.is-hoverable
   %thead
     %tr
@@ -9,7 +7,6 @@
       %th= t('common.name')
       %th= t('lessons.title')
       %th
-
   %tbody
     - @questions.each do |question|
       %tr
