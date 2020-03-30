@@ -25,27 +25,13 @@ services:
 
 jobs:
   include:
-    # Lint
-    - name: Lint all modules
-      language: ruby
-      rvm: 2.5.7
-      cache: yarn
-      before_install:
-        # update to bundler 2.0 https://docs.travis-ci.com/user/languages/ruby/#bundler-20
-        - gem install bundler
-        - nvm install node
-        - nvm use node
-        # Install yarn
-        - curl -o- -L https://yarnpkg.com/install.sh | bash
-        - yarn global add lerna
-      install:
-        - lerna bootstrap
-      script:
-        - yarn lint
 
     # Test services/zstack-zigbee-reader
     - name: Test services/zstack-zigbee-reader
       language: node_js
+      # TODO Generate, merge and upload test coverage
+      before_script:
+        - npm run lint
 
     # Test services/web
     - name: Test services/web
@@ -84,6 +70,7 @@ jobs:
         # precompile for (hopefully) better speed when executing. Does this help with caching?
         - REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
         - bundle exec rails db:migrate
+        - npm run lint
       script:
         - ./cc-test-reporter before-build
         - bundle exec rails test
