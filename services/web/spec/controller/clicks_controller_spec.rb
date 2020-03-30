@@ -7,9 +7,7 @@ RSpec.describe ClicksController, type: :controller do
   let(:school_class) { create(:school_class) }
   let(:lesson) { create(:lesson, school_class: school_class) }
 
-  before(:each) do
-    CurrentSchoolClass.set school_class
-  end
+  before(:each) { CurrentSchoolClass.set school_class }
 
   it 'gets index' do
     get :index
@@ -53,7 +51,7 @@ RSpec.describe ClicksController, type: :controller do
           post :create,
                as: format,
                params: { click: { device_type: 'rfid', device_id: '123' } }
-        }.to change{ QuestionResponse.count }.by(1)
+        }.to change { QuestionResponse.count }.by(1)
       end
     end
 
@@ -97,7 +95,9 @@ RSpec.describe ClicksController, type: :controller do
     end
 
     %i[html json].each do |format|
-      it "updates incomplete mapping but does not create question response (format: #{format}" do
+      it "updates incomplete mapping but does not create question response (format: #{
+           format
+         }" do
         student = create(:student, school_class: school_class)
         incomplete_mapping =
           create(
@@ -162,8 +162,7 @@ RSpec.describe ClicksController, type: :controller do
           device_id: nil
         )
 
-      post :create,
-           params: { click: { device_type: 'rfid', device_id: '123' } }
+      post :create, params: { click: { device_type: 'rfid', device_id: '123' } }
 
       incomplete_mapping.reload
       expect(incomplete_mapping.device_type).to eq 'rfid'
@@ -176,7 +175,8 @@ RSpec.describe ClicksController, type: :controller do
            as: :json,
            params: {
              click: {
-               device_id: new_click.device_id, device_type: new_click.device_type
+               device_id: new_click.device_id,
+               device_type: new_click.device_type
              }
            }
 
@@ -189,7 +189,8 @@ RSpec.describe ClicksController, type: :controller do
            as: :json,
            params: {
              click: {
-               device_id: new_click.device_id, device_type: new_click.device_type
+               device_id: new_click.device_id,
+               device_type: new_click.device_type
              }
            }
 
@@ -203,7 +204,8 @@ RSpec.describe ClicksController, type: :controller do
            as: :json,
            params: {
              click: {
-               device_id: new_click.device_id, device_type: new_click.device_type
+               device_id: new_click.device_id,
+               device_type: new_click.device_type
              }
            }
 
@@ -234,7 +236,9 @@ RSpec.describe ClicksController, type: :controller do
 
   it 'destroys click' do
     click # Force lazy loading
-    expect { delete :destroy, params: { id: click.id } }.to change { Click.count }.by -1
+    expect { delete :destroy, params: { id: click.id } }.to change {
+      Click.count
+    }.by -1
 
     expect(response).to redirect_to clicks_url
   end

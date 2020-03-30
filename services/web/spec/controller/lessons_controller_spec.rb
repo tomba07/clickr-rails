@@ -1,25 +1,21 @@
-require 'test_helper'
+require 'rails_helper'
 
-class LessonsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
+RSpec.describe LessonsController, type: :controller do
+  login_user
 
-  setup do
-    @user = create(:user)
-    sign_in @user
-    @lesson = create(:lesson)
-  end
+  let(:lesson) { create(:lesson) }
 
-  test 'should get index' do
+  it 'gets index' do
     get lessons_url
-    assert_response :success
+    expect(response).to have_http_status :success
   end
 
-  test 'should get new' do
+  it 'gets new' do
     get new_lesson_url
-    assert_response :success
+    expect(response).to have_http_status :success
   end
 
-  test 'should create lesson' do
+  it 'creates lesson' do
     new_lesson = build(:lesson)
 
     assert_difference('Lesson.count') do
@@ -32,10 +28,10 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_redirected_to lesson_url(Lesson.last)
+    expect(response).to redirect_to lesson_url(Lesson.last)
   end
 
-  test 'should create lesson and redirect to previous page if requested' do
+  it 'creates lesson and redirect to previous page if requested' do
     new_lesson = build(:lesson)
 
     assert_difference('Lesson.count') do
@@ -50,10 +46,10 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
            headers: { HTTP_REFERER: 'http://clickr.ftes.de' }
     end
 
-    assert_redirected_to 'http://clickr.ftes.de'
+    expect(response).to redirect_to 'http://clickr.ftes.de'
   end
 
-  test 'should create lesson using current school class' do
+  it 'creates lesson using current school class' do
     new_school_class = create(:school_class)
     CurrentSchoolClass.set new_school_class
     new_lesson = build(:lesson, school_class: nil)
@@ -65,29 +61,29 @@ class LessonsControllerTest < ActionDispatch::IntegrationTest
     assert_equal new_school_class, assigns(:lesson).school_class
   end
 
-  test 'should show lesson' do
+  it 'shows lesson' do
     get lesson_url(@lesson)
-    assert_response :success
+    expect(response).to have_http_status :success
   end
 
-  test 'should get edit' do
+  it 'gets edit' do
     get edit_lesson_url(@lesson)
-    assert_response :success
+    expect(response).to have_http_status :success
   end
 
-  test 'should update lesson' do
+  it 'updates lesson' do
     patch lesson_url(@lesson),
           params: {
             lesson: {
               school_class_id: @lesson.school_class_id, name: @lesson.name
             }
           }
-    assert_redirected_to lesson_url(@lesson)
+    expect(response).to redirect_to lesson_url(@lesson)
   end
 
-  test 'should destroy lesson' do
+  it 'destroys lesson' do
     assert_difference('Lesson.count', -1) { delete lesson_url(@lesson) }
 
-    assert_redirected_to lessons_url
+    expect(response).to redirect_to lessons_url
   end
 end
