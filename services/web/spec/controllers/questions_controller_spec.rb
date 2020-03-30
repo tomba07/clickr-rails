@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe QuestionsController, type: :controller do
+RSpec.describe QuestionsController do
   login_user
 
   let(:question) { create(:question) }
@@ -40,7 +40,6 @@ RSpec.describe QuestionsController, type: :controller do
 
       expect {
         post :create, params: { question: { name: question.name } }
-        puts Lesson.all.inspect
       }.to change { Lesson.count }.by 1
 
       expect(assigns(:question).school_class).to eq new_school_class

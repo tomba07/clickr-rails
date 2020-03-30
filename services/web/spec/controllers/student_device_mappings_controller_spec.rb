@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StudentDeviceMappingsController, type: :controller do
+RSpec.describe StudentDeviceMappingsController do
   login_user
 
   let(:student_device_mapping) { create(:student_device_mapping) }

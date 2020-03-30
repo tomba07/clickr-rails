@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchoolClassesController, type: :controller do
+RSpec.describe SchoolClassesController do
   login_user
 
   let(:school_class) { create(:school_class) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ClicksController, type: :controller do
+RSpec.describe ClicksController do
   login_user
 
   let(:click) { create(:click) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ButtonsController, type: :controller do
+RSpec.describe ButtonsController do
   login_user
 
   it 'renders the index template' do

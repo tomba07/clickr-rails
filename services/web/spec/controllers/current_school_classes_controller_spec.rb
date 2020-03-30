@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CurrentSchoolClassesController, type: :controller do
+RSpec.describe CurrentSchoolClassesController do
   login_user
 
   it 'changes school class and redirects to previous page' do

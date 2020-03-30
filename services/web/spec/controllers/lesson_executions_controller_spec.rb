@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LessonExecutionsController, type: :controller do
+RSpec.describe LessonExecutionsController do
   login_user
 
   it 'redirects to school classes if non selected' do

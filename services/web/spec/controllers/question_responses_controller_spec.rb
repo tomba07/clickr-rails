@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe QuestionResponsesController, type: :controller do
+RSpec.describe QuestionResponsesController do
   login_user
 
   let(:question_response) { create(:question_response) }

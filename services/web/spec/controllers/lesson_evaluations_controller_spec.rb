@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LessonEvaluationsController, type: :controller do
+RSpec.describe LessonEvaluationsController do
   login_user
   let(:lesson) { create(:lesson) }
 
