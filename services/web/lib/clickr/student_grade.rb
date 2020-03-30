@@ -24,6 +24,9 @@ class Clickr::StudentGrade
   private
 
   def to_s(percentage)
-    ActiveSupport::NumberHelper.number_to_percentage(100.0 * percentage, precision: 0)
+    ActiveSupport::NumberHelper.number_to_percentage(
+      100.0 * percentage,
+      precision: 0
+    )
   end
 end

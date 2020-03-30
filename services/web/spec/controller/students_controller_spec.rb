@@ -96,7 +96,7 @@ RSpec.describe StudentsController, type: :controller do
              params: { id: student.id, lesson_id: old_lesson.id, amount: -1 },
              as: :json
       }.to change {
-        student.question_response_sum_for lesson: old_cdlesson
+        student.question_response_sum_for lesson: old_lesson
       }.by -1
     end
   end
