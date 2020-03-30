@@ -71,6 +71,8 @@ jobs:
     # Test services/zstack-zigbee-reader
     - name: Test services/zstack-zigbee-reader
       language: node_js
+      node:
+        - node
       before_install:
         - cd services/zstack-zigbee-reader
       before_script:
