@@ -12,12 +12,12 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "@prettier/plugin-ruby": "^0.17.0",
+    "@prettier/plugin-ruby": "^0.18.0",
     "prettier": "^1.19.1",
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "lint": "prettier --check **/*.{rb,js,scss}",
-    "format": "prettier --write **/*.{rb,js,scss}"
+    "lint": "prettier --check **/*.{rb,js,scss,haml}",
+    "format": "prettier --write **/*.{rb,js,scss,haml}"
   }
 }
