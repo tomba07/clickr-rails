@@ -11,9 +11,23 @@ class QuestionResponse < ApplicationRecord
   validates :score, presence: true
   validates :click, uniqueness: { allow_nil: true }
   validates :student, uniqueness: { scope: :question }, if: :question
-  validates :school_class, inclusion: { in: ->(question_response) { [question_response.student.school_class] } }
-  validates :school_class, inclusion: { in: ->(question_response) { [question_response.lesson.school_class] } }
-  validates :lesson, inclusion: { in: ->(question_response) { [question_response.question.lesson] } }, if: -> { question }
+  validates :school_class,
+            inclusion: {
+              in: lambda { |question_response|
+                [question_response.student.school_class]
+              }
+            }
+  validates :school_class,
+            inclusion: {
+              in: lambda { |question_response|
+                [question_response.lesson.school_class]
+              }
+            }
+  validates :lesson,
+            inclusion: {
+              in: ->(question_response) { [question_response.question.lesson] }
+            },
+            if: -> { question }
 
   # Used to manually adjust student sum
   def is_virtual

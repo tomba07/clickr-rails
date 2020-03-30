@@ -4,6 +4,8 @@ FactoryBot.define do
     school_class
     student { association :student, school_class: school_class }
     lesson { association :lesson, school_class: school_class }
-    question { association :question, school_class: school_class, lesson: lesson }
+    question do
+      association :question, school_class: school_class, lesson: lesson
+    end
   end
 end
