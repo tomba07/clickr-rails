@@ -11,7 +11,7 @@ RSpec.describe Clickr::LessonEvaluation do
     [1, -1, -1].each_with_index do |score, i|
       create(
         :question_response,
-        student: students[i], question: question, lesson: lesson, score: score
+        student: students[i], question: question, lesson: lesson, score: score, school_class: school_class
       )
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe Clickr::LessonEvaluation do
 
   describe 'min_question_response_sum' do
     it 'is 0 (the lowest count above the participation threshold)' do
-      create(:question_response, student: students[1], lesson: lesson)
+      create(:question_response, student: students[1], lesson: lesson, school_class: school_class)
       expect(subject.min_question_response_sum).to eq 0
     end
   end
@@ -49,8 +49,8 @@ RSpec.describe Clickr::LessonEvaluation do
 
     it 'is 75% ((2 + 1) / 2) (ignores absent students)' do
       other_student = create(:student, school_class: school_class)
-      create(:question_response, student: students[0], lesson: lesson)
-      create(:question_response, student: other_student, lesson: lesson)
+      create(:question_response, student: students[0], lesson: lesson, school_class: school_class)
+      create(:question_response, student: other_student, lesson: lesson, school_class: school_class)
 
       lesson.update!(benchmark: 2)
 

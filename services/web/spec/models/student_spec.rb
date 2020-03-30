@@ -7,7 +7,7 @@ RSpec.describe Student do
   describe 'question_response_sum' do
     it 'sums up all scores' do
       student.question_responses <<
-        (1..5).to_a.map { create(:question_response) }
+        (1..5).to_a.map { create(:question_response, school_class: school_class) }
 
       expect(student.question_response_sum).to eq 5
     end
@@ -15,12 +15,9 @@ RSpec.describe Student do
 
   describe 'question_response_sum_for_most_recent_lesson' do
     it 'sums up all scores only for questions in most recent lesson' do
-      school_class.lessons <<
-        (old_lesson, most_recent_lesson = [create(:lesson), create(:lesson)])
-      old_lesson.question_responses <<
-        (1..3).to_a.map { create(:question_response, student: student) }
-      most_recent_lesson.question_responses <<
-        (1..5).to_a.map { create(:question_response, student: student) }
+      old_lesson, most_recent_lesson = create_list(:lesson, 2, school_class: school_class)
+      create_list(:question_response, 3, student: student, school_class: school_class, lesson: old_lesson)
+      create_list(:question_response, 5, student: student, school_class: school_class, lesson: most_recent_lesson)
 
       expect(student.question_response_sum_for_most_recent_lesson).to eq 5
     end
@@ -32,7 +29,7 @@ RSpec.describe Student do
       student.student_device_mappings.create!(school_class: school_class)
       student.student_device_mappings.create!(school_class: school_class)
 
-      other_student = create(:student)
+      other_student = create(:student, school_class: school_class)
       other_student.student_device_mappings.create!(school_class: school_class)
 
       expect(student.nth_incomplete_mapping).to eq 0

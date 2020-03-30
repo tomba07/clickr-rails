@@ -9,7 +9,7 @@ class Question < ApplicationRecord
   scope :newest_first, -> { order(created_at: :desc) }
 
   validates :name, presence: true, uniqueness: { scope: :lesson }
-  # TODO validates lesson.school_class = school_class
+  validates :school_class, inclusion: { in: ->(question) { [question.lesson.school_class] } }
 
   def self.default_name(lesson)
     I18n.t('questions.default_name', number: lesson.questions.count + 1)

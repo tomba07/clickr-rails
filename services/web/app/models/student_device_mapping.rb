@@ -8,7 +8,7 @@ class StudentDeviceMapping < ApplicationRecord
   scope :newest_first, -> { order(created_at: :desc) }
 
   validates :device_id, uniqueness: { scope: :school_class, allow_nil: true }
-  # TODO validates student.school_class = school_class
+  validates :school_class, inclusion: { in: ->(mapping) { [mapping.student.school_class] } }
 
   before_validation :set_incomplete!
 
