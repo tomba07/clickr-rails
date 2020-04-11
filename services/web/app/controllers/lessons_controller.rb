@@ -37,8 +37,7 @@ class LessonsController < ApplicationController
         )
         if params[:redirect_back]
           redirect_back fallback_location: lesson_path(@lesson),
-                        notice: t('.notice') and
-            return
+                        notice: t('.notice') and return
         end
 
         format.html { redirect_to @lesson, notice: t('.notice') }

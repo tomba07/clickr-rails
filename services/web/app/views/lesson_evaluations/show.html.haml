@@ -1,14 +1,12 @@
-= # TODO Re-enable linting for this file (.prettierignore)
-
 - content_for :container_css_class, 'is-fluid'
 - benchmark_min = 1
 - benchmark_max = @benchmark_max || 10
 - benchmark = @lesson.benchmark
-
 %div{ data: { controller: 'lesson-evaluation', 'lesson-evaluation-endpoint': update_benchmark_lesson_evaluate_path(@lesson) }}
   .panel
     .panel-heading
-      %h3.title.is-size-4 #{t('.title', lesson_name: @lesson&.name)} (#{@school_class&.name})
+      %h3.title.is-size-4
+        = "#{t('.title', lesson_name: @lesson&.name)} (#{@school_class&.name})"
       .field
         .select
           .control
@@ -20,7 +18,8 @@
           = benchmark_min
           = range_field_tag :benchmark, benchmark, min: benchmark_min, max: benchmark_max, step: 0.01, autocomplete: 'off', data: { action: 'change->lesson-evaluation#onBenchmarkChanged input->lesson-evaluation#onBenchmarkDragged' }
           = benchmark_max
-          #benchmark.tag.is-info.is-large{ data: { target: 'lesson-evaluation.benchmarkLabel' } }= benchmark
-          #average.tag.is-success.is-large{ data: { target: 'lesson-evaluation.averageLabel' }, title: t('.average_percentage_hint') }= number_to_percentage(100.0 * @evaluation.average_percentage, precision: 0)
-
+          .tag.is-info.is-large#benchmark{ data: { target: 'lesson-evaluation.benchmarkLabel' } }
+            = benchmark
+          .tag.is-success.is-large#average{ data: { target: 'lesson-evaluation.averageLabel' }, title: t('.average_percentage_hint') }
+            = number_to_percentage(100.0 * @evaluation.average_percentage, precision: 0)
   = render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, context: 'lesson_evaluation', lesson: @lesson

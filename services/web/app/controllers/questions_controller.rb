@@ -49,8 +49,7 @@ class QuestionsController < ApplicationController
 
         if params[:redirect_back]
           redirect_back fallback_location: question_path(@question),
-                        notice: t('.notice') and
-            return
+                        notice: t('.notice') and return
         end
         format.html { redirect_to @question, notice: t('.notice') }
         format.json { render :show, status: :created, location: @question }
@@ -106,8 +105,7 @@ class QuestionsController < ApplicationController
 
         if params[:redirect_back]
           redirect_back fallback_location: question_path(@question),
-                        notice: t('.notice') and
-            return
+                        notice: t('.notice') and return
         end
         format.html { render :show, status: :ok, location: @question }
         format.json { render :show, status: :ok, location: @question }

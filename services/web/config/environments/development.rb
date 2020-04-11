@@ -80,7 +80,9 @@ Rails.application.configure do
     # Bullet.slack = { webhook_url: 'http://some.slack.url', channel: '#default', username: 'notifier' }
     Bullet.raise = true
     # TODO Re-enable N+1 avoid eager loading check when seating plan is context-specific
-    Bullet.add_whitelist :type => :unused_eager_loading, class_name: 'Student', association: :bonus_grades
+    Bullet.add_whitelist type: :unused_eager_loading,
+                         class_name: 'Student',
+                         association: :bonus_grades
   end
 
   # create associations when building (not saving) parent

@@ -88,22 +88,14 @@ RSpec.describe Clickr::StudentGrade do
     end
 
     it 'returns 2+ ((77% + 100%) / 2 = 88.5%) for a 100% bonus grade' do
-      create(
-        :bonus_grade,
-        school_class: school_class,
-        student: student
-      )
+      create(:bonus_grade, school_class: school_class, student: student)
 
       expect(subject.grade).to eq '2+'
       expect(subject.explanation).to eq '(77% + 100%) / 2 = 89%'
     end
 
     it 'returns 1- ((77% + 100% + 100%) / 2 = 92.3%) for one lesson with 100% responses and a 100% bonus grade' do
-      create(
-        :bonus_grade,
-        school_class: school_class,
-        student: student
-      )
+      create(:bonus_grade, school_class: school_class, student: student)
       lesson = create(:lesson, school_class: school_class, benchmark: 1)
       question = create(:question, lesson: lesson, school_class: school_class)
       create(

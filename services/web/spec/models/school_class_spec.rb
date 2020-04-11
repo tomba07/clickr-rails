@@ -4,8 +4,7 @@ RSpec.describe SchoolClass do
   subject { create(:school_class) }
   let(:long_ago) do
     Rails.application.config.clickr.suggest_new_lesson_after_minutes.minutes
-      .ago -
-      1.minute
+      .ago - 1.minute
   end
 
   describe 'suggest_creating_new_lesson' do

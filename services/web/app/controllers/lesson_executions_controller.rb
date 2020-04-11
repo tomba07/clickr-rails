@@ -3,8 +3,7 @@ class LessonExecutionsController < ApplicationController
     @school_class = CurrentSchoolClass.get or
       (
         flash[:notice] = t('.select_school_class_notice') and
-          redirect_to school_classes_path and
-          return
+          redirect_to school_classes_path and return
       )
     @seating_plan = Clickr::SeatingPlan.new(@school_class)
     @edit = params[:edit_seating_plan] == 'true'

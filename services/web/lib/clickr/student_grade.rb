@@ -13,7 +13,11 @@ class Clickr::StudentGrade
         student.question_response_percentage_for lesson: l
       end
     bonus_percentages = bonus_grades.map(&:percentage)
-    percentage_groups = [[initial_percentage], lesson_percentages, bonus_percentages]
+    percentage_groups = [
+      [initial_percentage],
+      lesson_percentages,
+      bonus_percentages
+    ]
     percentages = percentage_groups.flatten
     @percentage = percentages.sum / percentages.size
 
