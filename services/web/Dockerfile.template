@@ -1,8 +1,8 @@
 ###############
 # Build stage #
 ###############
-# Pin ruby 2.5.7 in alpine 3.10
-FROM balenalib/%%BALENA_ARCH%%-alpine:3.10-build as build
+# Pin ruby 2.6.6-r2 in alpine 3.11
+FROM balenalib/%%BALENA_ARCH%%-alpine:3.11-build as build
 
 WORKDIR /app
 
@@ -55,7 +55,8 @@ RUN rm -rf node_modules tmp/cache vendor/assets lib/assets spec
 #############
 # Run stage #
 #############
-FROM balenalib/%%BALENA_ARCH%%-alpine:3.10-run
+# Pin ruby 2.6.6-r2 in alpine 3.11
+FROM balenalib/%%BALENA_ARCH%%-alpine:3.11-run
 LABEL maintainer="f@ftes.de"
 
 WORKDIR /app

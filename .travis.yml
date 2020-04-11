@@ -28,7 +28,7 @@ jobs:
     # Test services/web
     - name: Test services/web
       language: ruby
-      rvm: 2.5.7
+      rvm: 2.6.6
       env:
         - RAILS_ENV=test
       cache:

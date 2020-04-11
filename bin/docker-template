@@ -2,8 +2,8 @@
 # Usage: ./bin/docker-template [<alpine-image>] [<node-image>]
 # Translate Dockerfile.template to Dockerfile for local development
 
-# Pin ruby 2.5.7 in alpine 3.10
-ALPINE="${1:-alpine:3.10}"
+# Pin ruby 2.6.6-r2 in alpine 3.11
+ALPINE="${1:-alpine:3.11}"
 NODE="${2:-node:12-alpine}"
 
 find services -name Dockerfile.template | while read template; do
