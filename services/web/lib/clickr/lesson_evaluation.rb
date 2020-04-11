@@ -5,7 +5,7 @@ class Clickr::LessonEvaluation
 
   def initialize(lesson)
     school_class = lesson.school_class
-    students = school_class.students
+    students = school_class.students.includes(:bonus_grades)
 
     students_that_participated = students.that_participated_in lesson: lesson
 

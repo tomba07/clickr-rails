@@ -22,7 +22,7 @@ RSpec.describe Clickr::StudentGrade do
       )
 
       expect(subject.grade).to eq '2-'
-      expect(subject.percentage).to eq 0.77
+      expect(subject.explanation).to eq '(77%) / 1 = 77%'
     end
 
     it 'returns 5 ((77% + 0%) / 2 = 38.5%) for 1 lesson with with score 0 (student is NOT considered absent)' do
@@ -30,7 +30,7 @@ RSpec.describe Clickr::StudentGrade do
       create(:question, lesson: lesson, school_class: school_class)
 
       expect(subject.grade).to eq '5'
-      expect(subject.percentage).to eq 0.385
+      expect(subject.explanation).to eq '(77% + 0%) / 2 = 39%'
     end
 
     it 'returns 2+ ((77% + 100%) / 2 = 88.5%) for 1 lesson with 100% responses' do
@@ -45,7 +45,7 @@ RSpec.describe Clickr::StudentGrade do
       )
 
       expect(subject.grade).to eq '2+'
-      expect(subject.percentage).to eq 0.885
+      expect(subject.explanation).to eq '(77% + 100%) / 2 = 89%'
     end
 
     it 'returns 3- ((77% + 50%) / 2 = 63.5%) for 1 lesson with 50% responses' do
@@ -60,7 +60,7 @@ RSpec.describe Clickr::StudentGrade do
       )
 
       expect(subject.grade).to eq '3-'
-      expect(subject.percentage).to eq 0.635
+      expect(subject.explanation).to eq '(77% + 50%) / 2 = 64%'
     end
 
     it 'returns 1- ((77% + 100% + 100%) / 3 = 92.3%) for 2 lessons with 100% responses with correct explanation' do
@@ -79,6 +79,37 @@ RSpec.describe Clickr::StudentGrade do
         :question_response,
         question: question2,
         lesson: lesson2,
+        school_class: school_class,
+        student: student
+      )
+
+      expect(subject.grade).to eq '1-'
+      expect(subject.explanation).to eq '(77% + (100% + 100%)) / 3 = 92%'
+    end
+
+    it 'returns 2+ ((77% + 100%) / 2 = 88.5%) for a 100% bonus grade' do
+      create(
+        :bonus_grade,
+        school_class: school_class,
+        student: student
+      )
+
+      expect(subject.grade).to eq '2+'
+      expect(subject.explanation).to eq '(77% + 100%) / 2 = 89%'
+    end
+
+    it 'returns 1- ((77% + 100% + 100%) / 2 = 92.3%) for one lesson with 100% responses and a 100% bonus grade' do
+      create(
+        :bonus_grade,
+        school_class: school_class,
+        student: student
+      )
+      lesson = create(:lesson, school_class: school_class, benchmark: 1)
+      question = create(:question, lesson: lesson, school_class: school_class)
+      create(
+        :question_response,
+        question: question,
+        lesson: lesson,
         school_class: school_class,
         student: student
       )

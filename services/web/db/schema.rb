@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_151953) do
+ActiveRecord::Schema.define(version: 2020_04_11_104943) do
+
+  create_table "bonus_grades", force: :cascade do |t|
+    t.integer "student_id", null: false
+    t.integer "school_class_id", null: false
+    t.float "percentage", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_class_id"], name: "index_bonus_grades_on_school_class_id"
+    t.index ["student_id"], name: "index_bonus_grades_on_student_id"
+  end
 
   create_table "clicks", force: :cascade do |t|
     t.string "device_id", null: false
@@ -119,6 +129,8 @@ ActiveRecord::Schema.define(version: 2020_03_10_151953) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bonus_grades", "school_classes"
+  add_foreign_key "bonus_grades", "students"
   add_foreign_key "current_school_classes", "school_classes"
   add_foreign_key "lessons", "school_classes"
   add_foreign_key "question_responses", "clicks"

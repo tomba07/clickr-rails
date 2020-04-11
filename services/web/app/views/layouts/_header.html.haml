@@ -47,6 +47,10 @@
                 .icon
                   = icon('fas', 'reply')
                 = t('.admin.question_responses')
+              = link_to bonus_grades_path, class: "navbar-item #{'is-active' if controller_name == 'bonus_grades'}" do
+                .icon
+                  = icon('fas', 'medal')
+                = t('.admin.bonus_grades')
           = yield(:navbar_links)
       .navbar-end
         - if user_signed_in?

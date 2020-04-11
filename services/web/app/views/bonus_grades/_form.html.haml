@@ -1,0 +1,8 @@
+= form_with model: @bonus_grade, local: true do |f|
+  = render "layouts/error_messages", f: f
+  = f.collection_select_with_label :student_id , Student.all, :id, :name, {}, autofocus: true
+  = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name, {}
+  = f.number_field_with_label :percentage, min: 0, max: 1, step: 0.01
+  .buttons
+    = f.submit_primary t('common.save')
+    = yield

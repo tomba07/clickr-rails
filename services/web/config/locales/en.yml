@@ -179,6 +179,21 @@ en:
   current_school_classes:
     update:
       notice: "Your selected school class has been updated."
+  bonus_grades:
+    percentage: Percentage
+    title: Special merit
+    create:
+      notice: "Special merit was created."
+    update:
+      notice: "Special merit was updated."
+    destroy:
+      notice: "Special merit was destroyed."
+    edit:
+      title: "Editing special merit"
+    index:
+      title: "Special merits"
+    new:
+      title: "New special merit"
   common:
     back: "Back"
     show: "Show"
@@ -222,6 +237,7 @@ en:
         student_device_mappings: "Mappings"
         clicks: "Clicks"
         question_responses: "Responses"
+        bonus_grades: "Special merits"
       select_a_class: "Select a class"
       buttons: "Buttons"
       create_new_class: "Create new class"

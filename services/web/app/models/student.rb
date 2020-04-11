@@ -1,6 +1,7 @@
 class Student < ApplicationRecord
   strip_attributes
   belongs_to :school_class
+  has_many :bonus_grades, dependent: :destroy
   has_many :question_responses, dependent: :destroy
   has_many :questions_that_he_responded_to,
            through: :question_responses, class_name: 'Question'

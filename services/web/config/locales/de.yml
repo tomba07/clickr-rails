@@ -149,6 +149,21 @@ de:
   current_school_classes:
     update:
       notice: "Deine ausgewählte Schulklasse wurde geändert."
+  bonus_grades:
+    percentage: Prozent
+    title: Besondere Leistung
+    create:
+      notice: "Besondere Leistung wurde erstellt."
+    update:
+      notice: "Besondere Leistung wurde geändert."
+    destroy:
+      notice: "Besondere Leistung wurde gelöscht."
+    edit:
+      title: "Besondere Leistung bearbeiten"
+    index:
+      title: "Besondere Leistungen"
+    new:
+      title: "Neue besondere Leistung"
   common:
     back: "Zurück"
     show: "Anzeigen"
@@ -192,6 +207,7 @@ de:
         student_device_mappings: "Zuordnungen"
         clicks: "Clicks"
         question_responses: "Antworten"
+        bonus_grades: "Besondere Leistungen"
       select_a_class: "Klasse auswählen"
       buttons: "Knöpfe"
       create_new_class: "Neue Klasse erstellen"

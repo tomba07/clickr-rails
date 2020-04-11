@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :bonus_grades
   resources :buttons, only: %i[index]
   resources :student_device_mappings
   resources :question_responses

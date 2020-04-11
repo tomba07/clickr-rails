@@ -3,7 +3,7 @@ class Clickr::SeatingPlan
 
   def initialize(school_class)
     @school_class = school_class
-    students = school_class.students
+    students = school_class.students.includes(:bonus_grades)
     @row_min, @row_max = students.map(&:seat_row).minmax.map { |i| i || 0 }
     @col_min, @col_max = students.map(&:seat_col).minmax.map { |i| i || 0 }
     @students_by_coordinates =

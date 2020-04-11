@@ -1,10 +1,11 @@
 class SchoolClass < ApplicationRecord
   strip_attributes
-  has_many :students, dependent: :destroy
+  has_many :bonus_grades, dependent: :destroy
   has_many :lessons, dependent: :destroy
   has_many :questions, dependent: :destroy
   has_many :question_responses, dependent: :destroy
   has_many :student_device_mappings, dependent: :destroy
+  has_many :students, dependent: :destroy
   has_one :current_school_class, dependent: :destroy
 
   scope :newest_first, -> { order(created_at: :desc) }
