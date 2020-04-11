@@ -13,7 +13,13 @@ class BonusGradesController < ApplicationController
 
   # GET /bonus_grades/new
   def new
-    @bonus_grade = BonusGrade.new
+    session[:redirect_to] = params[:redirect_to]
+    student = Student.find_by(id: params[:student_id])
+    school_class = student&.school_class
+    @bonus_grade =
+      BonusGrade.new(
+        student: student, school_class: school_class, percentage: 1.0
+      )
   end
 
   # GET /bonus_grades/1/edit
@@ -26,7 +32,13 @@ class BonusGradesController < ApplicationController
 
     respond_to do |format|
       if @bonus_grade.save
-        format.html { redirect_to @bonus_grade, notice: t('.create.notice') }
+        redirect_url =
+          if session.delete(:redirect_to) == 'lesson_execution'
+            root_path
+          else
+            @bonus_grade
+          end
+        format.html { redirect_to redirect_url, notice: t('.create.notice') }
         format.json { render :show, status: :created, location: @bonus_grade }
       else
         format.html { render :new }
