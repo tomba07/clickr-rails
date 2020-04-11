@@ -45,6 +45,7 @@ COPY . .
 
 ENV RAILS_ENV=production
 
+RUN bundle install
 # Do not require master key and use fake secret key base (https://github.com/rails/rails/issues/32947#issuecomment-531508722)
 RUN REQUIRE_MASTER_KEY=false SECRET_KEY_BASE=1 bundle exec rails assets:precompile
 
