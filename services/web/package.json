@@ -14,7 +14,7 @@
   "devDependencies": {
     "@prettier/plugin-ruby": "^0.18.1",
     "prettier": "^1.19.1",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
     "lint": "prettier --check **/*.{rb,js,scss,haml}",
