@@ -2,7 +2,12 @@
   = render "layouts/error_messages", f: f
   = f.collection_select_with_label :student_id , Student.all, :id, :name, {}, autofocus: true
   = f.collection_select_with_label :school_class_id, SchoolClass.all, :id, :name, {}
-  = f.number_field_with_label :percentage, min: 0, max: 1, step: 0.01
+  .field{ 'data-controller': 'percentage-slider ' }
+    = f.label :percentage
+    0%
+    = f.range_field :percentage, no_field: true, type: :range, min: 0, max: 1, step: 0.01, autocomplete: false, data: { target: 'percentage-slider.input', action: 'input->percentage-slider#onDragged' }
+    100%
+    .tag.is-info.is-large{ data: { target: 'percentage-slider.label' } }
   .buttons
     = f.submit_primary t('common.save')
     = yield
