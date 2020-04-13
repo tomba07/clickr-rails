@@ -177,6 +177,8 @@ en:
       title: "Evaluation %{lesson_name}"
       benchmark_label: "100% benchmark for number of question responses"
       average_percentage_hint: "Average response percentage for this lesson over all students that participated"
+      benchmark_initialized: "100% benchmark set to %{benchmark}"
+      benchmark_failed: "Failed to set 100% benchmark"
   current_school_classes:
     update:
       notice: "Your selected school class has been updated."

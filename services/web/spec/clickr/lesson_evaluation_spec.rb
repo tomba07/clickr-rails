@@ -37,6 +37,20 @@ RSpec.describe Clickr::LessonEvaluation do
     end
   end
 
+  describe 'average_question_response_sum' do
+    it 'is 1 (only 1 student participated with sum 1)' do
+      expect(subject.average_question_response_sum).to eq 1
+    end
+
+    it 'is 0.5 (two students participated with sums [0, 1])' do
+      create(
+        :question_response,
+        student: students[1], lesson: lesson, school_class: school_class
+      )
+      expect(subject.average_question_response_sum).to eq 0.5
+    end
+  end
+
   describe 'nth_highest_question_response_sum' do
     it 'is 1 for highest (n=1)' do
       expect(subject.nth_highest_question_response_sum(n: 1)).to eq 1

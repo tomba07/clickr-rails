@@ -42,10 +42,10 @@ class Student < ApplicationRecord
     question_responses.where(lesson: lesson).sum(:score)
   end
 
-  def question_response_percentage_for(lesson:)
-    # TODO Weighted percentage of geometric and linear progression (customize via formula)
-    percentage =
-      question_response_sum_for(lesson: lesson).to_f / lesson.benchmark
+  def question_response_percentage_for(lesson:, benchmark: lesson.benchmark)
+    return 1.0 if benchmark == 0.0
+
+    percentage = question_response_sum_for(lesson: lesson).to_f / benchmark
     [1.0, percentage].min
   end
 

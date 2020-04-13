@@ -22,4 +22,12 @@ class Lesson < ApplicationRecord
   def most_recent_question
     questions.last
   end
+
+  def benchmark
+    self[:benchmark] || 1.0
+  end
+
+  def has_benchmark
+    self[:benchmark].present?
+  end
 end

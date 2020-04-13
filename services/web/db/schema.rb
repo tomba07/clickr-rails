@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_104943) do
+ActiveRecord::Schema.define(version: 2020_04_13_100211) do
 
   create_table "bonus_grades", force: :cascade do |t|
     t.integer "student_id", null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_104943) do
     t.integer "school_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "benchmark", default: 1.0, null: false
+    t.float "benchmark"
     t.index ["created_at"], name: "index_lessons_on_created_at"
     t.index ["school_class_id", "name"], name: "index_lessons_on_school_class_id_and_name", unique: true
     t.index ["school_class_id"], name: "index_lessons_on_school_class_id"

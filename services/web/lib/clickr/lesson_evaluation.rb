@@ -1,9 +1,11 @@
 class Clickr::LessonEvaluation
   attr_reader :min_question_response_sum,
               :max_question_response_sum,
-              :average_percentage
+              :average_question_response_sum,
+              :average_percentage,
+              :sums
 
-  def initialize(lesson)
+  def initialize(lesson, benchmark: lesson.benchmark)
     school_class = lesson.school_class
     students = school_class.students.includes(:bonus_grades)
 
@@ -14,10 +16,12 @@ class Clickr::LessonEvaluation
         s.question_response_sum_for lesson: lesson
       end.sort
     @min_question_response_sum, @max_question_response_sum = @sums.minmax
+    @average_question_response_sum =
+      @sums.size > 0 ? @sums.sum.to_f / @sums.size : 0
 
     percentages =
       students_that_participated.map do |s|
-        s.question_response_percentage_for lesson: lesson
+        s.question_response_percentage_for lesson: lesson, benchmark: benchmark
       end
     @average_percentage =
       percentages.size > 0 ? (percentages.sum / percentages.size) : 0
