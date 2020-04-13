@@ -171,6 +171,7 @@ en:
       ask_question_submit: "Ask question"
       stop_question_submit: "Stop question"
       evaluate_lesson: "Evaluate lesson"
+      select_a_student: "Select a Student"
   lesson_evaluations:
     show:
       title: "Evaluation %{lesson_name}"

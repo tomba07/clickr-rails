@@ -1,10 +1,17 @@
 - content_for :container_css_class, 'is-fluid'
 - content_for :navbar_links do
-  - if @edit
-    = link_to t('.done_editing_seating_plan'), { edit_seating_plan: nil }, class: 'navbar-item'
-  - else
-    = link_to t('.edit_seating_plan'), { edit_seating_plan: true }, class: 'navbar-item'
-  = link_to t('.evaluate_lesson'), lesson_evaluate_path(@lesson), class: 'navbar-item'
+  = link_to root_path(edit_seating_plan: !@edit), class: 'navbar-item' do
+    .icon
+      = icon('fas', 'edit')
+    %span= t(@edit ? '.done_editing_seating_plan' : '.edit_seating_plan')
+  = link_to lesson_evaluate_path(@lesson), class: 'navbar-item' do
+    .icon
+      = icon('fas', 'chart-bar')
+    %span= t('.evaluate_lesson')
+  %a.navbar-item#rollTheDiceButton
+    .icon
+      = icon('fas', 'dice')
+    %span= t('.select_a_student')
 - if @question&.response_allowed?
   - content_for :main_css_class, 'question--active'
 - if @suggest_creating_new_lesson

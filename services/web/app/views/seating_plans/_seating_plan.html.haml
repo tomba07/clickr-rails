@@ -7,12 +7,13 @@
 - lesson ||= lesson
 - lesson_id = lesson&.try(:id)
 -# https://johnbeatty.co/2018/03/09/stimulus-js-tutorial-how-do-i-drag-and-drop-items-in-a-list/
-.seating-plan-controller{ data: { controller: 'seating-plan',
+.seating-plan-controller{ data: { controller: 'seating-plan roll-the-dice',
 'seating-plan-row-offset': row_offset_to_base_1,
 'seating-plan-col-offset': col_offset_to_base_1,
 'seating-plan-endpoint': school_class_seating_plan_path(school_class, edit_seating_plan: edit, browser_window_id: browser_window_id, context: context, lesson_id: lesson_id),
 'seating-plan-school-class-id': seating_plan.school_class.id,
 'seating-plan-browser-window-id': browser_window_id,
+'roll-the-dice-duration-ms': Rails.application.config.clickr.roll_the_dice_duration_ms,
 action: 'dragstart->seating-plan#onDragStart dragover->seating-plan#onDragOver dragenter->seating-plan#onDragEnter drop->seating-plan#onDrop dragend->seating-plan#onDragEnd',
 } }
   .seating-plan{class: [('seating-plan--editable' if edit)].compact.join(' '), data: { target: 'seating-plan.content' } }

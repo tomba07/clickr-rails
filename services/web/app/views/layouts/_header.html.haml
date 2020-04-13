@@ -15,42 +15,45 @@
           = link_to root_path, class: "navbar-item #{'is-active' if controller_name == 'lesson_executions'}" do
             .icon
               = icon('fas', 'play')
-            = t('.give_lesson')
+            %span= t('.give_lesson')
           .navbar-item.has-dropdown.is-hoverable
-            .navbar-link Admin
+            .navbar-link
+              .icon
+                = icon('fas', 'cogs')
+              %span Admin
             .navbar-dropdown
               = link_to school_classes_path, class: "navbar-item #{'is-active' if controller_name == 'school_classes'}" do
                 .icon
                   = icon('fas', 'users')
-                .is-hidden-touch= t('.admin.school_classes')
+                %span= t('.admin.school_classes')
               = link_to lessons_path, class: "navbar-item #{'is-active' if controller_name == 'lessons'}" do
                 .icon
                   = icon('fas', 'paper-plane')
-                = t('.admin.lessons')
+                %span= t('.admin.lessons')
               = link_to students_path, class: "navbar-item #{'is-active' if controller_name == 'students'}" do
                 .icon
                   = icon('fas', 'user')
-                = t('.admin.students')
+                %span= t('.admin.students')
               = link_to questions_path, class: "navbar-item #{'is-active' if controller_name == 'questions'}" do
                 .icon
                   = icon('fas', 'question')
-                = t('.admin.questions')
+                %span= t('.admin.questions')
               = link_to student_device_mappings_path, class: "navbar-item #{'is-active' if controller_name == 'student_device_mappings'}" do
                 .icon
                   = icon('fas', 'map-signs')
-                = t('.admin.student_device_mappings')
+                %span= t('.admin.student_device_mappings')
               = link_to clicks_path, class: "navbar-item #{'is-active' if controller_name == 'clicks'}" do
                 .icon
                   = icon('fas', 'bolt')
-                = t('.admin.clicks')
+                %span= t('.admin.clicks')
               = link_to question_responses_path, class: "navbar-item #{'is-active' if controller_name == 'question_responses'}" do
                 .icon
                   = icon('fas', 'reply')
-                = t('.admin.question_responses')
+                %span= t('.admin.question_responses')
               = link_to bonus_grades_path, class: "navbar-item #{'is-active' if controller_name == 'bonus_grades'}" do
                 .icon
                   = icon('fas', 'medal')
-                = t('.admin.bonus_grades')
+                %span= t('.admin.bonus_grades')
           = yield(:navbar_links)
       .navbar-end
         - if user_signed_in?
@@ -58,7 +61,7 @@
             = link_to buttons_path, class: "navbar-item #{'is-active' if controller_name == 'buttons'}" do
               .icon
                 = icon('fas', 'bolt')
-              = t('.buttons')
+              %span= t('.buttons')
           .navbar-item.has-dropdown.is-hoverable.is-right
             %a.navbar-link
               = current_school_class&.name || t('.select_a_class')

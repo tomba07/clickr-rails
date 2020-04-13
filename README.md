@@ -100,6 +100,7 @@ App environment variables:
 - `CLICKR_STUDENT_ABSENT_IF_LESSON_SUM_LESS_THAN_OR_EQUAL_TO`: threshold when to consider student absent
   - absent students are ignored in the class lesson average
   - lessons in which the student was absent are ignored in his average grade
+- `CLICKR_ROLL_THE_DICE_DURATION_MS`: How long should the animation for selecting a student (roll the dice) take overall in milliseconds, default `3000`
 - `ZSTACK_ZIGBEE_DEVICE`: default `/dev/ttyACM0`
 - `ZSTACK_ZIGBEE_PERMIT_JOIN`: default `true`
 - `ZSTACK_ZIGBEE_PAN_ID`: default `0x1a63`

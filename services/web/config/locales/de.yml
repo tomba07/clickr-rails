@@ -141,6 +141,7 @@ de:
       ask_question_submit: "Frage stellen"
       stop_question_submit: "Frage beenden"
       evaluate_lesson: "Stunde auswerten"
+      select_a_student: "Schüler auswählen"
   lesson_evaluations:
     show:
       title: "Auswertung %{lesson_name}"

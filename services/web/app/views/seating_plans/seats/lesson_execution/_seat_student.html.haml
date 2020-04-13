@@ -5,7 +5,7 @@ col: col,
 },
 style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset_to_base_1};" }
   .card
-    .card-content{ class: [('has-background-success' if student.responded_to_most_recent_question)].compact.join(' ') }
+    .card-content{ class: [student.responded_to_most_recent_question && 'has-background-success'], data: { target: ['roll-the-dice.student', student.responded_to_most_recent_question && 'roll-the-dice.studentThatResponded'].compact.join(' ') } }
       - if edit
         = form_with model: student, class: 'has-text-centered', data: { type: :json, action: 'ajax:complete->seating-plan#onStudentUpdated' } do |f|
           = f.text_field :name
