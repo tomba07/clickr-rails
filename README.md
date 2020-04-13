@@ -3,9 +3,14 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/maintainability)](https://codeclimate.com/github/ftes/clickr-rails/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/test_coverage)](https://codeclimate.com/github/ftes/clickr-rails/test_coverage)
 
+<!--
 ## Introduction
 TODO briefly explain domain model!
 TODO License
+-->
+
+## Feature planning
+Kanban-style board @trello: https://trello.com/b/cKRiALs2/clickr
 
 ## Tech Stack
 Languages, frameworks and libraries:
@@ -26,21 +31,6 @@ Build/CI/Deployment:
 - Codeclimate (code quality)
 - balena.io (build ARM docker image, manage devices)
 
-## Concepts
-
-### Incomplete student-device-mapping
-An incomplete mapping is helpful when setting up a new school class.
-A lot of new students are created and need to be mapped to devices.
-
-Technically, students and incomplete mappings (without a device ID) are created.
-
-When a new click is registered, and
-1. that device is not yet mapped
-2. at least one incomplete mapping exists
-
-then the oldest incomplete mapping is updated with that device ID.
-So, effectively, the first student that is not yet mapped is now mapped to that device.
-
 ## Technical overview
 ```
 $ tree -L 2 --filelimit 10 --dirsfirst
@@ -60,7 +50,6 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 ```
 
 - `bin` contains development scripts
-- `buiild/balena-cli` contains a docker image capable of performing balena push commands (TODO replace with simpler git push)
 - `services` contains services which can be bundled as docker images (e.g. the rails web app and hardware connectors)
 - `docker-compose.yml` defines how to run those services together (TODO multi pi setup -> several applications)
 
@@ -80,15 +69,6 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 
 ## Balena cloud configuration
 Initialized via `bin/setup-environment-variables`.
-
-## TODO
-- `web`: [balena update locking](https://www.balena.io/docs/learn/deploy/release-strategy/update-locking/) and trigger from within the app (do not update during lesson)
-- new adapters (e.g. raw I/O)
-- `web`: check that created_at indexes are used (order by desc)
-- `zstack-zigbee-reader`: add unit tests
-- `web`: Missing websocket events (sometimes no live update after click)
-- `web, zstack-zigbee-reader`: Battery indicators in lesson execution view
-- `env vars`: Uniform naming scheme
 
 ## Configuration
 App environment variables:
@@ -114,3 +94,19 @@ One-time database setup:
 heroku run sh --type=worker
 $ bundle exec rails db:create db:migrate db:seed
 ```
+
+## Concepts
+<!-- TODO Describe concepts as ADR (architecture decision records), remove them from README -->
+
+### Incomplete student-device-mapping
+An incomplete mapping is helpful when setting up a new school class.
+A lot of new students are created and need to be mapped to devices.
+
+Technically, students and incomplete mappings (without a device ID) are created.
+
+When a new click is registered, and
+1. that device is not yet mapped
+2. at least one incomplete mapping exists
+
+then the oldest incomplete mapping is updated with that device ID.
+So, effectively, the first student that is not yet mapped is now mapped to that device.
