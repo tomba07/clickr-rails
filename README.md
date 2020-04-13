@@ -60,7 +60,7 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 4. `bundle install`
 5. `bundle exec rails db:create db:migrate db:seed`
 6. `rails s`
-7. `xdg-open http://localhost:80`, credentials: `f@ftes.de`/`password`
+7. `xdg-open http://localhost:3000`, credentials: `f@ftes.de`/`password`
 
 ## Docker
 1. `yarn install --cwd build/balena-cli && bin/setup-environment-variables <rails-master-key>` (if you haven't done so already)
