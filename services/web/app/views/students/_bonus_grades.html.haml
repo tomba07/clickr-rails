@@ -1,0 +1,20 @@
+%h1.title
+  .icon
+    = icon('fas', 'medal')
+  = t('bonus_grades.title')
+
+%table.table.is-striped.is-hoverable
+  %thead
+    %tr
+      %th= t('common.date')
+      %th= t('bonus_grades.percentage')
+      %th
+  %tbody
+    - @student.bonus_grades.newest_first.each do |bonus_grade|
+      %tr
+        %td= I18n.l bonus_grade.created_at, format: :short
+        %td
+          = percentage(bonus_grade.percentage)
+        %td
+          .buttons
+            = link_to t('common.destroy'), bonus_grade, method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'

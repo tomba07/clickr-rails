@@ -9,4 +9,4 @@
       %p.card-footer-item.is-size-4.has-text-weight-bold.has-cursor-help{title: t('.lesson_grade')}
         = Clickr::Grade.from_percentage(student.question_response_percentage_for(lesson: @lesson))
       %p.card-footer-item.is-size-4.has-text-grey.has-cursor-help{title: t('.overall_percent', explanation: grade.explanation)}
-        = number_to_percentage(100.0 * grade.percentage, precision: 0)
+        = percentage(grade.percentage)

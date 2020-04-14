@@ -21,5 +21,5 @@
           .tag.is-info.is-large#benchmark{ data: { target: 'lesson-evaluation.benchmarkLabel' } }
             = benchmark
           .tag.is-success.is-large#average{ data: { target: 'lesson-evaluation.averageLabel' }, title: t('.average_percentage_hint') }
-            = number_to_percentage(100.0 * @evaluation.average_percentage, precision: 0)
+            = percentage(@evaluation.average_percentage)
   = render 'seating_plans/seating_plan', school_class: @school_class, seating_plan: @seating_plan, context: 'lesson_evaluation', lesson: @lesson

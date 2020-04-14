@@ -12,7 +12,7 @@
       %tr
         %td= bonus_grade.student&.name
         %td= bonus_grade.school_class&.name
-        %td= number_to_percentage(100.0 * bonus_grade.percentage, precision: 0)
+        %td= percentage(bonus_grade.percentage)
         %td
           .buttons
             = link_to t('common.show'), bonus_grade_path(bonus_grade), class: 'button'
