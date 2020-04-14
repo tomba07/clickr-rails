@@ -2,13 +2,11 @@
 %header.header
   %nav.navbar.is-fixed-top.is-dark{'aria-label': 'main navigation', role: 'navigation'}
     .navbar-brand
-      %a{href: root_path}
+      = link_to current_school_class ? school_class_path(current_school_class) : root_path do
         %h4.navbar-item.title.is-4.is-marginless.has-text-white
           = Clickr
           - if current_school_class
             = "- #{current_school_class.name}"
-            - if current_school_class.most_recent_lesson
-              = "(#{current_school_class.most_recent_lesson&.name})"
     .navbar-menu
       - if user_signed_in?
         .navbar-start
