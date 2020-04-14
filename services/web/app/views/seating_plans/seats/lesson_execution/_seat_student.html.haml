@@ -30,8 +30,14 @@ style: "grid-row: #{row - row_offset_to_base_1}; grid-column: #{col - col_offset
         %p.card-footer-item.is-size-4.has-text-grey.has-cursor-help{title: t('.overall_sum')}
           = student.question_response_sum
         - unless nth_incomplete_mapping.nil?
-          %p.card-footer-item.has-text-danger.has-cursor-help{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)}
-            = "##{nth_incomplete_mapping + 1}"
+          %p.card-footer-item.is-size-4.has-text-danger.has-cursor-help{title: t('.nth_incomplete_mapping', n: nth_incomplete_mapping + 1)}
+            = icon('fas', 'map-signs')
+            = nth_incomplete_mapping + 1
+        - spam_count = student.spam_count
+        - if spam_count > 0
+          %p.card-footer-item.is-size-4.has-text-danger.has-cursor-help{ title: t('.spam_count') }
+            = icon('fas', 'exclamation-triangle')
+            %span= spam_count
         = link_to '+', adjust_score_student_path(student, browser_window_id: browser_window_id, amount: 1), method: :post, remote: true, class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('common.increment'), data: { type: :json, action: 'ajax:success->seating-plan#onScoreAdjusted' }
         = link_to new_bonus_grade_path(student_id: student.id, redirect_back: true), class: 'card-footer-item is-size-4 has-text-grey-lighter', title: t('bonus_grades.title') do
           %i.fas.fa-medal

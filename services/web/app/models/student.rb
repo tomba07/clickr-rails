@@ -2,6 +2,7 @@ class Student < ApplicationRecord
   strip_attributes
   belongs_to :school_class
   has_many :bonus_grades, dependent: :destroy
+  has_many :clicks, dependent: :nullify
   has_many :question_responses, dependent: :destroy
   has_many :questions_that_he_responded_to,
            through: :question_responses, class_name: 'Question'
@@ -58,5 +59,9 @@ class Student < ApplicationRecord
     return false if !most_recent_question
 
     question_responses.where(question: most_recent_question).exists?
+  end
+
+  def spam_count
+    clicks.spam_count
   end
 end

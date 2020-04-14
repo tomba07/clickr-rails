@@ -1,6 +1,5 @@
 class SchoolClassChannel < ApplicationCable::Channel
-  RESPONSE = 'response'.freeze
-  MAPPING = 'mapping'.freeze
+  CLICK = 'click'.freeze
   SEATING_PLAN = 'seating_plan'.freeze
   STUDENT = 'student'.freeze
   QUESTION = 'question'.freeze

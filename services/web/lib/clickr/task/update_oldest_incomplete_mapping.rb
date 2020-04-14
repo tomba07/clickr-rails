@@ -24,9 +24,12 @@ class Clickr::Task::UpdateOldestIncompleteMapping
     end
 
     Rails.logger.info "Updating incomplete mapping #{mapping.inspect}"
-    mapping.update!(
-      device_type: @click.device_type, device_id: @click.device_id
-    )
+    StudentDeviceMapping.transaction do
+      mapping.update!(
+        device_type: @click.device_type, device_id: @click.device_id
+      )
+      @click.update!(useful: true)
+    end
 
     @result = mapping
   end

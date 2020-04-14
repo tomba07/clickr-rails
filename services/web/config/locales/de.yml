@@ -92,6 +92,7 @@ de:
           overall_sum: "Summe insgesamt"
           nth_incomplete_mapping: "Das %{n} nächste nicht zugeordnete Gerät das gedrückt wird, wird diesem Schüler zugeordnet."
           delete: "Löschen"
+          spam_count: "Spam Zähler (nutzlose Klicks)"
       lesson_evaluation:
         seat_student:
           lesson_grade: "Note für Stunde"

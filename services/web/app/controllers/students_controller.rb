@@ -106,8 +106,7 @@ class StudentsController < ApplicationController
       if question_response.errors.empty?
         SchoolClassChannel.broadcast_to(
           @student.school_class,
-          type: SchoolClassChannel::RESPONSE,
-          browser_window_id: @browser_window_id
+          type: SchoolClassChannel::CLICK, browser_window_id: @browser_window_id
         )
         format.js do
           redirect_to edit_student_path(@student), notice: t('.success')

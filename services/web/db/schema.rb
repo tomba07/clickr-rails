@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_13_100211) do
+ActiveRecord::Schema.define(version: 2020_04_14_133424) do
 
   create_table "bonus_grades", force: :cascade do |t|
     t.integer "student_id", null: false
@@ -27,9 +27,12 @@ ActiveRecord::Schema.define(version: 2020_04_13_100211) do
     t.string "device_type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_at"], name: "index_clicks_on_created_at", order: :desc
+    t.boolean "useful", default: false
+    t.integer "student_id"
+    t.index ["created_at"], name: "index_clicks_on_created_at"
     t.index ["device_id"], name: "index_clicks_on_device_id"
     t.index ["device_type"], name: "index_clicks_on_device_type"
+    t.index ["student_id"], name: "index_clicks_on_student_id"
   end
 
   create_table "current_school_classes", force: :cascade do |t|
@@ -131,6 +134,7 @@ ActiveRecord::Schema.define(version: 2020_04_13_100211) do
 
   add_foreign_key "bonus_grades", "school_classes"
   add_foreign_key "bonus_grades", "students"
+  add_foreign_key "clicks", "students"
   add_foreign_key "current_school_classes", "school_classes"
   add_foreign_key "lessons", "school_classes"
   add_foreign_key "question_responses", "clicks"

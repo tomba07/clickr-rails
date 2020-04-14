@@ -122,6 +122,7 @@ en:
           overall_sum: "Overall sum"
           nth_incomplete_mapping: "The %{n}th next unmapped device that is clicked will be mapped to this student."
           delete: "Delete"
+          spam_count: "Spam count (useless clicks)"
       lesson_evaluation:
         seat_student:
           lesson_grade: "Lesson grade"

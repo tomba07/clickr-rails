@@ -44,8 +44,7 @@ export default class extends Controller {
           }
 
           switch (type) {
-            case 'response':
-            case 'mapping':
+            case 'click':
             case 'seating_plan':
             case 'student':
               this.refresh()

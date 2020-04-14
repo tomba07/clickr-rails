@@ -15,22 +15,19 @@ class Clickr::Task::CreateQuestionResponse
   def call
     return @result = nil if (!@school_class || !@click)
 
-    mapping =
-      @school_class.student_device_mappings.where(device_id: @click.device_id)
-        .first
-
-    Rails.logger.debug "Trying to create question response for mapping #{
-                         mapping.inspect
+    Rails.logger.debug "Trying to create question response for student #{
+                         @click.student
                        }"
 
-    return @result = create_question_response!(@click, mapping)
+    return @result = create_question_response!(@click)
   end
 
   private
 
-  def create_question_response!(click, mapping)
-    if !mapping
-      Rails.logger.debug 'Cannot create question response - no mapping found.'
+  def create_question_response!(click)
+    if !click.student
+      Rails
+        .logger.debug 'Cannot create question response - no student attached to click.'
       return nil
     end
 
@@ -44,9 +41,7 @@ class Clickr::Task::CreateQuestionResponse
     end
 
     response_exists =
-      QuestionResponse.exists?(
-        student_id: mapping.student_id, question: question
-      )
+      QuestionResponse.exists?(student: click.student, question: question)
 
     if response_exists
       Rails
@@ -58,12 +53,18 @@ class Clickr::Task::CreateQuestionResponse
                         question.inspect
                       }"
 
-    click.create_question_response!(
-      student_id: mapping.student_id,
-      question: question,
-      lesson: lesson,
-      school_class: @school_class,
-      score: question.score || 1
-    )
+    QuestionResponse.transaction do
+      click.update!(useful: true)
+
+      return(
+        click.create_question_response!(
+          student: click.student,
+          question: question,
+          lesson: lesson,
+          school_class: @school_class,
+          score: question.score || 1
+        )
+      )
+    end
   end
 end
