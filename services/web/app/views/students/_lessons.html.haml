@@ -6,7 +6,7 @@
       %th= t('.response_sum')
       %th
   %tbody
-    - @student.school_class&.lessons.newest_first.each do |lesson|
+    - @student.school_class&.lessons.with_participation_of(student: @student).newest_first.each do |lesson|
       %tr
         %td= lesson.name
         %td= I18n.l lesson.created_at, format: :short
