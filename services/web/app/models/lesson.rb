@@ -30,4 +30,8 @@ class Lesson < ApplicationRecord
   def has_benchmark
     self[:benchmark].present?
   end
+
+  def question_score_sum
+    questions.sum(:score)
+  end
 end

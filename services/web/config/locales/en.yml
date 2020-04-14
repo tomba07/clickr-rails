@@ -59,6 +59,7 @@ en:
     new:
       title: "New lesson"
     title: "Lesson"
+    benchmark: "100% benchmark"
   question_responses:
     create:
       notice: "Question response was created."
@@ -114,6 +115,8 @@ en:
       clone_prompt: "Optionally select a class to copy"
     lessons:
       average_percentage: "Average Percentage"
+      number_of_questions: "Questions"
+      question_score_sum: "Max. score"
   seating_plans:
     seats:
       lesson_execution:
@@ -162,6 +165,8 @@ en:
       success: "Adjusted score"
     lessons:
       response_sum: "Score"
+      number_of_questions: "Questions"
+      question_score_sum: "Max. score"
   lesson_executions:
     show:
       select_school_class_notice: "Select a class."

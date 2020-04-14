@@ -8,14 +8,20 @@
       %th= t('lessons.title')
       %th= t('common.date')
       %th= t('.response_sum')
+      %th= t('.number_of_questions')
+      %th= t('.question_score_sum')
+      %th= t('lessons.benchmark')
       %th
   %tbody
     - @student.school_class&.lessons.newest_first.with_participation_of(student: @student).each do |lesson|
       %tr
-        %td= lesson.name
+        %td= link_to lesson.name, lesson_evaluate_path(lesson)
         %td= I18n.l lesson.created_at, format: :short
         %td
           = "#{@student.question_response_sum_for lesson: lesson} (#{percentage(@student.question_response_percentage_for(lesson: lesson))})"
+        %td= lesson.questions.count
+        %td= lesson.question_score_sum
+        %td= lesson.benchmark
         %td
           .buttons
             = link_to '-', adjust_score_student_path(@student, lesson_id: lesson.id, amount: -1), method: :post, class: 'button', title: t('common.decrement'), remote: true, data: { 'turbolinks-scroll': true }

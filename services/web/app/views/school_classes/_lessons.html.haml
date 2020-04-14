@@ -8,14 +8,20 @@
       %th= t('lessons.title')
       %th= t('common.date')
       %th= t('.average_percentage')
+      %th= t('.number_of_questions')
+      %th= t('.question_score_sum')
+      %th= t('lessons.benchmark')
       %th
   %tbody
     - @school_class&.lessons.newest_first.each do |lesson|
       %tr
-        %td= lesson.name
+        %td= link_to lesson.name, lesson_evaluate_path(lesson)
         %td= I18n.l lesson.created_at, format: :short
         %td
           = percentage(Clickr::LessonEvaluation.new(lesson).average_percentage)
+        %td= lesson.questions.count
+        %td= lesson.question_score_sum
+        %td= lesson.benchmark
         %td
           .buttons
             = link_to t('common.destroy'), lesson_path(lesson, redirect_back: true), method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'

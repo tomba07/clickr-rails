@@ -29,6 +29,7 @@ de:
     new:
       title: "Neue Stunde"
     title: "Stunde"
+    benchmark: "100% Niveau"
   question_responses:
     create:
       notice: "Rückmeldung zu Frage wurde erstellt."
@@ -84,6 +85,8 @@ de:
       clone_prompt: "Optional eine Klasse zum Kopieren auswählen"
     lessons:
       average_percentage: "Prozent Durchschnitt"
+      number_of_questions: "Fragen"
+      question_score_sum: "Punkte max."
   seating_plans:
     seats:
       lesson_execution:
@@ -132,6 +135,8 @@ de:
       success: "Punkte angepasst"
     lessons:
       response_sum: "Punkte"
+      number_of_questions: "Fragen"
+      question_score_sum: "Punkte max."
   lesson_executions:
     show:
       select_school_class_notice: "Wähle eine Klasse aus."
