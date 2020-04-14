@@ -1,0 +1,21 @@
+%h1.title
+  .icon
+    = icon('fas', 'paper-plane')
+  = t('lessons.title')
+%table.table.is-striped.is-hoverable
+  %thead
+    %tr
+      %th= t('lessons.title')
+      %th= t('common.date')
+      %th= t('.average_percentage')
+      %th
+  %tbody
+    - @school_class&.lessons.newest_first.each do |lesson|
+      %tr
+        %td= lesson.name
+        %td= I18n.l lesson.created_at, format: :short
+        %td
+          = percentage(Clickr::LessonEvaluation.new(lesson).average_percentage)
+        %td
+          .buttons
+            = link_to t('common.destroy'), lesson_path(lesson, redirect_back: true), method: :delete, data: { confirm: t('common.are_you_sure') }, class: 'button is-danger'

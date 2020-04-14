@@ -13,7 +13,7 @@ class BonusGradesController < ApplicationController
 
   # GET /bonus_grades/new
   def new
-    session[:redirect_to] = params[:redirect_to]
+    session[:redirect_to] = request.env['HTTP_REFERER']
     student = Student.find_by(id: params[:student_id])
     school_class = student&.school_class
     @bonus_grade =
@@ -32,12 +32,7 @@ class BonusGradesController < ApplicationController
 
     respond_to do |format|
       if @bonus_grade.save
-        redirect_url =
-          if session.delete(:redirect_to) == 'lesson_execution'
-            root_path
-          else
-            @bonus_grade
-          end
+        redirect_url = session.delete(:redirect_to) || @bonus_grade
         format.html { redirect_to redirect_url, notice: t('.create.notice') }
         format.json { render :show, status: :created, location: @bonus_grade }
       else

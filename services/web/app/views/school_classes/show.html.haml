@@ -4,3 +4,8 @@
 .buttons
   = link_to t('common.edit'), edit_school_class_path(@school_class), class: 'button is-primary'
   = link_to I18n.t('common.back'), school_classes_path, class: 'button'
+
+%hr/
+.columns
+  .column.is-6
+    = render 'lessons'

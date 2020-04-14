@@ -13,7 +13,7 @@ class SchoolClassesController < ApplicationController
 
   # GET /school_classes/new
   def new
-    session[:redirect_to] = params[:redirect_to]
+    session[:redirect_to] = request.env['HTTP_REFERER']
     @school_class = SchoolClass.new
   end
 
@@ -40,12 +40,7 @@ class SchoolClassesController < ApplicationController
         CurrentSchoolClass.set @school_class
 
         format.html do
-          redirect_url =
-            if session.delete(:redirect_to) == 'lesson_execution'
-              root_path
-            else
-              @school_class
-            end
+          redirect_url = session.delete(:redirect_to) || @school_class
           redirect_to redirect_url, notice: t('.notice')
         end
         format.json { render :show, status: :created, location: @school_class }

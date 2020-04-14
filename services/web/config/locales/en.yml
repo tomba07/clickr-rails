@@ -112,6 +112,8 @@ en:
     form:
       clone_label: "Copy class with students and device mappings (optional)"
       clone_prompt: "Optionally select a class to copy"
+    lessons:
+      average_percentage: "Average Percentage"
   seating_plans:
     seats:
       lesson_execution:

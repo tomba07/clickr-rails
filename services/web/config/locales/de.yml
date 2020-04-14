@@ -82,6 +82,8 @@ de:
     form:
       clone_label: "Klasse mit Schülern und Gerätezuordnungen kopieren (optional)"
       clone_prompt: "Optional eine Klasse zum Kopieren auswählen"
+    lessons:
+      average_percentage: "Prozent Durchschnitt"
   seating_plans:
     seats:
       lesson_execution:
