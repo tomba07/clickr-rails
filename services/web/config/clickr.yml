@@ -4,7 +4,7 @@ defaults: &defaults
   benchmark_buffer_on_top_of_max_sum: <%= ENV.fetch('CLICKR_BENCHMARK_BUFFER', '5').to_i %>
   initial_student_response_percentage: <%= ENV.fetch('CLICKR_INITIAL_STUDENT_RESPONSE_PERCENTAGE', '77').to_f / 100.0 %>
   student_absent_if_lesson_sum_less_than_or_equal_to: <%= ENV.fetch('CLICKR_STUDENT_ABSENT_IF_LESSON_SUM_LESS_THAN_OR_EQUAL_TO', '-1').to_i %>
-  roll_the_dice_duration_ms: <%= ENV.fetch('CLICKR_ROLL_THE_DICE_DURATION_MS', '3000').to_i %>
+  roll_the_dice_duration_ms: <%= ENV.fetch('CLICKR_ROLL_THE_DICE_DURATION_MS', '1000').to_i %>
 
 development:
   <<: *defaults
