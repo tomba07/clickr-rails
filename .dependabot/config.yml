@@ -4,11 +4,27 @@ update_configs:
   - package_manager: "javascript"
     directory: "/"
     update_schedule: "live"
+    allowed_updates:
+      - match:
+          update_type: "security"
 
   - package_manager: "ruby:bundler"
     directory: "/services/web"
     update_schedule: "live"
+    allowed_updates:
+      - match:
+          update_type: "security"
 
   - package_manager: "javascript"
     directory: "/services/web"
     update_schedule: "live"
+    allowed_updates:
+      - match:
+          update_type: "security"
+
+  - package_manager: "javascript"
+    directory: "/services/zstack-zigbee-reader"
+    update_schedule: "live"
+    allowed_updates:
+      - match:
+          update_type: "security"
