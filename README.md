@@ -14,11 +14,11 @@
 
 **For teachers:**
 - Give oral grades based on the response data, rather than a gut feeling.
-- Spend no more taking notes on student participation after or during each lesson. 
+- No more notetaking on student participation after or during each lesson. 
 
 **For students:**
 - See how your participation immediately improves your oral grade.
-
+- Motivation for active participation by being able to see the results.
 
 ## Features
 <!-- TODO Link to screencasts/screenshots -->
@@ -26,7 +26,7 @@
 - **Question mode:** Teacher opens question response timebox, students can respond by clicking.
 - **Special merits:** Bump the student grade after outstanding responses.
 - **Lesson Evaluation:** Interactive grading, based on response average.
-- **Student grades:** Calculate overall grade based on responses in lessons.
+- **Student grades:** Calculate grade suggestion based on student's participation. // Not sure if this is what it actually does... Just guessing here ;)
 - _Coming soon: Class list import (excel, csv)._
 - _Coming soon: Student photo support._
 - _Coming soon: "Name the student" - Learning mode for teacher using student photos._
@@ -61,6 +61,6 @@
 ## Further topics
 - [Running in production](./docs/running-in-production.md)
 - [Configuration](./docs/configuration.md)
-- [Architectural decision](./docs/adr)
+- [Architectural decisions](./docs/adr)
 - [Docker build](./docs/docker-build.md)
 - [Heroku demo](./docs/heroku.md)
