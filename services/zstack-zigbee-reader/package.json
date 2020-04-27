@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.5",
     "zigbee-herdsman": "^0.12.42"
   },
   "devDependencies": {
