@@ -4,13 +4,12 @@
 FROM balenalib/%%BALENA_ARCH%%-alpine-node:12-latest-build as build
 WORKDIR /app
 
-RUN apk add --update \
+RUN apk add --no-cache \
   # node-gyp, required by zigbee-herdsman
   g++ \
   linux-headers \
   make \
-  python \
-  && rm -rf /var/cache/apk/*
+  python
 
 COPY package*.json ./
 RUN npm ci --only=production
