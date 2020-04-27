@@ -9,7 +9,7 @@ echo "RAILS_MASTER_KEY=$1" >> .env
 echo "ZSTACK_ZIGBEE_PERMIT_JOIN=true" >> .env
 echo "ZSTACK_ZIGBEE_DEVICE=/dev/ttyACM0" >> .env
 
-yarn --cwd build/balena-cli balena env add --application clickr CLICKR_POST_ENDPOINT "http://web/clicks"
-yarn --cwd build/balena-cli balena env add --application clickr RAILS_MASTER_KEY "$1"
-yarn --cwd build/balena-cli balena env add --application clickr ZSTACK_ZIGBEE_PERMIT_JOIN "true"
-yarn --cwd build/balena-cli balena env add --application clickr ZSTACK_ZIGBEE_DEVICE "/dev/ttyACM0"
+yarn balena env add --application clickr CLICKR_POST_ENDPOINT "http://web/clicks"
+yarn balena env add --application clickr RAILS_MASTER_KEY "$1"
+yarn balena env add --application clickr ZSTACK_ZIGBEE_PERMIT_JOIN "true"
+yarn balena env add --application clickr ZSTACK_ZIGBEE_DEVICE "/dev/ttyACM0"

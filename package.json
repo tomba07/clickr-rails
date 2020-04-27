@@ -7,10 +7,17 @@
   "private": true,
   "scripts": {
     "lint": "lerna run lint",
-    "format": "lerna run format"
+    "format": "lerna run format",
+    "balen:list-devices": "balena devices --application clickr",
+    "balena:login": "balena login",
+    "balena:configure": "balena local configure /dev/sda --config-wifi-ssid --config-wifi-key",
+    "balena:push": "balena push clickr",
+    "postinstall": "lerna bootstrap"
   },
+  "license": "GPL-3.0-or-later",
   "//": "Use lerna instead of yarn workspaces due to rails webpacker issue (check file integrity and scss relative imports)",
   "devDependencies": {
+    "balena-cli": "^11.31.22",
     "lerna": "^3.20.2"
   }
 }

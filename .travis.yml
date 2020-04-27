@@ -114,7 +114,7 @@ jobs:
         - echo -e $BALENA_SSH_KEY > id_rsa
         - chmod 0600 id_rsa
         - ssh-add ./id_rsa
-        - cat build/balena-cli/git.balena-cloud.com.ssh-keyscan >> ~/.ssh/known_hosts
+        - cat .balena-cloud.com.ssh-keyscan >> ~/.ssh/known_hosts
         - git remote add balena $BALENA_REMOTE
         - git push --force balena master
 

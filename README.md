@@ -2,60 +2,49 @@
 [![Travis services/web build Status](https://travis-ci.com/ftes/clickr-rails.svg?branch=master)](https://travis-ci.com/ftes/clickr-rails)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/maintainability)](https://codeclimate.com/github/ftes/clickr-rails/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2e8f539b798959baf7e9/test_coverage)](https://codeclimate.com/github/ftes/clickr-rails/test_coverage)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-<!--
-## Introduction
-TODO briefly explain domain model!
-TODO License
--->
+**Designed to motivate: A student response system for schools.**
 
-## Feature planning
-Kanban-style board @trello: https://trello.com/b/cKRiALs2/clickr
+**For teachers:**
+- Give oral grades based on the response data, rather than a gut feeling.
+- Spend no more taking notes on student participation after or during each lesson. 
+
+**For students:**
+- See how your participation immediately improves your oral grade.
+
+
+## Overview
+What clickr is:
+- Rasperry Pi in class room (all data stays local) connected to projector
+- Each student has a physical button (zigbee)
+- Live view (via browser): teacher starts a question, students register their response by clicking the button
+
+What clickr is not (yet):
+- Multiple choice response system: Students only register a "binary" response: Do I know the answer or not. 
 
 ## Tech Stack
-Languages, frameworks and libraries:
-- web service:
-    - Ruby
-    - Rails (webpacker, stimulus)
-    - SQLite
-    - Devise gem (authentication)
-    - bulma (styling)
-    - fontawesome (icons)
-- input adapters:
-    - javascript (NodeJS)
-    - zigbee-herdsman (zigbee driver library)
-
-Build/CI/Deployment:
-- docker and docker-compose
-- Travis (run tests, push code coverage results to Codeclimate, build and push AMD64 amd ARM64 docker images, deploy master branch to heroku, trigger balena.io build and deploy)
-- Codeclimate (code quality)
-- balena.io (build ARM docker image, manage devices)
+- **Web app:** Ruby on Rails, PostgreSQL
+- **Input adapter:** Node.js, [zigbee-herdsman](https://github.com/Koenkk/zigbee-herdsman)
+- **CI/CD:** TravisCI, heroku (cloud preview) [balena.io](https://www.balena.io/) (embedded device management)
 
 ## Technical overview
 ```
-$ tree -L 2 --filelimit 10 --dirsfirst
-├── bin [11 entries exceeds filelimit, not opening dir]
-├── build
-│   └── balena-cli
-├── node_modules [966 entries exceeds filelimit, not opening dir]
-├── packages
+$ tree -L 2 --filelimit 12 --dirsfirst
+.
+├── bin
 ├── services
-│   ├── web
-│   └── zstack-zigbee-reader
+│   ├── web
+│   └── zstack-zigbee-reader
 ├── docker-compose.yml
-├── lerna.json
-├── package.json
-├── README.md
-└── yarn.lock
 ```
 
 - `bin` contains development scripts
 - `services` contains services which can be bundled as docker images (e.g. the rails web app and hardware connectors)
-- `docker-compose.yml` defines how to run those services together (TODO multi pi setup -> several applications)
+- `docker-compose.yml` defines how to run those services together
 
 ## Getting started
-1. `yarn install --cwd build/balena-cli`
-2. `bin/setup-environment-variables <rails-master-key>`
+1. `npm i`
 3. `cd services/web`
 4. `bundle install`
 5. `bundle exec rails db:create db:migrate db:seed`
@@ -63,9 +52,9 @@ $ tree -L 2 --filelimit 10 --dirsfirst
 7. `xdg-open http://localhost:3000`, credentials: `f@ftes.de`/`password`
 
 ## Docker
-1. `yarn install --cwd build/balena-cli && bin/setup-environment-variables <rails-master-key>` (if you haven't done so already)
-2. `./bin/docker-build` (build locally first, that's faster, but not for ARM/Raspberry Pi)
-3. `./bin/release-to-pi` (balena.io cloud build and push to devices)
+1. `yarn install && bin/setup-environment-variables <rails-master-key>` (if you haven't done so already)
+2. `./bin/docker-build` (build locally to test everything is fine first)
+3. `npm run balena:push` (balena.io cloud build and push to devices)
 
 ## Balena cloud configuration
 Initialized via `bin/setup-environment-variables`.
